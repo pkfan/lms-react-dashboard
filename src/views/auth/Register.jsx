@@ -15,6 +15,8 @@ import {
 import { getUserCountryDetails, getAllCountries } from 'user-detail-from-browser';
 import PhoneNumberInput from '@/components/PhoneNumberInput';
 import CountrySelect from '@/components/CountrySelect';
+import StatesSelect from '@/components/StatesSelect';
+import CitySelect from '@/components/CitySelect';
 
 import { Link } from 'react-router-dom';
 
@@ -27,6 +29,7 @@ import { MdEmail } from 'react-icons/md';
 import SocialAuthButton from './SocialAuthButton';
 import inputStyles from '@/styles/inputStyles';
 import Logo from '@/components/Logo';
+import { useGetStatesQuery, useGetCitiesQuery } from './api';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -75,12 +78,36 @@ const useStyles = createStyles((theme) => ({
 export function Register() {
   // `value` will be the parsed phone number in E.164 format.
   // Example: "+12133734253".
+
+  // console.log('isSuccess states', isSuccess);
+  // console.log('isFetching states', isFetching);
+  // console.log('isError states', isError);
+  // console.log('data states', data);
+
   const [phoneNumberValue, setPhoneNumberValue] = useState();
   console.log('phoneNumberValue', phoneNumberValue);
   const { classes } = useStyles();
   const userCountryDetail = getUserCountryDetails();
   const defaultCountryCode = userCountryDetail.country_code_two;
   const [countryCode, setCountryCode] = useState(defaultCountryCode);
+
+  const {
+    isSuccess: isStatesSuccess,
+    isFetching: isSatesFetching,
+    isError: isStatesError,
+    data: states,
+  } = useGetStatesQuery(countryCode);
+
+  const [stateId, setStateId] = useState('');
+
+  const {
+    isSuccess: isCitiesSuccess,
+    isFetching: isCitiesFetching,
+    isError: isCitiesError,
+    data: cities,
+  } = useGetCitiesQuery(stateId);
+
+  const [cityId, setCityId] = useState('');
 
   const form = useForm({
     initialValues: {
@@ -164,7 +191,27 @@ export function Register() {
           <CountrySelect
             allCountries={getAllCountries()}
             countryCode={countryCode}
+            setStateId={setStateId}
             setCountryCode={setCountryCode}
+          />
+
+          <StatesSelect
+            states={states}
+            stateId={stateId}
+            setStateId={setStateId}
+            setCityId={setCityId}
+            isSuccess={isStatesSuccess}
+            isError={isStatesError}
+            isFetching={isSatesFetching}
+          />
+          <CitySelect
+            cities={cities}
+            cityId={cityId}
+            stateId={stateId}
+            setCityId={setCityId}
+            isSuccess={isCitiesSuccess}
+            isError={isCitiesError}
+            isFetching={isCitiesFetching}
           />
 
           <PhoneNumberInput

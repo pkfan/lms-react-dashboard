@@ -4,8 +4,8 @@ import baseQuery from '@/api/baseQuery';
 
 import login from './login';
 import getAuthUser from './getAuthUser';
-// import getJob from './getJob';
-// import getJobs from './getJobs';
+import getStates from './getStates';
+import getCities from './getCities';
 
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
@@ -15,6 +15,8 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     // getJobs: getJobs(builder),
     getAuthUser: getAuthUser(builder),
+    getStates: getStates(builder),
+    getCities: getCities(builder),
 
     login: login(builder),
   }),
@@ -22,4 +24,5 @@ export const authApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAuthUserQuery, useLoginMutation } = authApi;
+export const { useGetAuthUserQuery, useGetStatesQuery, useGetCitiesQuery, useLoginMutation } =
+  authApi;

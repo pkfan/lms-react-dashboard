@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { Group, Avatar, Text, Select } from '@mantine/core';
 import inputStyles from '@/styles/inputStyles';
 
@@ -16,12 +16,16 @@ const SelectItem = forwardRef(({ image, label, ...others }, ref) => (
 
 SelectItem.displayName = 'SelectItem';
 
-export default function CountrySelect({ allCountries, countryCode, setCountryCode }) {
+export default function CountrySelect({ allCountries, countryCode, setCountryCode, setStateId }) {
   const countries = allCountries.map((country) => ({
     image: country.country_flag_url,
     label: country.country_name,
     value: country.country_code_two,
   }));
+
+  useEffect(() => {
+    setStateId('');
+  }, [countryCode]);
 
   return (
     <Select
