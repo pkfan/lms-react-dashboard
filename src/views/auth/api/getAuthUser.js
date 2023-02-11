@@ -20,6 +20,8 @@ export default function getAuthUser(builder) {
       console.log('authUserQuery transformErrorResponse', response);
       return { status: response.status, errors };
     },
+
+    // The 2nd parameter is the destructured `QueryLifecycleApi`
   });
 
   return authUserQuery;

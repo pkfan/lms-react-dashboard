@@ -1,6 +1,7 @@
 import { createStyles, Flex, Group } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { BiChevronRight } from 'react-icons/bi';
+import useIsActiveSidebarLink from '@/hooks/useIsActiveSidebarLink';
 
 const useStyles = createStyles((theme) => ({
   reactRouterLink: {
@@ -22,14 +23,19 @@ const useStyles = createStyles((theme) => ({
   },
   sideBarLinkActive: {
     // backgroundColor: `${theme.colors.lmsPrimary[6]}!important`,
-    backgroundImage: `linear-gradient(to top right,${theme.colors.lmsPrimary[9]}, ${theme.colors.lmsPrimary[5]})`,
+    backgroundImage: `linear-gradient(${theme.colors.lmsPrimary[4]}, ${theme.colors.lmsPrimary[9]})`,
     color: theme.colors.lmsPrimary[0],
     paddingRight: '16px',
   },
 }));
 
-export function SideBarLink({ children, isActive, href = 'notFound', setSidebarOpened }) {
+export function SideBarLink({ children, href = 'notFound', setSidebarOpened }) {
   const { classes, cx } = useStyles();
+  const isActiveLink = useIsActiveSidebarLink();
+
+  const targetSegment = href.split('/')[3];
+  const isActive = isActiveLink(targetSegment);
+  // console.log('target segment', targetSegment);
 
   return (
     <Link to={href} className={classes.reactRouterLink}>
@@ -40,7 +46,7 @@ export function SideBarLink({ children, isActive, href = 'notFound', setSidebarO
         onClick={() => setSidebarOpened((o) => !o)}
       >
         <Group>{children}</Group>
-        <BiChevronRight size={16} />
+        <BiChevronRight size={16} className="htmlRtlIcon" />
       </Flex>
     </Link>
   );

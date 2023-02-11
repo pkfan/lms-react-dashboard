@@ -9,6 +9,7 @@ import Course from '@/views/pages/Course';
 import Dashboard from '@/views/pages/Dashboard';
 import Instructor from '@/views/pages/Instructor';
 import Student from '@/views/pages/Student';
+import Profile from '@/views/pages/Profile';
 
 // import AuthRoutes from './AuthRoutes';
 // import AdminRoutes from './AdminRoutes';
@@ -26,30 +27,33 @@ export function ReactRouter() {
     <BrowserRouter>
       <Routes>
         {/* auth routes  */}
-        <Route path="/" element={<AuthLayout />}>
+        <Route path="lms/" element={<AuthLayout />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
-        {/* student routes  */}
-        <Route path="student/" element={<LmsLayout />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="course/1/dsfdfsdf/sdfsdfsdf/sdfsdf" element={<Course />} />
-          <Route path="instructor" element={<Instructor />} />
-          <Route path="student" element={<Student />} />
-        </Route>
-        {/* instructor routes  */}
-        <Route path="instructor/" element={<LmsLayout />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="course/1/dsfdfsdf/sdfsdfsdf/sdfsdf" element={<Course />} />
-          <Route path="instructor" element={<Instructor />} />
-          <Route path="student" element={<Student />} />
-        </Route>
-        {/* admin routes  */}
-        <Route path="admin/" element={<LmsLayout />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="course/1/dsfdfsdf/sdfsdfsdf/sdfsdf" element={<Course />} />
-          <Route path="instructor" element={<Instructor />} />
-          <Route path="student" element={<Student />} />
+        <Route path="dashboard/" element={<LmsLayout />}>
+          <Route path="profile" element={<Profile />} />
+          {/* student routes  */}
+          <Route path="student/" element={<LmsLayout />}>
+            <Route path="index" element={<Dashboard />} />
+            <Route path="course" element={<Course />} />
+            <Route path="instructor" element={<Instructor />} />
+            <Route path="student" element={<Student />} />
+          </Route>
+          {/* instructor routes  */}
+          <Route path="instructor/" element={<LmsLayout />}>
+            <Route path="index" element={<Dashboard />} />
+            <Route path="course" element={<Course />} />
+            <Route path="instructor" element={<Instructor />} />
+            <Route path="student" element={<Student />} />
+          </Route>
+          {/* admin routes  */}
+          <Route path="admin/" element={<LmsLayout />}>
+            <Route path="index" element={<Dashboard />} />
+            <Route path="course" element={<Course />} />
+            <Route path="instructor" element={<Instructor />} />
+            <Route path="student" element={<Student />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

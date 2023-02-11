@@ -9,7 +9,7 @@ import TopBar from '@/components/TopBar';
 
 const useStyles = createStyles((theme) => ({
   lmsLayout: {
-    marginTop: '48px',
+    marginTop: '60px',
 
     [`@media (min-width: ${theme.breakpoints.sm}px)`]: {
       marginLeft: '235px',
@@ -20,7 +20,8 @@ const useStyles = createStyles((theme) => ({
     maxWidth: '1165px',
     margin: '0 auto',
     padding: '16px',
-    background: 'yellow',
+    position: 'relative',
+    // background: 'yellow',
   },
 }));
 
@@ -32,7 +33,8 @@ export function LmsLayout() {
 
   useEffect(() => {
     if (isError) {
-      navigate('/login');
+      console.log('isError login useEffect lmsLayout', isError);
+      navigate('/lms/login');
     }
   }, [isError]);
 

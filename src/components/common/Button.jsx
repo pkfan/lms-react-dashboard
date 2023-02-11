@@ -2,11 +2,11 @@ import { Button as MantineButton, createStyles } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   button: {
-    backgroundImage: `linear-gradient(to top right,${theme.colors.lmsPrimary[9]}, ${theme.colors.lmsPrimary[5]})`,
+    backgroundImage: `linear-gradient(${theme.colors.lmsPrimary[4]}, ${theme.colors.lmsPrimary[9]})`,
     transition: 'all 300ms ease-in-out',
 
     '&:hover': {
-      backgroundImage: `linear-gradient(to top right,${theme.colors.lmsPrimary[5]}, ${theme.colors.lmsPrimary[9]})`,
+      backgroundImage: `linear-gradient(${theme.colors.lmsPrimary[9]}, ${theme.colors.lmsPrimary[4]})`,
       transform: 'scale(1.03)',
     },
   },

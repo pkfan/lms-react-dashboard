@@ -108,7 +108,7 @@ export function Login() {
         time: 1000,
       });
       setTimeout(() => {
-        navigate('/admin/dashboard');
+        navigate('/dashboard/student/index');
       }, 1000);
     }
 
@@ -217,14 +217,14 @@ export function Login() {
 
                 <Anchor href="https://mantine.dev/">Forget Password</Anchor>
               </Flex>
-              <Flex justify="end" align="center" w="100%" maw={350}>
+              <Flex justify="end" align="center" w="100%" maw={400}>
                 <Button type="submit" loading={isLoading}>
                   SIGN IN
                 </Button>
               </Flex>
               <Text>
                 Not a member?{' '}
-                <Anchor component={Link} fw={500} to="/register">
+                <Anchor component={Link} fw={500} to="/lms/register">
                   Register
                 </Anchor>
               </Text>

@@ -7,7 +7,7 @@ export const inputStyles = (theme) => ({
     color: theme.colors.lmsLayout[4],
   },
   [`@media (min-width: ${theme.breakpoints.sm}px)`]: {
-    width: '350px',
+    width: '400px',
   },
 });
 

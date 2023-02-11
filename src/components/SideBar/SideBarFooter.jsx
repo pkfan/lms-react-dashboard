@@ -5,7 +5,7 @@ const useStyles = createStyles((theme) => ({
   footer: {
     position: 'absolute',
     left: 0,
-    bottom: '48px',
+    bottom: '60px',
     width: '100%',
     padding: '8px',
     borderTop: `1px solid ${theme.colors.lmsBorder[3]}`,
@@ -29,10 +29,12 @@ export function SideBarFooter() {
       <Flex justify="space-between" align="center">
         <Avatar className={classes.avatar} radius="sm" />
         <Box>
-          <Text fw={700}>Admin</Text>
-          <Text fz="sm">Muhammad Amir</Text>
+          <Text fw={700} fz="sm">
+            Muhammad Amir
+          </Text>
+          <Text fz="xs">Admin</Text>
         </Box>
-        <IconChevronRight size={18} />
+        <IconChevronRight size={18} className="htmlRtlIcon" />
       </Flex>
     </Box>
   );

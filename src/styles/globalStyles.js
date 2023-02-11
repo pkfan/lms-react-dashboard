@@ -1,7 +1,38 @@
 export const globalStyles = () => ({
+  '::-webkit-scrollbar': {
+    width: '10px',
+  },
+
+  /* Track */
+  '::-webkit-scrollbar-track': {
+    background: 'var(--layout-0)',
+  },
+
+  /* Handle */
+  '::-webkit-scrollbar-thumb': {
+    background: 'var(--primary-6)',
+  },
+
+  /* Handle on hover */
+  '::-webkit-scrollbar-thumb:hover': {
+    background: 'var(--primary-7)',
+  },
+
   body: {
     backgroundColor: 'var(--layout-2)',
     color: 'var(--layout-7)',
+  },
+  '.mantine-Title-root': {
+    color: 'var(--layout-6)',
+  },
+  'a, a: active, a: hover, a: visited': {
+    textDecoration: 'none',
+    color: 'inherit',
+  },
+
+  //html rtls inputStyle
+  '[dir="rtl"] .htmlRtlIcon': {
+    transform: 'rotate(180deg)',
   },
 
   '.PhoneInput': {
@@ -46,10 +77,11 @@ export const globalStyles = () => ({
   '.PhoneInput > input:focus': {
     outline: 'none!important',
   },
+
   '.PhoneInput > .PhoneInputCountry > div': {
     width: '50px',
     position: 'absolute',
-    left: '299px',
+    left: '349px',
     zIndex: -10,
     overflow: 'hidden',
     borderRadius: '4px',
@@ -57,7 +89,7 @@ export const globalStyles = () => ({
   '.PhoneInput > .PhoneInputCountry > select': {
     width: '50px',
     height: '40px',
-    left: '300px',
+    left: '350px',
     opacity: 0,
     transform: 'scale(0)',
     cursor: 'pointer',
@@ -98,7 +130,7 @@ export const globalStyles = () => ({
   },
   '@media (min-width: 768px)': {
     '.PhoneNumberInput': {
-      width: '350px',
+      width: '400px',
     },
   },
 

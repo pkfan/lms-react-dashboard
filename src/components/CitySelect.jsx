@@ -1,14 +1,21 @@
-import { Select, Loader, Group, Text } from '@mantine/core';
+import { Select, Loader, Group, Text, createStyles } from '@mantine/core';
 import inputStyles from '@/styles/inputStyles';
-import { ImWarning } from 'react-icons/im';
+
+const useStyles = createStyles((theme) => ({
+  border: {
+    '& input': {
+      border: `1px solid ${theme.colors.red[5]}`,
+    },
+  },
+}));
 
 export default function CitySelect({
   cities = [],
   cityId,
   setCityId,
   isSuccess,
-  isError,
   isFetching,
+  isInvalidCity,
 }) {
   if (isSuccess) {
     cities = cities?.map((city) => ({
@@ -19,6 +26,8 @@ export default function CitySelect({
   if (isFetching) {
     cityId = '';
   }
+
+  const { classes, cx } = useStyles();
 
   return (
     <>
@@ -35,20 +44,24 @@ export default function CitySelect({
         </Group>
       )} */}
       {isSuccess && (
-        <Select
-          sx={inputStyles}
-          withAsterisk
-          label="City"
-          placeholder="Select City"
-          data={cities}
-          dropdownPosition="bottom"
-          searchable
-          maxDropdownHeight={400}
-          nothingFound="Not Found"
-          value={cityId}
-          onChange={setCityId}
-          filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
-        />
+        <>
+          <Select
+            sx={inputStyles}
+            withAsterisk
+            className={cx({ [classes.border]: isInvalidCity })}
+            label="City"
+            placeholder="Select City"
+            data={cities}
+            dropdownPosition="bottom"
+            searchable
+            maxDropdownHeight={400}
+            nothingFound="Not Found"
+            value={cityId}
+            onChange={setCityId}
+            filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
+          />
+          {isInvalidCity && <Text color="red">Please choose your city</Text>}
+        </>
       )}
     </>
   );

@@ -1,4 +1,5 @@
 import PhoneInput from 'react-phone-number-input';
+import { Text } from '@mantine/core';
 
 const phoneNumberStyle = {
   pointerEvents: 'none',
@@ -21,6 +22,7 @@ export function PhoneNumberInput({
   phoneNumberValue,
   setPhoneNumberValue,
   label,
+  isInvalidNumber,
 }) {
   return (
     <div>
@@ -32,7 +34,7 @@ export function PhoneNumberInput({
         {label}&nbsp;
         <span style={{ color: '#fa5252' }}>*</span>
         <PhoneInput
-          className="PhoneNumberInput"
+          className={isInvalidNumber ? 'PhoneNumberInput invalidInput' : 'PhoneNumberInput'}
           id={id}
           // className={String(phoneNumberValue).length <= 9 ? 'invalidInput' : ''}
           international
@@ -41,10 +43,11 @@ export function PhoneNumberInput({
           onChange={setPhoneNumberValue}
         />
         {/* icon  */}
-        <div className="phoneNumberIcon invalidInput" style={phoneNumberStyle}>
+        <div className={'phoneNumberIcon invalidInput'} style={phoneNumberStyle}>
           {icon}
         </div>
       </label>
+      {isInvalidNumber && <Text color="red">invalid Number e.g +923164204082</Text>}
     </div>
   );
 }

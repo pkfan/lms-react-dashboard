@@ -1,15 +1,16 @@
-import { Box, Text } from '@mantine/core';
+import { Box, Text, Group } from '@mantine/core';
 
 import Logo from '@/components/Logo';
 
 import { Burger } from './Burger';
+import DropdownMenu from '@/views/roles/profile/DropdownMenu';
 
 function TopBar({ sx, sidebarOpened, setSidebarOpened }) {
   const topBarStyle = (theme) => ({
     background: theme.colors.lmsSkin[0],
     boxShadow: theme.shadows.sm,
     width: '100vw',
-    height: '48px',
+    height: '60px',
     padding: '12px 24px',
     position: 'fixed',
     zIndex: '100',
@@ -17,6 +18,7 @@ function TopBar({ sx, sidebarOpened, setSidebarOpened }) {
     left: 0,
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
     borderBottom: `1px solid ${theme.colors.lmsBorder[3]}`,
   });
   return (
@@ -28,8 +30,13 @@ function TopBar({ sx, sidebarOpened, setSidebarOpened }) {
 
     <Box component="nav" sx={[topBarStyle, sx]}>
       <Burger sidebarOpened={sidebarOpened} setSidebarOpened={setSidebarOpened} />
-      <Logo />
-      <Text>Application Box</Text>
+      <Group>
+        <Logo />
+        <Text>Lms Pro</Text>
+      </Group>
+      <Box>
+        <DropdownMenu />
+      </Box>
     </Box>
   );
 }

@@ -10,7 +10,7 @@ const useStyles = createStyles((theme) => ({
     color: theme.colors.lmsLayout[5],
     borderRight: `1px solid ${theme.colors.lmsBorder[3]}`,
     position: 'fixed',
-    top: '48px',
+    top: '60px',
     left: '-235px',
     zIndex: '110',
     backgroundColor: theme.colors.lmsSkin[0],

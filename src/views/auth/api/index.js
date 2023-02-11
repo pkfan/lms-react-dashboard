@@ -3,6 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQuery from '@/api/baseQuery';
 
 import login from './login';
+import register from './register';
 import getAuthUser from './getAuthUser';
 import getStates from './getStates';
 import getCities from './getCities';
@@ -18,11 +19,17 @@ export const authApi = createApi({
     getStates: getStates(builder),
     getCities: getCities(builder),
 
+    register: register(builder),
     login: login(builder),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAuthUserQuery, useGetStatesQuery, useGetCitiesQuery, useLoginMutation } =
-  authApi;
+export const {
+  useGetAuthUserQuery,
+  useGetStatesQuery,
+  useGetCitiesQuery,
+  useLoginMutation,
+  useRegisterMutation,
+} = authApi;

@@ -3,13 +3,12 @@ import { AiOutlineDashboard, AiFillSetting } from 'react-icons/ai';
 import { MdOutlineVideoLibrary, MdPayment } from 'react-icons/md';
 import { ImManWoman } from 'react-icons/im';
 import { GiRomanToga } from 'react-icons/gi';
-import useIsActiveUrl from '@/hooks/useIsActiveUrl';
 
 import SideBarLink from './SideBarLink';
 
 const useStyles = createStyles(() => ({
   scrollArea: {
-    maxHeight: 'calc(100vh - 48px - 64px)',
+    maxHeight: 'calc(100vh - 60px - 64px)',
   },
   sideBarLinks: {
     margin: '16px',
@@ -19,54 +18,37 @@ const useStyles = createStyles(() => ({
 }));
 
 export function SideBarLinks({ setSidebarOpened }) {
-  const isActiveUrl = useIsActiveUrl();
   const { classes } = useStyles();
 
   return (
     <ScrollArea.Autosize className={classes.scrollArea}>
       <Stack spacing="xs" className={classes.sideBarLinks}>
-        <SideBarLink
-          setSidebarOpened={setSidebarOpened}
-          href="dashboard"
-          isActive={isActiveUrl('/dashboard')}
-        >
+        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/index">
           <AiOutlineDashboard size={24} />
           <Text fw={500}>Dashboard</Text>
         </SideBarLink>
 
-        <SideBarLink
-          setSidebarOpened={setSidebarOpened}
-          href="course/1/dsfdfsdf/sdfsdfsdf/sdfsdf"
-          isActive={isActiveUrl('course/')}
-        >
+        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/course">
           <MdOutlineVideoLibrary size={24} />
           <Text fw={500}>Courses</Text>
         </SideBarLink>
 
-        <SideBarLink
-          setSidebarOpened={setSidebarOpened}
-          href="student"
-          isActive={isActiveUrl('/student/1')}
-        >
+        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/student">
           <ImManWoman size={24} />
           <Text fw={500}>Students</Text>
         </SideBarLink>
 
-        <SideBarLink
-          setSidebarOpened={setSidebarOpened}
-          href="instructor"
-          isActive={isActiveUrl('Instructor')}
-        >
+        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/instructor">
           <GiRomanToga size={24} style={{ opicity: 0.6 }} />
           <Text fw={500}>Intructors</Text>
         </SideBarLink>
 
-        <SideBarLink isActive={false}>
+        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/payment">
           <MdPayment size={24} />
           <Text fw={500}>Payment</Text>
         </SideBarLink>
 
-        <SideBarLink isActive={false}>
+        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/settings">
           <AiFillSetting size={24} />
           <Text fw={500}>settings</Text>
         </SideBarLink>
