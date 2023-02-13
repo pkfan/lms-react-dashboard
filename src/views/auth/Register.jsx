@@ -6,10 +6,10 @@ import {
   Text,
   Divider,
   Anchor,
-  // Checkbox,
   TextInput,
   PasswordInput,
 } from '@mantine/core';
+import Alert from '@/components/common/Alert';
 import Button from '@/components/common/Button';
 import FullPageLoader from '@/components/common/FullPageLoader';
 import {
@@ -141,7 +141,7 @@ export function Register() {
     },
 
     validate: {
-      full_name: hasLength({ min: 8 }, 'Too short'),
+      full_name: hasLength({ min: 4 }, 'Too short'),
       address: hasLength({ min: 8 }, 'Too short'),
       email: isEmail('Invalid email'),
       // password: hasLength({ min: 8 }, 'Too Short, password must be atleast 8 characters'),
@@ -261,7 +261,7 @@ export function Register() {
           >
             <Logo width="80px" />
             <Text fz={24}>Sign up to Pkfan</Text>
-            <Paper shadow="xl" className={classes.paper}>
+            <Paper withBorder shadow="xl" className={classes.paper}>
               <SocialAuthButton
                 sx={classes.variant}
                 variant="outline"
@@ -290,9 +290,9 @@ export function Register() {
                 }
               />
 
-              <Text fz={14} fw={700} sx={(theme) => ({ color: theme.colors.red[5] })}>
-                {registerError?.errors}
-              </Text>
+              {isRegisterError && (
+                <Alert title="Errors!" color="red" errors={registerError?.errors} />
+              )}
 
               <TextInput
                 sx={inputStyles}

@@ -7,6 +7,10 @@ import register from './register';
 import getAuthUser from './getAuthUser';
 import getStates from './getStates';
 import getCities from './getCities';
+import updateUser from './updateUser';
+import updatePassword from './updatePassword';
+import forgetPassword from './forgetPassword';
+import resetPassword from './resetPassword';
 
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
@@ -14,13 +18,18 @@ export const authApi = createApi({
   reducerPath: 'auth',
   tagTypes: ['Auth'],
   endpoints: (builder) => ({
-    // getJobs: getJobs(builder),
+    // query
     getAuthUser: getAuthUser(builder),
     getStates: getStates(builder),
     getCities: getCities(builder),
 
+    // mutation
     register: register(builder),
     login: login(builder),
+    updateUser: updateUser(builder),
+    updatePassword: updatePassword(builder),
+    forgetPassword: forgetPassword(builder),
+    resetPassword: resetPassword(builder),
   }),
 });
 
@@ -32,4 +41,8 @@ export const {
   useGetCitiesQuery,
   useLoginMutation,
   useRegisterMutation,
+  useUpdateUserMutation,
+  useUpdatePasswordMutation,
+  useForgetPasswordMutation,
+  useResetPasswordMutation,
 } = authApi;

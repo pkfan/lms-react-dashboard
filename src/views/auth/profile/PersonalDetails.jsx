@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { createStyles, Flex, TextInput, Title, Box, Textarea } from '@mantine/core';
+import Alert from '@/components/common/Alert';
+
 import Paper from '@/components/common/Paper';
 import Button from '@/components/common/Button';
-import { store } from '@/store';
-// import {
-//   showLoadingNotification,
-//   updateLoadingNotificationError,
-//   updateLoadingNotificationSuccess,
-// } from '@/helpers/notification';
+import {
+  showLoadingNotification,
+  updateLoadingNotificationError,
+  updateLoadingNotificationSuccess,
+} from '@/helpers/notification';
 
 import { getAllCountries } from 'user-detail-from-browser';
 import PhoneNumberInput from '@/components/PhoneNumberInput';
@@ -22,7 +23,12 @@ import { MdEmail } from 'react-icons/md';
 import { ImLocation2 } from 'react-icons/im';
 
 import inputStyles from '@/styles/inputStyles';
-import { useGetStatesQuery, useGetCitiesQuery, useGetAuthUserQuery } from '@/views/auth/api';
+import {
+  useGetStatesQuery,
+  useGetCitiesQuery,
+  useGetAuthUserQuery,
+  useUpdateUserMutation,
+} from '@/views/auth/api';
 
 const useStyles = createStyles(() => ({
   container: {
@@ -33,21 +39,27 @@ const useStyles = createStyles(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     gap: '16px',
-    // backgroundColor: theme.colors.lmsSkin[0],
-    // color: theme.colors.lmsSkin[1],
   },
 }));
 
-export function PersonalDetails({ setScrollLocked, setVisibleOverlay }) {
+export function PersonalDetails({ setVisibleOverlay }) {
   const { classes } = useStyles();
   const {
     data: authUserData,
+    refetch: authUserRefetch,
     isSuccess: isAuthUserSuccess,
-    isFetching: isAuthUserFetching,
-    isError: isAuthUserError,
   } = useGetAuthUserQuery();
+  const [
+    updateUser,
+    {
+      error: updateUserError,
+      isSuccess: isUpdateUserSuccess,
+      isLoading: isUpdateUserLoading,
+      isError: isUpdateUserError,
+    },
+  ] = useUpdateUserMutation();
 
-  console.log('authUserData', authUserData);
+  // console.log('authUserData', authUserData);
 
   const [phoneNumberValue, setPhoneNumberValue] = useState(`+${authUserData?.phone}`);
   // console.log('phoneNumberValue', phoneNumberValue);
@@ -75,23 +87,13 @@ export function PersonalDetails({ setScrollLocked, setVisibleOverlay }) {
     initialValues: {
       full_name: authUserData?.full_name,
       email: authUserData?.email,
-      biography: authUserData?.biography,
+      biography: authUserData?.biography || '',
       address: authUserData?.address,
     },
 
     validate: {
-      full_name: hasLength({ min: 8 }, 'Too short'),
+      full_name: hasLength({ min: 4 }, 'Too short'),
       email: isEmail('Invalid email'),
-      // password: hasLength({ min: 8 }, 'Too Short, password must be atleast 8 characters'),
-      password: (value) => {
-        const regularExpression = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-        let isValid = regularExpression.test(value);
-
-        if (isValid) {
-          return null;
-        }
-        return 'Password must be atleast 8 characters, and contains !@#$%^&* with Capital, Small letters ';
-      },
     },
   });
 
@@ -108,8 +110,8 @@ export function PersonalDetails({ setScrollLocked, setVisibleOverlay }) {
       // setCityId(authUserData.city_id);
 
       setVisibleOverlay(false);
-      console.log('authUserData success', authUserData);
-      console.log('store in details : ', store.getState());
+      // console.log('authUserData success', authUserData);
+      // console.log('store in details : ', store.getState());
 
       // setScrollLocked(false);
     }
@@ -131,6 +133,24 @@ export function PersonalDetails({ setScrollLocked, setVisibleOverlay }) {
       // setScrollLocked(false);
     }
   }, [isCitiesSuccess, cities]);
+
+  useEffect(() => {
+    if (isUpdateUserSuccess) {
+      updateLoadingNotificationSuccess({
+        id: 'updateProfile',
+        message: 'Personal Information updated successfully',
+        time: 6000,
+      });
+      authUserRefetch();
+    }
+    if (isUpdateUserError) {
+      updateLoadingNotificationError({
+        id: 'updateProfile',
+        message: 'Errors in Personal Information',
+        time: 3000,
+      });
+    }
+  }, [isUpdateUserSuccess, isUpdateUserError]);
 
   const validateOtherFields = (values) => {
     let hasNotValidValues = false;
@@ -178,17 +198,18 @@ export function PersonalDetails({ setScrollLocked, setVisibleOverlay }) {
   };
 
   const onSubmitHandle = (values) => {
+    console.log('before updateUser : ', values);
     values = validateOtherFields(values);
 
     if (!values) return;
-    // register(values);
-    // console.log(values);
+    updateUser(values);
+    console.log('after updateUser : ', values);
 
-    // showLoadingNotification({
-    //   id: 'register',
-    //   title: 'Processing...',
-    //   message: 'we are creating your student account',
-    // });
+    showLoadingNotification({
+      id: 'updateProfile',
+      title: 'Updating Profile Information...',
+      message: 'we are updating your account infromation',
+    });
   };
 
   return (
@@ -203,10 +224,11 @@ export function PersonalDetails({ setScrollLocked, setVisibleOverlay }) {
         >
           Personal Information
         </Title>
-        {/* <Text fz={14} fw={700} sx={(theme) => ({ color: theme.colors.red[5] })}>
-          {registerError?.errors}
-        </Text> */}
+
         <Box className={classes.container}>
+          {isUpdateUserError && (
+            <Alert title="Errors!" color="red" errors={updateUserError?.errors} />
+          )}
           <TextInput
             sx={inputStyles}
             withAsterisk
@@ -289,7 +311,9 @@ export function PersonalDetails({ setScrollLocked, setVisibleOverlay }) {
           />
 
           <Flex justify="end" align="center" w="100%" mt={24} maw={350}>
-            <Button type="submit">SAVE CHANGES</Button>
+            <Button type="submit" loading={isUpdateUserLoading}>
+              SAVE CHANGES
+            </Button>
           </Flex>
         </Box>
       </Paper>

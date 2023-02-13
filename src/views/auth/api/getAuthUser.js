@@ -1,3 +1,5 @@
+import createResponseErrors from '@/helpers/createResponseErrors';
+
 export default function getAuthUser(builder) {
   const authUserQuery = builder.query({
     query: () => ({
@@ -11,14 +13,7 @@ export default function getAuthUser(builder) {
     },
     // Pick out errors and prevent nested properties in a hook or selector
     transformErrorResponse: (response) => {
-      let errors;
-      if (response.data.errors) {
-        errors = response.data.errors;
-      } else {
-        errors = response.data;
-      }
-      console.log('authUserQuery transformErrorResponse', response);
-      return { status: response.status, errors };
+      return createResponseErrors(response);
     },
 
     // The 2nd parameter is the destructured `QueryLifecycleApi`

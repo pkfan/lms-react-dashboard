@@ -11,6 +11,7 @@ import {
   TextInput,
   PasswordInput,
 } from '@mantine/core';
+import Alert from '@/components/common/Alert';
 import { useForm, isEmail, hasLength } from '@mantine/form';
 import { useNavigate, Link } from 'react-router-dom';
 import Button from '@/components/common/Button';
@@ -79,12 +80,21 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function Login() {
-  const { isSuccess, isFetching, isError } = useGetAuthUserQuery();
-  const [login, { isLoading, isSuccess: isLoginSuccess, error, isError: isLogginError }] =
-    useLoginMutation();
+  const {
+    isSuccess: isAuthUserSuccess,
+    isFetching: isAuthUserFetching,
+    isError: isAuthUserError,
+  } = useGetAuthUserQuery();
+  const [
+    login,
+    {
+      isLoading: isLoginLoading,
+      isSuccess: isLoginSuccess,
+      error: loginError,
+      isError: isLoginError,
+    },
+  ] = useLoginMutation();
   const navigate = useNavigate();
-
-  console.log('error login : ', error);
 
   const { classes } = useStyles();
   const form = useForm({
@@ -101,7 +111,7 @@ export function Login() {
   });
 
   useEffect(() => {
-    if (isSuccess || isLoginSuccess) {
+    if (isAuthUserSuccess || isLoginSuccess) {
       updateLoadingNotificationSuccess({
         id: 'login',
         message: 'Your are logged in successfully',
@@ -112,14 +122,14 @@ export function Login() {
       }, 1000);
     }
 
-    if (isLogginError) {
+    if (isLoginError) {
       updateLoadingNotificationError({
         id: 'login',
         message: 'Error while logging in to your account',
         time: 3000,
       });
     }
-  }, [isLoginSuccess, isSuccess, isLogginError]);
+  }, [isLoginSuccess, isAuthUserSuccess, isLoginError]);
 
   const onSubmit = (values) => {
     login(values);
@@ -132,9 +142,9 @@ export function Login() {
 
   return (
     <>
-      {isFetching && <FullPageLoader />}
+      {isAuthUserFetching && <FullPageLoader />}
 
-      {isError && (
+      {isAuthUserError && (
         <form
           onSubmit={form.onSubmit((values) => {
             onSubmit(values);
@@ -149,7 +159,7 @@ export function Login() {
           >
             <Logo width="80px" />
             <Text fz={24}>Sign in to Pkfan</Text>
-            <Paper shadow="xl" className={classes.paper}>
+            <Paper withBorder shadow="xl" className={classes.paper}>
               <SocialAuthButton
                 sx={classes.variant}
                 variant="outline"
@@ -179,9 +189,7 @@ export function Login() {
                 }
               />
 
-              <Text fz={14} fw={700} sx={(theme) => ({ color: theme.colors.red[5] })}>
-                {error?.errors}
-              </Text>
+              {isLoginError && <Alert title="Errors!" color="red" errors={loginError?.errors} />}
 
               <TextInput
                 sx={inputStyles}
@@ -215,10 +223,12 @@ export function Login() {
                   {...form.getInputProps('remember')}
                 />
 
-                <Anchor href="https://mantine.dev/">Forget Password</Anchor>
+                <Anchor component={Link} fw={500} to="/lms/forget-password">
+                  Forget Password
+                </Anchor>
               </Flex>
               <Flex justify="end" align="center" w="100%" maw={400}>
-                <Button type="submit" loading={isLoading}>
+                <Button type="submit" loading={isLoginLoading}>
                   SIGN IN
                 </Button>
               </Flex>

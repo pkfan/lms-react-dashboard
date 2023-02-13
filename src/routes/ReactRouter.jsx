@@ -1,20 +1,19 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
+// Auth pages
 import AuthLayout from '@/layout/AuthLayout';
 import Login from '@/views/auth/Login';
 import Register from '@/views/auth/Register';
+import ForgetPassword from '@/views/auth/ForgetPassword';
+import ResetPassword from '@/views/auth/ResetPassword';
 
+// lms pages
 import LmsLayout from '@/layout/LmsLayout';
 import Course from '@/views/pages/Course';
 import Dashboard from '@/views/pages/Dashboard';
 import Instructor from '@/views/pages/Instructor';
 import Student from '@/views/pages/Student';
 import Profile from '@/views/pages/Profile';
-
-// import AuthRoutes from './AuthRoutes';
-// import AdminRoutes from './AdminRoutes';
-// import InstructorRoutes from './InstructorRoutes';
-// import StudentRoutes from './StudentRoutes';
 
 export function ReactRouter() {
   return (
@@ -30,6 +29,8 @@ export function ReactRouter() {
         <Route path="lms/" element={<AuthLayout />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="forget-password" element={<ForgetPassword />} />
+          <Route path="reset-password/:token" element={<ResetPassword />} />
         </Route>
         <Route path="dashboard/" element={<LmsLayout />}>
           <Route path="profile" element={<Profile />} />

@@ -27,7 +27,7 @@ export const globalStyles = () => ({
   },
   'a, a: active, a: hover, a: visited': {
     textDecoration: 'none',
-    color: 'inherit',
+    color: 'var(primary-6)',
   },
 
   //html rtls inputStyle

@@ -1,16 +1,15 @@
 import createResponseErrors from '@/helpers/createResponseErrors';
-
-export default function login(builder) {
-  const loginQuery = builder.mutation({
+export default function updateUser(builder) {
+  const updateUserQuery = builder.mutation({
     // note: an optional `queryFn` may be used in place of `query`
-    query: ({ email, password, remember }) => ({
-      url: `/login`,
-      method: 'POST',
-      data: { email, password, remember },
+    query: (data) => ({
+      url: `/user/profile-information`,
+      method: 'PUT',
+      data,
     }),
     // Pick out data and prevent nested properties in a hook or selector
     transformResponse: (response) => {
-      // console.log('loginQuery response', response);
+      console.log('updateUserQuery response', response);
       return response.data;
     },
     // Pick out errors and prevent nested properties in a hook or selector
@@ -31,5 +30,5 @@ export default function login(builder) {
     // ) {},
   });
 
-  return loginQuery;
+  return updateUserQuery;
 }

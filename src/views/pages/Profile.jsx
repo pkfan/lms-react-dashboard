@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Title, Stack, Grid } from '@mantine/core';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
-import ProfileDetails from '../roles/profile/ProfileDetails';
-import PersonalDetails from '../roles/profile/PersonalDetails';
-import { useScrollLock } from '@mantine/hooks';
+import ProfileDetails from '../auth/profile/ProfileDetails';
+import PersonalDetails from '../auth/profile/PersonalDetails';
 import MainLoadingOverlay from '@/components/common/MainLoadingOverlay';
+import UpdatePassword from '../auth/profile/UpdatePassword';
 
 export function Profile() {
-  const [scrollLocked, setScrollLocked] = useScrollLock();
   const [visibleOvarlay, setVisibleOverlay] = useState(true);
 
   return (
@@ -27,10 +26,10 @@ export function Profile() {
           <ProfileDetails />
         </Grid.Col>
         <Grid.Col span={12} md={8}>
-          <PersonalDetails
-            setScrollLocked={setScrollLocked}
-            setVisibleOverlay={setVisibleOverlay}
-          />
+          <Stack>
+            <PersonalDetails setVisibleOverlay={setVisibleOverlay} />
+            <UpdatePassword />
+          </Stack>
         </Grid.Col>
       </Grid>
     </Stack>
