@@ -4,7 +4,7 @@ import { IconAlertCircle } from '@tabler/icons';
 
 const Errors = ({ errors }) => {
   return (
-    <List listStyleType="disc">
+    <List listStyleType="disc" sx={{ color: 'white' }}>
       {errors.map((error, index) => {
         return <List.Item key={index}>{error}</List.Item>;
       })}

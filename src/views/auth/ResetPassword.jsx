@@ -149,7 +149,7 @@ export function ResetPassword() {
                   color="green"
                   errors={
                     <Text>
-                      Password has been reset successfully{' '}
+                      Password has been reset successfully.{'  '}
                       <Anchor component={Link} color="blue" fw={500} to="/lms/login">
                         Login
                       </Anchor>{' '}

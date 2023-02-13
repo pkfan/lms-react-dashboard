@@ -14,7 +14,7 @@ export default function createResponseErrors(response) {
   } else {
     errors = response.data;
   }
-  console.log('updatePasswordQuery transformErrorResponse', response);
+  console.log('createResponseErrors', response);
 
   return { status: response.status, errors };
 }

@@ -11,6 +11,8 @@ import updateUser from './updateUser';
 import updatePassword from './updatePassword';
 import forgetPassword from './forgetPassword';
 import resetPassword from './resetPassword';
+import successfullyVerifiedEmail from './successfullyVerifiedEmail';
+import unverifyEmailNotification from './unverifyEmailNotification';
 
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
@@ -22,6 +24,7 @@ export const authApi = createApi({
     getAuthUser: getAuthUser(builder),
     getStates: getStates(builder),
     getCities: getCities(builder),
+    successfullyVerifiedEmail: successfullyVerifiedEmail(builder),
 
     // mutation
     register: register(builder),
@@ -30,19 +33,24 @@ export const authApi = createApi({
     updatePassword: updatePassword(builder),
     forgetPassword: forgetPassword(builder),
     resetPassword: resetPassword(builder),
+    unverifyEmailNotification: unverifyEmailNotification(builder),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  // query
   useGetAuthUserQuery,
   useGetStatesQuery,
   useGetCitiesQuery,
+  useSuccessfullyVerifiedEmailQuery,
+  // mutattion
   useLoginMutation,
   useRegisterMutation,
   useUpdateUserMutation,
   useUpdatePasswordMutation,
   useForgetPasswordMutation,
   useResetPasswordMutation,
+  useUnverifyEmailNotificationMutation,
 } = authApi;

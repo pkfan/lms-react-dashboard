@@ -1,24 +1,24 @@
 import createResponseErrors from '@/helpers/createResponseErrors';
 
-export default function getAuthUser(builder) {
-  const authUserQuery = builder.query({
+export default function unverifyEmailNotification(builder) {
+  const unverifyEmailNotificationQuery = builder.mutation({
+    // note: an optional `queryFn` may be used in place of `query`
     query: () => ({
-      url: `/user`,
-      method: 'GET',
+      url: `/email/verification-notification`,
+      method: 'POST',
+      data: {},
     }),
     // Pick out data and prevent nested properties in a hook or selector
     transformResponse: (response) => {
-      console.log('authUserQuery response', response);
+      // console.log('unverifyEmailNotificationQuery response', response);
       return response.data;
     },
     // Pick out errors and prevent nested properties in a hook or selector
     transformErrorResponse: (response) => {
       return createResponseErrors(response);
     },
-    providesTags: ['Auth'],
-
-    // The 2nd parameter is the destructured `QueryLifecycleApi`
+    invalidatesTags: ['Auth'],
   });
 
-  return authUserQuery;
+  return unverifyEmailNotificationQuery;
 }

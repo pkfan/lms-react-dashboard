@@ -6,6 +6,8 @@ import Login from '@/views/auth/Login';
 import Register from '@/views/auth/Register';
 import ForgetPassword from '@/views/auth/ForgetPassword';
 import ResetPassword from '@/views/auth/ResetPassword';
+import SuccessfullyVerifiedEmail from '@/views/auth/SuccessfullyVerifiedEmail';
+import UnverifyEmailNotification from '@/views/auth/UnverifyEmailNotification';
 
 // lms pages
 import LmsLayout from '@/layout/LmsLayout';
@@ -31,6 +33,8 @@ export function ReactRouter() {
           <Route path="register" element={<Register />} />
           <Route path="forget-password" element={<ForgetPassword />} />
           <Route path="reset-password/:token" element={<ResetPassword />} />
+          <Route path="email/verify/:id/:hash" element={<SuccessfullyVerifiedEmail />} />
+          <Route path="email/verification" element={<UnverifyEmailNotification />} />
         </Route>
         <Route path="dashboard/" element={<LmsLayout />}>
           <Route path="profile" element={<Profile />} />
