@@ -32,7 +32,7 @@ import { FaFacebookSquare, FaTwitterSquare, FaUser, FaKey, FaPhone } from 'react
 import { FcGoogle } from 'react-icons/fc';
 import { MdEmail } from 'react-icons/md';
 
-import SocialAuthButton from './SocialAuthButton';
+import SocialAuthButton from '../components/SocialAuthButton';
 import inputStyles from '@/styles/inputStyles';
 import Logo from '@/components/Logo';
 import {
@@ -40,7 +40,7 @@ import {
   useGetCitiesQuery,
   useGetAuthUserQuery,
   useRegisterMutation,
-} from './api';
+} from '@/views/auth/api';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -262,7 +262,7 @@ export function Register() {
             <Logo width="80px" />
             <Text fz={24}>Sign up to Pkfan</Text>
             <Paper withBorder shadow="xl" className={classes.paper}>
-              <SocialAuthButton
+              {/* <SocialAuthButton
                 sx={classes.variant}
                 variant="outline"
                 icon={<FcGoogle size={24} />}
@@ -288,7 +288,7 @@ export function Register() {
                     <Text ml={5}>OR</Text>
                   </>
                 }
-              />
+              /> */}
 
               {isRegisterError && (
                 <Alert title="Errors!" color="red" errors={registerError?.errors} />

@@ -1,11 +1,17 @@
 import { Box } from '@mantine/core';
 
-import SideBarLinks from './SideBarLinks';
+import StudentSidebarLinks from '@/views/roles/student/components/StudentSidebarLinks';
+import InstructorSidebarLinks from '@/views/roles/instructor/components/InstructorSidebarLinks';
+import AdminSidebarLinks from '@/views/roles/admin/components/AdminSidebarLinks';
+import ProfileSidebarLinks from '@/views/auth/components/profile/ProfileSidebarLinks';
 
-export function SideBarBody({ setSidebarOpened }) {
+export function SideBarBody({ setSidebarOpened, lmsRole }) {
   return (
     <Box>
-      <SideBarLinks setSidebarOpened={setSidebarOpened} />
+      {lmsRole == 'student' && <StudentSidebarLinks setSidebarOpened={setSidebarOpened} />}
+      {lmsRole == 'instructor' && <InstructorSidebarLinks setSidebarOpened={setSidebarOpened} />}
+      {lmsRole == 'admin' && <AdminSidebarLinks setSidebarOpened={setSidebarOpened} />}
+      {lmsRole == 'profile' && <ProfileSidebarLinks setSidebarOpened={setSidebarOpened} />}
     </Box>
   );
 }

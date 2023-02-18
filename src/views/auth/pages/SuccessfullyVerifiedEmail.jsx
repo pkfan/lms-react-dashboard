@@ -8,7 +8,7 @@ import queryString from 'query-string';
 import Logo from '@/components/Logo';
 import { IconCheck, IconAlertCircle } from '@tabler/icons';
 
-import { useSuccessfullyVerifiedEmailQuery } from './api';
+import { useSuccessfullyVerifiedEmailQuery } from '@/views/auth/api';
 
 const useStyles = createStyles((theme) => ({
   container: {

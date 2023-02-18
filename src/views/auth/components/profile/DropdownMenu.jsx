@@ -8,7 +8,8 @@ import {
   IconTrash,
   IconArrowsLeftRight,
 } from '@tabler/icons';
-import { GrUser } from 'react-icons/gr';
+import { BiUser } from 'react-icons/bi';
+import { AiOutlineDashboard } from 'react-icons/ai';
 
 export function DropdownMenu() {
   return (
@@ -28,10 +29,32 @@ export function DropdownMenu() {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Label>Application</Menu.Label>
-        <Menu.Item component={Link} to="/dashboard/profile" icon={<GrUser size={18} />}>
+        <Menu.Item component={Link} to="/dashboard/profile" icon={<BiUser size={18} />}>
           Profile
         </Menu.Item>
+        <Menu.Label>Dashboard</Menu.Label>
+        <Menu.Item
+          component={Link}
+          to="/dashboard/student/index"
+          icon={<AiOutlineDashboard size={18} />}
+        >
+          Switch to Student
+        </Menu.Item>
+        <Menu.Item
+          component={Link}
+          to="/dashboard/instructor/index"
+          icon={<AiOutlineDashboard size={18} />}
+        >
+          Switch to Instructor
+        </Menu.Item>
+        <Menu.Item
+          component={Link}
+          to="/dashboard/admin/index"
+          icon={<AiOutlineDashboard size={18} />}
+        >
+          Switch to Admin
+        </Menu.Item>
+        <Menu.Label>Application</Menu.Label>
         <Menu.Item icon={<IconSettings size={18} />}>Settings</Menu.Item>
         <Menu.Item icon={<IconMessageCircle size={18} />}>Messages</Menu.Item>
         <Menu.Item icon={<IconPhoto size={18} />}>Gallery</Menu.Item>

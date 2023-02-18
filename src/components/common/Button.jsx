@@ -1,19 +1,20 @@
 import { Button as MantineButton, createStyles } from '@mantine/core';
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { variant }) => ({
   button: {
-    backgroundImage: `linear-gradient(${theme.colors.lmsPrimary[4]}, ${theme.colors.lmsPrimary[9]})`,
+    backgroundImage: `linear-gradient(${theme.colors[variant][4]}, ${theme.colors[variant][9]})`,
     transition: 'all 300ms ease-in-out',
+    textTransform: 'uppercase',
 
     '&:hover': {
-      backgroundImage: `linear-gradient(${theme.colors.lmsPrimary[9]}, ${theme.colors.lmsPrimary[4]})`,
+      backgroundImage: `linear-gradient(${theme.colors[variant][9]}, ${theme.colors[variant][4]})`,
       transform: 'scale(1.03)',
     },
   },
 }));
 
-export function Button({ children, className, loading, ...others }) {
-  const { classes, cx } = useStyles();
+export function Button({ children, className, loading, variant = 'lmsPrimary', ...others }) {
+  const { classes, cx } = useStyles({ variant });
 
   return (
     <MantineButton

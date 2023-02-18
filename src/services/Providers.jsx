@@ -31,7 +31,6 @@ function Providers({ children }) {
       >
         <NotificationsProvider>{children}</NotificationsProvider>
       </MantineProvider>
-      ;
     </ReactReduxProvider>
   );
 }

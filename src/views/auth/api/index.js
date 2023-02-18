@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import baseQuery from '@/api/baseQuery';
 
+import getTest from './getTest';
 import login from './login';
 import register from './register';
 import getAuthUser from './getAuthUser';
@@ -13,6 +14,7 @@ import forgetPassword from './forgetPassword';
 import resetPassword from './resetPassword';
 import successfullyVerifiedEmail from './successfullyVerifiedEmail';
 import unverifyEmailNotification from './unverifyEmailNotification';
+import deleteOtherSessionRecords from './deleteOtherSessionRecords';
 
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
@@ -21,6 +23,7 @@ export const authApi = createApi({
   tagTypes: ['Auth'],
   endpoints: (builder) => ({
     // query
+    getTest: getTest(builder),
     getAuthUser: getAuthUser(builder),
     getStates: getStates(builder),
     getCities: getCities(builder),
@@ -34,6 +37,7 @@ export const authApi = createApi({
     forgetPassword: forgetPassword(builder),
     resetPassword: resetPassword(builder),
     unverifyEmailNotification: unverifyEmailNotification(builder),
+    deleteOtherSessionRecords: deleteOtherSessionRecords(builder),
   }),
 });
 
@@ -41,6 +45,7 @@ export const authApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   // query
+  useGetTestQuery,
   useGetAuthUserQuery,
   useGetStatesQuery,
   useGetCitiesQuery,
@@ -53,4 +58,5 @@ export const {
   useForgetPasswordMutation,
   useResetPasswordMutation,
   useUnverifyEmailNotificationMutation,
+  useDeleteOtherSessionRecordsMutation,
 } = authApi;

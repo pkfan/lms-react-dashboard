@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Title, Stack, Grid } from '@mantine/core';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
-import ProfileDetails from '../auth/profile/ProfileDetails';
-import PersonalDetails from '../auth/profile/PersonalDetails';
+import ProfileDetails from '../../components/profile/ProfileDetails';
+import PersonalDetails from '../../components/profile/PersonalDetails';
 import MainLoadingOverlay from '@/components/common/MainLoadingOverlay';
-import UpdatePassword from '../auth/profile/UpdatePassword';
+import UpdatePassword from '../../components/profile/UpdatePassword';
 
 export function Profile() {
   const [visibleOvarlay, setVisibleOverlay] = useState(true);

@@ -24,13 +24,13 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function SideBar({ sidebarOpened, setSidebarOpened }) {
+export function SideBar({ sidebarOpened, setSidebarOpened, lmsRole }) {
   const { classes, cx } = useStyles();
 
   return (
     <Box className={cx(classes.sideBar, { [classes.sideBarToggle]: sidebarOpened })}>
-      <SideBarBody setSidebarOpened={setSidebarOpened} />
-      <SideBarFooter />
+      <SideBarBody setSidebarOpened={setSidebarOpened} lmsRole={lmsRole} />
+      <SideBarFooter lmsRole={lmsRole} />
     </Box>
   );
 }

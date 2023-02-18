@@ -14,7 +14,7 @@ import { useForm } from '@mantine/form';
 import { FaKey } from 'react-icons/fa';
 
 import inputStyles from '@/styles/inputStyles';
-import { useUpdatePasswordMutation } from '../api';
+import { useUpdatePasswordMutation } from '@/views/auth/api';
 
 const useStyles = createStyles(() => ({
   container: {

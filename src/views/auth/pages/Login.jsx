@@ -26,13 +26,16 @@ import { FaFacebookSquare, FaTwitterSquare, FaUser, FaKey } from 'react-icons/fa
 import { FcGoogle } from 'react-icons/fc';
 import { MdEmail } from 'react-icons/md';
 
-import SocialAuthButton from './SocialAuthButton';
+import SocialAuthButton from '../components/SocialAuthButton';
 
 import inputStyles from '@/styles/inputStyles';
 import Logo from '@/components/Logo';
 
-import { useLoginMutation } from './api';
-import { useGetAuthUserQuery } from './api';
+import {
+  useGetAuthUserQuery,
+  useDeleteOtherSessionRecordsMutation,
+  useLoginMutation,
+} from '@/views/auth/api';
 import FullPageLoader from '@/components/common/FullPageLoader';
 
 const useStyles = createStyles((theme) => ({
@@ -84,6 +87,8 @@ export function Login() {
     isSuccess: isAuthUserSuccess,
     isFetching: isAuthUserFetching,
     isError: isAuthUserError,
+    data: authUserData,
+    refetch: authUserRefetch,
   } = useGetAuthUserQuery();
   const [
     login,
@@ -94,6 +99,7 @@ export function Login() {
       isError: isLoginError,
     },
   ] = useLoginMutation();
+  const [deleteOtherSessionRecords] = useDeleteOtherSessionRecordsMutation();
   const navigate = useNavigate();
 
   const { classes } = useStyles();
@@ -111,15 +117,26 @@ export function Login() {
   });
 
   useEffect(() => {
+    // delete user other browser sessions
+    if (isLoginSuccess) {
+      if (!authUserData) {
+        authUserRefetch();
+        return;
+      }
+
+      deleteOtherSessionRecords();
+    }
     if (isAuthUserSuccess || isLoginSuccess) {
+      if (authUserData && !authUserData?.email_verified_at) {
+        navigate('/lms/email/verification');
+      } else {
+        navigate('/dashboard/student/index');
+      }
       updateLoadingNotificationSuccess({
         id: 'login',
         message: 'Your are logged in successfully',
-        time: 1000,
+        time: 4000,
       });
-      setTimeout(() => {
-        navigate('/dashboard/student/index');
-      }, 1000);
     }
 
     if (isLoginError) {
@@ -129,7 +146,7 @@ export function Login() {
         time: 3000,
       });
     }
-  }, [isLoginSuccess, isAuthUserSuccess, isLoginError]);
+  }, [isLoginSuccess, isAuthUserSuccess, isLoginError, authUserData]);
 
   const onSubmit = (values) => {
     login(values);
@@ -160,7 +177,7 @@ export function Login() {
             <Logo width="80px" />
             <Text fz={24}>Sign in to Pkfan</Text>
             <Paper withBorder shadow="xl" className={classes.paper}>
-              <SocialAuthButton
+              {/* <SocialAuthButton
                 sx={classes.variant}
                 variant="outline"
                 icon={<FcGoogle size={24} />}
@@ -187,7 +204,7 @@ export function Login() {
                     <Text ml={5}>Continue with Email</Text>
                   </>
                 }
-              />
+              /> */}
 
               {isLoginError && <Alert title="Errors!" color="red" errors={loginError?.errors} />}
 

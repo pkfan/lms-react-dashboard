@@ -1,10 +1,4 @@
-import { createStyles, ScrollArea, Stack, Text } from '@mantine/core';
-import { AiOutlineDashboard, AiFillSetting } from 'react-icons/ai';
-import { MdOutlineVideoLibrary, MdPayment } from 'react-icons/md';
-import { ImManWoman } from 'react-icons/im';
-import { GiRomanToga } from 'react-icons/gi';
-
-import SideBarLink from './SideBarLink';
+import { createStyles, ScrollArea, Stack } from '@mantine/core';
 
 const useStyles = createStyles(() => ({
   scrollArea: {
@@ -17,41 +11,13 @@ const useStyles = createStyles(() => ({
   },
 }));
 
-export function SideBarLinks({ setSidebarOpened }) {
+export function SideBarLinks({ children }) {
   const { classes } = useStyles();
 
   return (
     <ScrollArea.Autosize className={classes.scrollArea}>
       <Stack spacing="xs" className={classes.sideBarLinks}>
-        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/index">
-          <AiOutlineDashboard size={24} />
-          <Text fw={500}>Dashboard</Text>
-        </SideBarLink>
-
-        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/course">
-          <MdOutlineVideoLibrary size={24} />
-          <Text fw={500}>Courses</Text>
-        </SideBarLink>
-
-        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/student">
-          <ImManWoman size={24} />
-          <Text fw={500}>Students</Text>
-        </SideBarLink>
-
-        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/instructor">
-          <GiRomanToga size={24} style={{ opicity: 0.6 }} />
-          <Text fw={500}>Intructors</Text>
-        </SideBarLink>
-
-        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/payment">
-          <MdPayment size={24} />
-          <Text fw={500}>Payment</Text>
-        </SideBarLink>
-
-        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/student/settings">
-          <AiFillSetting size={24} />
-          <Text fw={500}>settings</Text>
-        </SideBarLink>
+        {children}
       </Stack>
     </ScrollArea.Autosize>
   );

@@ -18,7 +18,7 @@ import { MdEmail } from 'react-icons/md';
 import inputStyles from '@/styles/inputStyles';
 import Logo from '@/components/Logo';
 
-import { useGetAuthUserQuery, useResetPasswordMutation } from './api';
+import { useGetAuthUserQuery, useResetPasswordMutation } from '@/views/auth/api';
 import FullPageLoader from '@/components/common/FullPageLoader';
 
 const useStyles = createStyles((theme) => ({

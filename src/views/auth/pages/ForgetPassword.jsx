@@ -17,7 +17,7 @@ import {
 import inputStyles from '@/styles/inputStyles';
 import Logo from '@/components/Logo';
 
-import { useGetAuthUserQuery, useForgetPasswordMutation } from './api';
+import { useGetAuthUserQuery, useForgetPasswordMutation } from '@/views/auth/api';
 import FullPageLoader from '@/components/common/FullPageLoader';
 
 const useStyles = createStyles((theme) => ({

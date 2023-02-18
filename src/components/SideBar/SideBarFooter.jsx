@@ -1,5 +1,7 @@
 import { Avatar, Box, createStyles, Flex, Text } from '@mantine/core';
+import { Link } from 'react-router-dom';
 import { IconChevronRight } from '@tabler/icons';
+import { useGetAuthUserQuery } from '@/views/auth/api';
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -21,22 +23,29 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function SideBarFooter() {
+export function SideBarFooter({ lmsRole }) {
   const { classes } = useStyles();
+  const { data: authUserData, isSuccess: isAuthUserSuccess } = useGetAuthUserQuery();
 
   return (
-    <Box component="footer" className={classes.footer}>
-      <Flex justify="space-between" align="center">
-        <Avatar className={classes.avatar} radius="sm" />
-        <Box>
-          <Text fw={700} fz="sm">
-            Muhammad Amir
-          </Text>
-          <Text fz="xs">Admin</Text>
+    <>
+      {isAuthUserSuccess && lmsRole != 'profile' && (
+        <Box component={Link} to="/dashboard/profile" className={classes.footer}>
+          <Flex justify="space-between" align="center">
+            <Avatar className={classes.avatar} radius="sm" src={authUserData.avatar} />
+            <Box>
+              <Text fw={700} fz="sm" sx={{ textTransform: 'capitalize' }}>
+                {authUserData?.full_name}
+              </Text>
+              <Text fz="xs" sx={{ textTransform: 'uppercase' }}>
+                {lmsRole}
+              </Text>
+            </Box>
+            <IconChevronRight size={18} className="htmlRtlIcon" />
+          </Flex>
         </Box>
-        <IconChevronRight size={18} className="htmlRtlIcon" />
-      </Flex>
-    </Box>
+      )}
+    </>
   );
 }
 

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { createStyles, Flex, Paper, Text, Alert } from '@mantine/core';
 import Button from '@/components/common/Button';
 import { IconAlertCircle } from '@tabler/icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import {
   showLoadingNotification,
@@ -13,8 +13,7 @@ import {
 
 import Logo from '@/components/Logo';
 
-import { useUnverifyEmailNotificationMutation } from './api';
-import { useGetAuthUserQuery } from './api';
+import { useUnverifyEmailNotificationMutation, useGetAuthUserQuery } from '@/views/auth/api';
 import FullPageLoader from '@/components/common/FullPageLoader';
 
 const useStyles = createStyles((theme) => ({
@@ -134,9 +133,19 @@ export function UnverifyEmailNotification() {
                 If you didn't receive the email, we will gladly send you another.
               </Text>
             </Alert>
-            <Flex justify="end" align="center" w="100%" maw={400}>
+            <Flex
+              justify="center"
+              align="center"
+              gap={8}
+              w="100%"
+              maw={400}
+              direction={{ base: 'column', sm: 'row' }}
+            >
               <Button onClick={onSubmitHandle} loading={isUnverifyEmailNotificationLoading}>
                 Resend Verification Email
+              </Button>
+              <Button variant="lmsSecondary" component={Link} to="/dashboard/student/index">
+                Remind Me Later
               </Button>
             </Flex>
           </Paper>

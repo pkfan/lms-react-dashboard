@@ -1,11 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Box, createStyles } from '@mantine/core';
 import { Outlet, useNavigate } from 'react-router-dom';
 import FullPageLoader from '@/components/common/FullPageLoader';
 import { useGetAuthUserQuery } from '@/views/auth/api';
-
-import { SideBar } from '@/components/SideBar/SideBar';
-import TopBar from '@/components/TopBar';
 
 const useStyles = createStyles((theme) => ({
   lmsLayout: {
@@ -25,9 +22,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function LmsLayout() {
+export function LmsLayout({ children }) {
   const { classes } = useStyles();
-  const [sidebarOpened, setSidebarOpened] = useState(false);
+
   const navigate = useNavigate();
   const { isError, isFetching, isSuccess } = useGetAuthUserQuery();
 
@@ -44,8 +41,7 @@ export function LmsLayout() {
 
       {isSuccess && (
         <Box className={classes.lmsLayout}>
-          <TopBar sidebarOpened={sidebarOpened} setSidebarOpened={setSidebarOpened} />
-          <SideBar sidebarOpened={sidebarOpened} setSidebarOpened={setSidebarOpened} />
+          {children}
           <Box component="main" className={classes.main}>
             <Outlet />
           </Box>

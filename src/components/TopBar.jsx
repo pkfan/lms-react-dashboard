@@ -3,7 +3,7 @@ import { Box, Text, Group } from '@mantine/core';
 import Logo from '@/components/Logo';
 
 import { Burger } from './Burger';
-import DropdownMenu from '@/views/auth/profile/DropdownMenu';
+import DropdownMenu from '@/views/auth/components/profile/DropdownMenu';
 
 function TopBar({ sx, sidebarOpened, setSidebarOpened }) {
   const topBarStyle = (theme) => ({
