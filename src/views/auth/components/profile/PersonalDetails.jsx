@@ -43,7 +43,6 @@ const useStyles = createStyles(() => ({
 }));
 
 export function PersonalDetails({ setVisibleOverlay }) {
-  
   const { classes } = useStyles();
   const {
     data: authUserData,

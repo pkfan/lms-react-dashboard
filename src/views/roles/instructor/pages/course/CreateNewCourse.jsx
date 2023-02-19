@@ -2,17 +2,15 @@ import { useState } from 'react';
 import { Title, Stack, Tabs, Text, Paper, Group, Box } from '@mantine/core';
 import Overlay from '@/components/common/Overlay';
 import { Link } from 'react-router-dom';
-import Pagination from '@/components/common/Pagination';
 import Button from '@/components/common/Button';
 import Switch from '@/components/common/Switch';
-import MainLoadingOverlay from '@/components/common/MainLoadingOverlay';
 import { SiAddthis } from 'react-icons/si';
+// import MainLoadingOverlay from '@/components/common/MainLoadingOverlay';
 
 import CourseStatusIcons from './CourseStatusIcons';
 
 import PageTitle from '@/components/common/PageTitle';
 export function CreateNewCourse() {
-  const [checkedSwitch, setCheckedSwitch] = useState(false);
   const [requiremtnsSwitch, setRequiremtnsSwitch] = useState(false);
 
   return (

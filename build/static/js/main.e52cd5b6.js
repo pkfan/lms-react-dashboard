@@ -38378,13 +38378,11 @@
                 n(e), r(e), a(e), o(e), i(e);
               });
         };
-      r
-        .createRoot(document.getElementById('root'))
-        .render(
-          (0, gu.jsx)(e.StrictMode, {
-            children: (0, gu.jsx)($u, { children: (0, gu.jsx)(DE, {}) }),
-          }),
-        ),
+      r.createRoot(document.getElementById('root')).render(
+        (0, gu.jsx)(e.StrictMode, {
+          children: (0, gu.jsx)($u, { children: (0, gu.jsx)(DE, {}) }),
+        }),
+      ),
         FE();
     })();
 })();

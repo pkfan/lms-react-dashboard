@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Switch as MantineSwitch, useMantineTheme, Text } from '@mantine/core';
 import { IconCheck, IconX } from '@tabler/icons';
 

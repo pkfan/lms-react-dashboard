@@ -15,7 +15,7 @@ import resetPassword from './resetPassword';
 import successfullyVerifiedEmail from './successfullyVerifiedEmail';
 import unverifyEmailNotification from './unverifyEmailNotification';
 import deleteOtherSessionRecords from './deleteOtherSessionRecords';
-
+import postTest from './postTest';
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
   baseQuery,
@@ -38,6 +38,7 @@ export const authApi = createApi({
     resetPassword: resetPassword(builder),
     unverifyEmailNotification: unverifyEmailNotification(builder),
     deleteOtherSessionRecords: deleteOtherSessionRecords(builder),
+    postTest: postTest(builder),
   }),
 });
 
@@ -59,4 +60,5 @@ export const {
   useResetPasswordMutation,
   useUnverifyEmailNotificationMutation,
   useDeleteOtherSessionRecordsMutation,
+  usePostTestMutation,
 } = authApi;

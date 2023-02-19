@@ -1,5 +1,6 @@
 import { Text, Avatar, Flex, Title } from '@mantine/core';
 import Paper from '@/components/common/Paper';
+import ResumableComponent from './ResumableComponent';
 
 export function ProfileDetails() {
   return (
@@ -23,6 +24,7 @@ export function ProfileDetails() {
           Use it to create cards, dropdowns, modals and other components that require background
           with shadow
         </Text>
+        <ResumableComponent />
       </Flex>
     </Paper>
   );

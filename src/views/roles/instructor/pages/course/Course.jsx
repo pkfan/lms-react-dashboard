@@ -2,20 +2,16 @@ import { useState } from 'react';
 import {
   Title,
   Stack,
-  Grid,
-  Flex,
   Tabs,
   Badge,
   Box,
   Popover,
   TextInput,
-  ActionIcon,
   Button as MantineButton,
 } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import Pagination from '@/components/common/Pagination';
 import Button from '@/components/common/Button';
-import MainLoadingOverlay from '@/components/common/MainLoadingOverlay';
 import { SiAddthis } from 'react-icons/si';
 import { MdVideoSettings } from 'react-icons/md';
 import { RiDraftLine } from 'react-icons/ri';
@@ -25,10 +21,11 @@ import Paper from '@/components/common/Paper';
 import CourseList from '@/views/course/components/CourseList';
 import CourseCard from '@/views/course/components/CourseCard';
 import PageTitle from '@/components/common/PageTitle';
+
 export function Course() {
-  const [visibleOvarlay, setVisibleOverlay] = useState(true);
+  // const [visibleOvarlay, setVisibleOverlay] = useState(true);
+  // const [openedPopover, setOpenedPopover] = useState(false);
   const [activeTab, setActiveTab] = useState('all');
-  const [openedPopover, setOpenedPopover] = useState(false);
 
   return (
     <Stack sx={{ width: '100%' }}>

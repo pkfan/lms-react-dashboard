@@ -1,5 +1,4 @@
 import { Tooltip, ActionIcon } from '@mantine/core';
-import { FaEdit } from 'react-icons/fa';
 
 export function CourseCardAction({ children, tooltip, ...others }) {
   return (

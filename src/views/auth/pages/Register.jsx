@@ -4,7 +4,7 @@ import {
   Flex,
   Paper,
   Text,
-  Divider,
+  // Divider,
   Anchor,
   TextInput,
   PasswordInput,
@@ -23,16 +23,15 @@ import PhoneNumberInput from '@/components/PhoneNumberInput';
 import CountrySelect from '@/components/CountrySelect';
 import StatesSelect from '@/components/StatesSelect';
 import CitySelect from '@/components/CitySelect';
-
 import { Link, useNavigate } from 'react-router-dom';
-
 import { useForm, isEmail, hasLength } from '@mantine/form';
+import { FaUser, FaKey, FaPhone } from 'react-icons/fa';
 
-import { FaFacebookSquare, FaTwitterSquare, FaUser, FaKey, FaPhone } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
+// import { FaFacebookSquare, FaTwitterSquare} from 'react-icons/fa';
+// import { FcGoogle } from 'react-icons/fc';
+// import SocialAuthButton from '../components/SocialAuthButton';
 import { MdEmail } from 'react-icons/md';
 
-import SocialAuthButton from '../components/SocialAuthButton';
 import inputStyles from '@/styles/inputStyles';
 import Logo from '@/components/Logo';
 import {

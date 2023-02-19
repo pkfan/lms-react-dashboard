@@ -5,7 +5,7 @@ import {
   Flex,
   Paper,
   Text,
-  Divider,
+  // Divider,
   Anchor,
   Checkbox,
   TextInput,
@@ -21,12 +21,12 @@ import {
   updateLoadingNotificationError,
   updateLoadingNotificationSuccess,
 } from '@/helpers/notification';
-
-import { FaFacebookSquare, FaTwitterSquare, FaUser, FaKey } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
 import { MdEmail } from 'react-icons/md';
+import { FaKey } from 'react-icons/fa';
 
-import SocialAuthButton from '../components/SocialAuthButton';
+// import { FaFacebookSquare, FaTwitterSquare, FaUser } from 'react-icons/fa';
+// import { FcGoogle } from 'react-icons/fc';
+// import SocialAuthButton from '../components/SocialAuthButton';
 
 import inputStyles from '@/styles/inputStyles';
 import Logo from '@/components/Logo';
