@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Menu, Avatar, Text } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import {
@@ -10,18 +11,34 @@ import {
 } from '@tabler/icons';
 import { BiUser } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
+import { useGetUserAvatarQuery } from '@/views/auth/api';
+import createImageUrl from '@/helpers/createImageUrl';
 
 export function DropdownMenu() {
+  const { isSuccess: isUserAvatarSuccess, data: userAvatarData } = useGetUserAvatarQuery();
+  const [avatarSrc, setAvatarSrc] = useState('');
+
+  useEffect(() => {
+    if (isUserAvatarSuccess && userAvatarData) {
+      const url = createImageUrl({
+        directory: userAvatarData.directory,
+        imageName: userAvatarData.file_name,
+      });
+      setAvatarSrc(url);
+    }
+  }, [isUserAvatarSuccess, userAvatarData]);
+
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
         <Avatar
-          src="https://avatars.githubusercontent.com/u/10353856?v=4"
+          src={avatarSrc}
           alt="it's me"
           sx={(theme) => ({
             cursor: 'pointer',
-            border: `2px solid ${theme.colors.lmsLayout[3]}`,
+            border: `2px solid ${theme.colors.lmsLayout[5]}`,
             borderRadius: '50%',
+            backgroundColor: '#000',
             transition: 'all 300ms ease-in-out',
             '&:hover': { transform: 'scale(1.1)' },
           })}

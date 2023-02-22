@@ -1,15 +1,26 @@
 import { useState } from 'react';
-import { Title, Stack, Tabs, Text, Paper, Group, Box } from '@mantine/core';
+import { Stack, Tabs, Text, Paper, Group, Box, Menu, Button as MantineButton } from '@mantine/core';
 import Overlay from '@/components/common/Overlay';
 import { Link } from 'react-router-dom';
 import Button from '@/components/common/Button';
+import ButtonWhite from '@/components/common/ButtonWhite';
 import Switch from '@/components/common/Switch';
 import { SiAddthis } from 'react-icons/si';
+import { FaChevronDown } from 'react-icons/fa';
 // import MainLoadingOverlay from '@/components/common/MainLoadingOverlay';
+import {
+  IconSettings,
+  IconSearch,
+  IconPhoto,
+  IconMessageCircle,
+  IconTrash,
+  IconArrowsLeftRight,
+} from '@tabler/icons';
 
 import CourseStatusIcons from './CourseStatusIcons';
 
 import PageTitle from '@/components/common/PageTitle';
+
 export function CreateNewCourse() {
   const [requiremtnsSwitch, setRequiremtnsSwitch] = useState(false);
 
@@ -17,11 +28,57 @@ export function CreateNewCourse() {
     <Stack sx={{ width: '100%' }}>
       {/* <MainLoadingOverlay visibleOvarlay={visibleOvarlay} /> */}
 
-      <PageTitle>
-        <Title order={2}>Course Management</Title>
-        <Button component={Link} to="/dashboard/student/index" leftIcon={<SiAddthis size={14} />}>
-          Create New Course
-        </Button>
+      <PageTitle title="Add New Course">
+        <Group>
+          <Button
+            compact
+            variant="lmsSecondary"
+            component={Link}
+            to="/dashboard/student/index"
+            leftIcon={<SiAddthis size={14} />}
+          >
+            Preview
+          </Button>
+          <Button
+            compact
+            variant="green"
+            component={Link}
+            to="/dashboard/student/index"
+            leftIcon={<SiAddthis size={14} />}
+          >
+            Publish
+          </Button>
+          <Box>
+            <Menu shadow="md">
+              <Menu.Target>
+                <MantineButton
+                  compact
+                  sx={(theme) => ({
+                    backgroundImage: `linear-gradient(${theme.colors.lmsLayout[0]}, ${theme.colors.lmsLayout[3]})`,
+
+                    textTransform: 'uppercase',
+
+                    '&:hover': {
+                      backgroundImage: `linear-gradient(${theme.colors.lmsLayout[3]}, ${theme.colors.lmsLayout[0]})`,
+                    },
+                  })}
+                  variant="outline"
+                  component="div"
+                  color="lmsLayout"
+                  rightIcon={<FaChevronDown size={14} />}
+                >
+                  More
+                </MantineButton>
+              </Menu.Target>
+
+              <Menu.Dropdown>
+                <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
+                <Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>
+                <Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </Box>
+        </Group>
       </PageTitle>
 
       <Tabs
@@ -40,40 +97,45 @@ export function CreateNewCourse() {
       >
         <Tabs.List>
           <Tabs.Tab
+            disabled={false}
             sx={{ fontSize: '16px' }}
             value="basic"
-            icon={<CourseStatusIcons status="check" />}
+            icon={<CourseStatusIcons status="cross" />}
           >
             Basic
           </Tabs.Tab>
           <Tabs.Tab
+            disabled={false}
             sx={{ fontSize: '16px' }}
             value="description"
-            icon={<CourseStatusIcons status="check" />}
+            icon={<CourseStatusIcons status="cross" />}
           >
             Description
           </Tabs.Tab>
           <Tabs.Tab
+            disabled={true}
             sx={{ fontSize: '16px' }}
             value="requirements"
             icon={
               requiremtnsSwitch ? (
                 <CourseStatusIcons status="cross" />
               ) : (
-                <CourseStatusIcons status="disable" />
+                <CourseStatusIcons status="cross" />
               )
             }
           >
             Requirements
           </Tabs.Tab>
           <Tabs.Tab
+            disabled
             sx={{ fontSize: '16px' }}
             value="outcomes"
-            icon={<CourseStatusIcons status="disable" />}
+            icon={<CourseStatusIcons status="cross" />}
           >
             Outcomes
           </Tabs.Tab>
           <Tabs.Tab
+            disabled
             sx={{ fontSize: '16px' }}
             value="faq"
             icon={<CourseStatusIcons status="cross" />}
@@ -81,58 +143,66 @@ export function CreateNewCourse() {
             faq
           </Tabs.Tab>
           <Tabs.Tab
+            disabled
             sx={{ fontSize: '16px' }}
             value="features"
-            icon={<CourseStatusIcons status="disable" />}
+            icon={<CourseStatusIcons status="cross" />}
           >
             features
           </Tabs.Tab>
           <Tabs.Tab
+            disabled
             sx={{ fontSize: '16px' }}
             value="thumnail"
-            icon={<CourseStatusIcons status="disable" />}
+            icon={<CourseStatusIcons status="cross" />}
           >
             thumnail
           </Tabs.Tab>
           <Tabs.Tab
+            disabled
             sx={{ fontSize: '16px' }}
             value="seo"
-            icon={<CourseStatusIcons status="disable" />}
+            icon={<CourseStatusIcons status="cross" />}
           >
             SEO
           </Tabs.Tab>
           <Tabs.Tab
+            disabled
             sx={{ fontSize: '16px' }}
             value="chapters"
-            icon={<CourseStatusIcons status="disable" />}
+            icon={<CourseStatusIcons status="cross" />}
           >
             chapters
           </Tabs.Tab>
           <Tabs.Tab
+            disabled
             sx={{ fontSize: '16px' }}
             value="lessons"
-            icon={<CourseStatusIcons status="disable" />}
+            icon={<CourseStatusIcons status="cross" />}
           >
             lessons
           </Tabs.Tab>
           <Tabs.Tab
+            disabled
             sx={{ fontSize: '16px' }}
             value="quizes"
-            icon={<CourseStatusIcons status="disable" />}
+            icon={<CourseStatusIcons status="cross" />}
           >
             quizes
           </Tabs.Tab>
           <Tabs.Tab
+            disabled
             sx={{ fontSize: '16px' }}
             value="assignment"
-            icon={<CourseStatusIcons status="disable" />}
+            icon={<CourseStatusIcons status="cross" />}
           >
             assignment
           </Tabs.Tab>
           <Tabs.Tab
+            disabled
             sx={{ fontSize: '16px' }}
             value="exams"
-            icon={<CourseStatusIcons status="disable" />}
+            icon={<CourseStatusIcons status="cross" />}
           >
             exams
           </Tabs.Tab>

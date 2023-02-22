@@ -147,7 +147,24 @@ export const globalStyles = () => ({
   //   width: '36px',
   //   color: 'var(--layout-5)',
   // },
+  '.image-resizer': {
+    display: 'inline-flex',
+    position: 'relative',
+    flexGrow: 0,
+  },
+  '.image-resizer .resize-trigger': {
+    position: 'absolute',
+    right: '-6px',
+    bottom: '-9px',
+    opacity: 0,
+    transition: 'opacity .3s ease',
+    color: '#3259a5',
+  },
+  '.image-resizer:hover .resize-trigger': { opacity: 1 },
 
+  '.mantine-Button-root:hover': {
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
   '#your-id > [data-active]': {
     backgroundColor: 'pink',
   },

@@ -10,7 +10,7 @@ export function Profile() {
   const [visibleOvarlay, setVisibleOverlay] = useState(true);
 
   return (
-    <Stack>
+    <Stack sx={{ width: '100%' }}>
       <MainLoadingOverlay visibleOvarlay={visibleOvarlay} />
 
       <Breadcrumbs

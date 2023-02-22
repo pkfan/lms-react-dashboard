@@ -9,6 +9,8 @@ export default function createResponseErrors(response) {
   } else if (_.isArray(response.data.errors)) {
     errors = _.flatten(response.data.errors);
     // console.log('isArray errors', errors);
+  } else if (response.message) {
+    errors = response.message;
   } else if (response.data.message) {
     errors = response.data.message;
   } else {

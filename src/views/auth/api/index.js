@@ -2,20 +2,25 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import baseQuery from '@/api/baseQuery';
 
+// query
 import getTest from './getTest';
-import login from './login';
-import register from './register';
 import getAuthUser from './getAuthUser';
 import getStates from './getStates';
 import getCities from './getCities';
+import successfullyVerifiedEmail from './successfullyVerifiedEmail';
+import getUserAvatar from './getUserAvatar';
+
+// mutate
+import login from './login';
+import register from './register';
 import updateUser from './updateUser';
 import updatePassword from './updatePassword';
 import forgetPassword from './forgetPassword';
 import resetPassword from './resetPassword';
-import successfullyVerifiedEmail from './successfullyVerifiedEmail';
 import unverifyEmailNotification from './unverifyEmailNotification';
 import deleteOtherSessionRecords from './deleteOtherSessionRecords';
 import postTest from './postTest';
+
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
   baseQuery,
@@ -28,6 +33,7 @@ export const authApi = createApi({
     getStates: getStates(builder),
     getCities: getCities(builder),
     successfullyVerifiedEmail: successfullyVerifiedEmail(builder),
+    getUserAvatar: getUserAvatar(builder),
 
     // mutation
     register: register(builder),
@@ -51,6 +57,7 @@ export const {
   useGetStatesQuery,
   useGetCitiesQuery,
   useSuccessfullyVerifiedEmailQuery,
+  useGetUserAvatarQuery,
   // mutattion
   useLoginMutation,
   useRegisterMutation,

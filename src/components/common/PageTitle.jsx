@@ -1,6 +1,6 @@
-import { Flex } from '@mantine/core';
+import { Flex, Title } from '@mantine/core';
 
-export function PageTitle({ children }) {
+export function PageTitle({ children, title }) {
   return (
     <Flex
       direction={{ base: 'column', xs: 'column', md: 'row' }}
@@ -9,6 +9,7 @@ export function PageTitle({ children }) {
       sx={{ width: '100%' }}
       gap={16}
     >
+      <Title order={2}>{title}</Title>
       {children}
     </Flex>
   );

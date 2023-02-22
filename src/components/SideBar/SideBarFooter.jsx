@@ -1,7 +1,10 @@
+import { useState, useEffect } from 'react';
 import { Avatar, Box, createStyles, Flex, Text } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { IconChevronRight } from '@tabler/icons';
 import { useGetAuthUserQuery } from '@/views/auth/api';
+import { useGetUserAvatarQuery } from '@/views/auth/api';
+import createImageUrl from '@/helpers/createImageUrl';
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -26,13 +29,30 @@ const useStyles = createStyles((theme) => ({
 export function SideBarFooter({ lmsRole }) {
   const { classes } = useStyles();
   const { data: authUserData, isSuccess: isAuthUserSuccess } = useGetAuthUserQuery();
+  const { isSuccess: isUserAvatarSuccess, data: userAvatarData } = useGetUserAvatarQuery();
+  const [avatarSrc, setAvatarSrc] = useState('');
+
+  useEffect(() => {
+    if (isUserAvatarSuccess && userAvatarData) {
+      const url = createImageUrl({
+        directory: userAvatarData.directory,
+        imageName: userAvatarData.file_name,
+      });
+      setAvatarSrc(url);
+    }
+  }, [isUserAvatarSuccess, userAvatarData]);
 
   return (
     <>
       {isAuthUserSuccess && lmsRole != 'profile' && (
         <Box component={Link} to="/dashboard/profile" className={classes.footer}>
           <Flex justify="space-between" align="center">
-            <Avatar className={classes.avatar} radius="sm" src={authUserData.avatar} />
+            <Avatar
+              className={classes.avatar}
+              radius="sm"
+              src={avatarSrc}
+              sx={{ backgroundColor: '#000' }}
+            />
             <Box>
               <Text fw={700} fz="sm" sx={{ textTransform: 'capitalize' }}>
                 {authUserData?.full_name}
