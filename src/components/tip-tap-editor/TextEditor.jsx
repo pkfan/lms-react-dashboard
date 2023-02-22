@@ -19,6 +19,11 @@ import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
+import FontSize from 'tiptap-extension-font-size';
+import History from '@tiptap/extension-history';
+
+import './focusStyle.scss';
+import Focus from '@tiptap/extension-focus';
 
 import {
   Box,
@@ -32,11 +37,11 @@ import {
   Button as MantineButton,
 } from '@mantine/core';
 import { BsFillImageFill } from 'react-icons/bs';
-import { FaImages, FaExternalLinkAlt, FaTable } from 'react-icons/fa';
+import { FaImages, FaExternalLinkAlt, FaTable, FaRedo, FaUndo } from 'react-icons/fa';
 import { FiUpload } from 'react-icons/fi';
 import { IconPhoto } from '@tabler/icons';
 import { RiCodeBoxFill } from 'react-icons/ri';
-import { BiFontFamily } from 'react-icons/bi';
+import { BiFontFamily, BiFontSize } from 'react-icons/bi';
 // import Image from './ImageResize';
 import TipTapImageExtend from './TipTapImageExtend';
 import inlineStyleConversion from './helper/inlineStyleConversion';
@@ -111,8 +116,9 @@ export function TextEditor() {
       StarterKit.configure({
         codeBlock: false,
         text: false,
+        history: false,
       }),
-      ,
+
       Underline,
       Link,
       Superscript,
@@ -131,8 +137,15 @@ export function TextEditor() {
       TableCell,
       TableHeader,
       TableRow,
+      FontSize,
+      Focus.configure({
+        className: 'has-focus',
+        mode: 'all',
+      }),
+      History,
     ],
     content,
+    autofocus: true,
   });
 
   const addImageToTipTapDomFromGallary = (imageUrl) => {
@@ -221,6 +234,77 @@ export function TextEditor() {
                 </Menu.Dropdown>
               </Menu>
             </Box>
+            <Box sx={{ display: 'inline' }}>
+              <Menu shadow="md" withArrow arrowPosition="center">
+                <Menu.Target>
+                  <MantineButton
+                    compact
+                    sx={(theme) => ({
+                      backgroundImage: `linear-gradient(${theme.colors.lmsLayout[0]}, ${theme.colors.lmsLayout[3]})`,
+
+                      textTransform: 'uppercase',
+
+                      '&:hover': {
+                        backgroundImage: `linear-gradient(${theme.colors.lmsLayout[3]}, ${theme.colors.lmsLayout[0]})`,
+                      },
+                    })}
+                    variant="outline"
+                    component="div"
+                    color="lmsLayout"
+                  >
+                    <BiFontSize size={16} />
+                  </MantineButton>
+                </Menu.Target>
+
+                <Menu.Dropdown sx={{ '& .mantine-Menu-item': { padding: '3px 12px!important' } }}>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('8pt').run()}>
+                    8
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('9pt').run()}>
+                    9
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('10pt').run()}>
+                    10
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('11pt').run()}>
+                    11
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('12pt').run()}>
+                    12
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('14pt').run()}>
+                    14
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('16pt').run()}>
+                    16
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('18pt').run()}>
+                    18
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('20pt').run()}>
+                    20
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('22pt').run()}>
+                    22
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('24pt').run()}>
+                    24
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('28pt').run()}>
+                    28
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('36pt').run()}>
+                    36
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('48pt').run()}>
+                    48
+                  </Menu.Item>
+                  <Menu.Item onClick={() => editor.chain().focus().setFontSize('72pt').run()}>
+                    72
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </Box>
 
             <RichTextEditor.Bold />
             <RichTextEditor.Italic />
@@ -258,7 +342,30 @@ export function TextEditor() {
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Link />
             <RichTextEditor.Unlink />
-            <RichTextEditor.Color />
+          </RichTextEditor.ControlsGroup>
+          <RichTextEditor.ControlsGroup>
+            <MantineButton
+              compact
+              variant="outline"
+              color="lmsLayout"
+              radius="xs"
+              onClick={() => editor.chain().focus().undo().run()}
+              disabled={!editor.can().undo()}
+              className={editor.isActive('codeBlock') ? 'is-active' : ''}
+            >
+              <FaUndo size={16} />
+            </MantineButton>
+            <MantineButton
+              compact
+              variant="outline"
+              color="lmsLayout"
+              radius="xs"
+              onClick={() => editor.chain().focus().redo().run()}
+              disabled={!editor.can().redo()}
+              className={editor.isActive('codeBlock') ? 'is-active' : ''}
+            >
+              <FaRedo size={16} />
+            </MantineButton>
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
             <>

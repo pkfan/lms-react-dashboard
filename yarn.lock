@@ -2200,7 +2200,7 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
 
-"@tiptap/core@^2.0.0-beta.218":
+"@tiptap/core@^2.0.0-beta.116", "@tiptap/core@^2.0.0-beta.218":
   version "2.0.0-beta.218"
   resolved "https://registry.yarnpkg.com/@tiptap/core/-/core-2.0.0-beta.218.tgz#010f82931586a2c1e3ad3c123cf96f39b099d8c3"
   integrity sha512-RCrT4AYgH+2mQtt26EkFjIkGZGsuT7vKTbknEhpXdhWgbxy/fg65WyPs8hQMyocjOqPX2vbike4PfqWi9nBqCw==
@@ -2264,6 +2264,11 @@
   integrity sha512-OzmucdEJOK7Geq6C3oBZg1m1lBrAAm6SyMPn+0fN83ijixYJAChi7c20A+mrR6aeTlmjASi2CXFkrrVmNV7ZDQ==
   dependencies:
     tippy.js "^6.3.7"
+
+"@tiptap/extension-focus@^2.0.0-beta.218":
+  version "2.0.0-beta.218"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-focus/-/extension-focus-2.0.0-beta.218.tgz#ed53cbae73605acbe433b3a9041fba0bb3143442"
+  integrity sha512-vwChh/o+Ed4GsXLr0QChFHipfGVgUFhUScNHXdWh4Ztq/ERbps3HmT1AGsHHFj25yVHWuXG5B4uT3QFMoD6lAg==
 
 "@tiptap/extension-font-family@^2.0.0-beta.218":
   version "2.0.0-beta.218"
@@ -2372,7 +2377,7 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-text-align/-/extension-text-align-2.0.0-beta.218.tgz#5fa424f1150c3d32658dd7a4ec3801f0d978aaa3"
   integrity sha512-r2ABsqN551BzikIBXrb2v1AFsqWXrdm+jsNyxk6qcuL0D2Sj2ythz1XbVyu+baaJQz2VImP7wVcVMEVZgdPMIQ==
 
-"@tiptap/extension-text-style@^2.0.0-beta.218":
+"@tiptap/extension-text-style@^2.0.0-beta.17", "@tiptap/extension-text-style@^2.0.0-beta.218":
   version "2.0.0-beta.218"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-text-style/-/extension-text-style-2.0.0-beta.218.tgz#f414ddb19e2cb22904466bd56e29485b367a17ad"
   integrity sha512-I4AobKh9/WccYBkZEokJHaMHIjLBZQD6ds4Ux/eTdaaiTsT3UaT2B/1SGuzDKBcRDDYcLoKBxHxEBGVOoVz1OQ==
@@ -9892,6 +9897,14 @@ tippy.js@^6.3.7:
   integrity sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==
   dependencies:
     "@popperjs/core" "^2.9.0"
+
+tiptap-extension-font-size@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/tiptap-extension-font-size/-/tiptap-extension-font-size-1.2.0.tgz#dc884e2a8158819cffa4a322107de4c275aca6e0"
+  integrity sha512-akVve/bIAhAf4ze6XR4sh0qV7o7XgAoPkDGumTj4SFNtjhcH61wD97ibxWQAXchJPNAV6DdzRJiuUtEgzspjyA==
+  dependencies:
+    "@tiptap/core" "^2.0.0-beta.116"
+    "@tiptap/extension-text-style" "^2.0.0-beta.17"
 
 tiptap-imagresize@^1.0.2:
   version "1.0.2"

@@ -24,6 +24,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@tiptap/extension-code-block-lowlight": "^2.0.0-beta.218",
     "@tiptap/extension-color": "^2.0.0-beta.218",
+    "@tiptap/extension-focus": "^2.0.0-beta.218",
     "@tiptap/extension-font-family": "^2.0.0-beta.218",
     "@tiptap/extension-gapcursor": "^2.0.0-beta.218",
     "@tiptap/extension-highlight": "^2.0.0-beta.218",
@@ -70,6 +71,7 @@
     "sass": "^1.58.3",
     "stylis": "^4.1.3",
     "stylis-plugin-rtl": "^2.1.1",
+    "tiptap-extension-font-size": "^1.2.0",
     "tiptap-imagresize": "^1.0.2",
     "user-detail-from-browser": "^1.0.5",
     "web-vitals": "^2.1.4"

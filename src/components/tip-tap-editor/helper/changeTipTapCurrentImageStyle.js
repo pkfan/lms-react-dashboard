@@ -1,3 +1,5 @@
+import inlineStyleConversion from './inlineStyleConversion';
+
 export const changeTipTapCurrentImageStyle = (style) => {
   if (window.tipTapImageAttributeCurrentNode) {
     window.tipTapImageAttributeCurrentNode.setAttribute('style', inlineStyleConversion(style));
