@@ -7,6 +7,7 @@ export function resumableUpload({
   fileExtenstions = ['jpg', 'jpeg', 'png', 'webp'],
   maxFiles = undefined,
   maxFileSize = '10-MB',
+  imageFileViaPaste,
   onAdded = () => {},
   onProgress = () => {},
   onSuccess = () => {},
@@ -16,14 +17,15 @@ export function resumableUpload({
     throw new Error('[pkfan error] Remote URL not defined, please set URL to upload file');
   }
 
-  if (domElement.getAttribute('resumableUploadCall') == 'true') {
-    console.log('resumableUpload call', domElement);
-    return;
+  if (domElement) {
+    if (domElement.getAttribute('resumableUploadCall') == 'true') {
+      console.log('resumableUpload call', domElement);
+      return;
+    }
+    domElement.setAttribute('resumableUploadCall', 'true');
   }
 
   const counterObj = { uniqueId: { counter: 0 } };
-
-  domElement.setAttribute('resumableUploadCall', 'true');
 
   let resumable = new Resumable({
     // target: config.baseUrl + '/image',
@@ -47,11 +49,13 @@ export function resumableUpload({
     // chunkRetryInterval: 5 * 1000, //miliseconds
   });
 
-  // if (browseLessonFiles[0] && domElement[0]) {
-  //   resumable.assignBrowse(browseLessonFiles[0]);
-  resumable.assignBrowse(domElement);
-  //   resumable.assignDrop(domElement);
-  // }
+  if (domElement) {
+    resumable.assignBrowse(domElement);
+  } else if (imageFileViaPaste) {
+    resumable.addFile(imageFileViaPaste);
+  } else {
+    throw new Error('[pkfan error] file not attach OR null [domElement, imageFileViaPaste]');
+  }
 
   resumable.on('fileAdded', function ({ file }) {
     // trigger when lessonFile picked

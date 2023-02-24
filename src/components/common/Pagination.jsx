@@ -1,9 +1,11 @@
 import { Pagination as MantinePagination } from '@mantine/core';
 
-export function Pagination() {
+export function Pagination({ total = 10, activePage, setPage }) {
   return (
     <MantinePagination
-      total={10}
+      total={total}
+      page={activePage}
+      onChange={setPage}
       position="center"
       sx={{ margin: '30px 8px' }}
       styles={(theme) => ({

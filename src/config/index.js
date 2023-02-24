@@ -5,6 +5,8 @@ const config = {
   // baseUrl: 'http://localhost:8000/api',
   domainUrl,
   baseUrl: `${domainUrl}/api`,
+
+  imageUploadSize: '10-MB',
 };
 
 export default config;

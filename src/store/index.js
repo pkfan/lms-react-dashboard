@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 
 import { jobsApi } from '@/views/jobs/api';
 import { authApi } from '@/views/auth/api';
+import { textEditorApi } from '@/views/tip-tap-editor/api';
 import jobsReducer from '@/views/jobs/jobsSlice';
 
 export const store = configureStore({
@@ -11,11 +12,12 @@ export const store = configureStore({
     // Add the generated reducer as a specific top-level slice
     [jobsApi.reducerPath]: jobsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
+    [textEditorApi.reducerPath]: textEditorApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(jobsApi.middleware, authApi.middleware),
+    getDefaultMiddleware().concat(jobsApi.middleware, authApi.middleware, textEditorApi.middleware),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

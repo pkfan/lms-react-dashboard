@@ -89,6 +89,7 @@ export function ProfileDetails() {
       // const url = `${config.domainUrl}/${profilePictureSuccess.response.directory}/${profilePictureSuccess.response.file_name}.webp`;
       // console.log('url :', url);
       // setAvatarSrc(url);
+      console.log('profilePictureSuccess', profilePictureSuccess);
       userAvatarRefetch();
     }
 
@@ -112,7 +113,9 @@ export function ProfileDetails() {
       const url = createImageUrl({
         directory: userAvatarData.directory,
         imageName: userAvatarData.file_name,
+        imageExtension: userAvatarData.extension,
       });
+
       setAvatarSrc(url);
     }
   }, [isUserAvatarSuccess, userAvatarData]);

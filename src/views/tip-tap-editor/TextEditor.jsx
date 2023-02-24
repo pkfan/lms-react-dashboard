@@ -1,5 +1,7 @@
 import './helper/windowDomVariablesAndMethodsInit';
-import { useState } from 'react';
+import imageUploadOnPaste from './helper/imageUploadOnPaste';
+
+import { useState, useEffect, useRef } from 'react';
 import { RichTextEditor, Link } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 
@@ -14,7 +16,7 @@ import Text from '@tiptap/extension-text';
 import TextStyle from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color';
 
-import './tableStyle.scss';
+import './style/tableStyle.scss';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
@@ -22,7 +24,7 @@ import TableRow from '@tiptap/extension-table-row';
 import FontSize from 'tiptap-extension-font-size';
 import History from '@tiptap/extension-history';
 
-import './focusStyle.scss';
+import './style/focusStyle.scss';
 import Focus from '@tiptap/extension-focus';
 
 import {
@@ -36,12 +38,22 @@ import {
   Image as MantineImage,
   Button as MantineButton,
 } from '@mantine/core';
+import Button from '@/components/common/Button';
 import { BsFillImageFill } from 'react-icons/bs';
-import { FaImages, FaExternalLinkAlt, FaTable, FaRedo, FaUndo } from 'react-icons/fa';
-import { FiUpload } from 'react-icons/fi';
-import { IconPhoto } from '@tabler/icons';
+import { FaTable, FaRedo, FaUndo, FaSave } from 'react-icons/fa';
+
 import { RiCodeBoxFill } from 'react-icons/ri';
+import { AiFillHtml5 } from 'react-icons/ai';
 import { BiFontFamily, BiFontSize } from 'react-icons/bi';
+
+import {
+  showLoadingNotification,
+  updateLoadingNotificationError,
+  updateLoadingNotificationSuccess,
+} from '@/helpers/notification';
+
+import createImageUrl from '@/helpers/createImageUrl';
+
 // import Image from './ImageResize';
 import TipTapImageExtend from './TipTapImageExtend';
 import inlineStyleConversion from './helper/inlineStyleConversion';
@@ -50,11 +62,12 @@ import changeTipTapCurrentImageStyle from './helper/changeTipTapCurrentImageStyl
 // codeblock extenstions imports
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { lowlight } from 'lowlight';
-import './codeBlockStyle.scss';
+import './style/codeBlockStyle.scss';
 import css from 'highlight.js/lib/languages/css';
 import js from 'highlight.js/lib/languages/javascript';
 import ts from 'highlight.js/lib/languages/typescript';
 import html from 'highlight.js/lib/languages/xml';
+import ImageGallary from './ImageGallary';
 
 // codeblock
 lowlight.registerLanguage('html', html);
@@ -109,6 +122,65 @@ const content = `<h2 style="text-align: center;">Welcome to Mantine rich text ed
 export function TextEditor() {
   const [changeImageWidthWithSlider, setChangeImageWidthWithSlider] = useState(50);
   const [openGallary, setOpenGallary] = useState(false);
+  /////////
+
+  const [avatarSrc, setAvatarSrc] = useState('');
+  const [bodyPictureDefault, setBodyPictureDefault] = useState(true);
+  const [bodyPictureAdded, setBodyPictureAdded] = useState({ file: null });
+  const [bodyPictureSuccess, setBodyPictureSuccess] = useState({ response: null });
+  const [bodyPictureError, setBodyPictureError] = useState({ response: null });
+
+  useEffect(() => {
+    imageUploadOnPaste({
+      onAdded: setBodyPictureAdded,
+      onSuccess: setBodyPictureSuccess,
+      onError: setBodyPictureError,
+    });
+  }, []);
+
+  useEffect(() => {
+    //   bodyPictureAdded, setBodyPictureAdded] = useState({ file: null });
+    // const [bodyPictureSuccess, setBodyPictureSuccess] = useState({ response: null });
+
+    // const url = `${config.domainUrl}/${profilePictureSuccess.response.directory}/${profilePictureSuccess.response.file_name}.webp`;
+    // console.log('url :', url);
+    if (bodyPictureAdded.file && !(bodyPictureSuccess.response || bodyPictureError.response)) {
+      console.log(' if (bodyPictureAdded.file && !(bodyPictureSuccess.response || bodyP');
+      showLoadingNotification({
+        id: 'bodyPicture',
+        title: 'Uploading Image...',
+        message: 'Uloading image to server and then will add.',
+      });
+    } else if (bodyPictureSuccess.response) {
+      const { directory, file_name, extension } = bodyPictureSuccess.response;
+
+      const imageUrl = createImageUrl({
+        directory,
+        imageName: file_name,
+        imageExtension: extension,
+      });
+      console.log('createImageUrl error trace :', imageUrl);
+
+      addImageToTipTapDomEditorViaBody(imageUrl);
+
+      updateLoadingNotificationSuccess({
+        id: 'bodyPicture',
+        title: 'Image Uploaded and added.',
+        message: 'Your image uploaded successfully',
+        time: 2000,
+      });
+      setBodyPictureSuccess({ response: null });
+      setOpenGallary(false);
+    } else if (bodyPictureError.response) {
+      updateLoadingNotificationError({
+        id: 'bodyPicture',
+        title: 'Failed',
+        message: bodyPictureError.response.message,
+        time: 4000,
+      });
+      setBodyPictureError({ response: null });
+    }
+  }, [bodyPictureSuccess, bodyPictureError, bodyPictureAdded]);
 
   const editor = useEditor({
     extensions: [
@@ -148,6 +220,24 @@ export function TextEditor() {
     autofocus: true,
   });
 
+  if (!editor) {
+    return null;
+  }
+
+  function addImageToTipTapDomEditorViaBody(imageUrl) {
+    // setURL(imageUrl);
+    editor
+      .chain()
+      .focus()
+      .setImage({
+        src: imageUrl,
+        alt: 'lms',
+        //   style: 'display:flex;width:500px;margin:auto;',
+        style: inlineStyleConversion({ display: 'flex', margin: '16px auto 16px auto' }),
+      })
+      .run();
+  }
+
   const addImageToTipTapDomFromGallary = (imageUrl) => {
     // setURL(imageUrl);
     if (imageUrl) {
@@ -166,10 +256,10 @@ export function TextEditor() {
     }
   };
 
-  if (!editor) {
-    return null;
-  }
-
+  const getFinalHtmlCode = () => {
+    const html = editor.getHTML();
+    console.log('html : ', html);
+  };
   const onClickChangeImageHandle = (value) => {
     // return if invalid window global image object
     if (!window.tipTapImageAttributeCurrentNode) {
@@ -366,6 +456,15 @@ export function TextEditor() {
             >
               <FaRedo size={16} />
             </MantineButton>
+            <MantineButton
+              compact
+              variant="outline"
+              color="lmsLayout"
+              radius="xs"
+              onClick={getFinalHtmlCode}
+            >
+              <AiFillHtml5 size={16} />
+            </MantineButton>
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
             <>
@@ -540,16 +639,20 @@ export function TextEditor() {
             sx={{ transform: 'translateY(8px)' }}
           >
             <Slider
-              sx={{ width: 280 }}
-              size="sm"
-              thumbSize={20}
+              sx={{ width: 150 }}
+              size="xs"
+              thumbSize={16}
               value={changeImageWidthWithSlider}
               onChange={onClickChangeImageHandle}
-              min={20}
-              max={90}
+              min={1}
+              max={100}
             />
             <MantineText sx={{ fontWeight: 'bolder', fontSize: 12 }}>Resize Image</MantineText>
           </Flex>
+
+          <Button compact color="lmsLayout" leftIcon={<FaSave size={16} />}>
+            save
+          </Button>
         </RichTextEditor.Toolbar>
         <RichTextEditor.Content />
       </RichTextEditor>
@@ -561,50 +664,13 @@ export function TextEditor() {
           onClose={() => setOpenGallary(false)}
           title="Add Images"
         >
-          <Tabs color="dark" variant="outline" radius="md" defaultValue="gallery">
-            <Tabs.List>
-              <Tabs.Tab value="gallery" icon={<FaImages size={16} />}>
-                Gallery
-              </Tabs.Tab>
-              <Tabs.Tab value="thumbnail" icon={<IconPhoto size={16} />}>
-                Thumbnails
-              </Tabs.Tab>
-              <Tabs.Tab value="upload" icon={<FiUpload size={16} />}>
-                Upload
-              </Tabs.Tab>
-              <Tabs.Tab value="external" icon={<FaExternalLinkAlt size={16} />}>
-                External Link
-              </Tabs.Tab>
-            </Tabs.List>
-
-            <Tabs.Panel value="gallery" pt="xs">
-              <Flex wrap="wrap" gap={8}>
-                {imageUrls.map((url, index) => (
-                  <MantineImage
-                    key={index}
-                    radius="sm"
-                    src={url}
-                    onClick={() => addImageToTipTapDomFromGallary(url)}
-                    alt="lms pro"
-                    width={200}
-                    mah={200}
-                    sx={{ overflow: 'hidden', cursor: 'pointer' }}
-                  />
-                ))}
-              </Flex>
-            </Tabs.Panel>
-
-            <Tabs.Panel value="thumbnail" pt="xs">
-              thumbnail tab content
-            </Tabs.Panel>
-
-            <Tabs.Panel value="upload" pt="xs">
-              Settings tab content
-            </Tabs.Panel>
-            <Tabs.Panel value="external" pt="xs">
-              Settings tab content
-            </Tabs.Panel>
-          </Tabs>
+          <ImageGallary
+            addImageToTipTapDomFromGallary={addImageToTipTapDomFromGallary}
+            setOpenGallary={setOpenGallary}
+            onAdded={setBodyPictureAdded}
+            onSuccess={setBodyPictureSuccess}
+            onError={setBodyPictureError}
+          />
         </Modal>
       )}
     </>
