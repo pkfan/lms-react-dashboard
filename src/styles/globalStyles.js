@@ -98,7 +98,7 @@ export const globalStyles = () => ({
 
   '@media (max-width: 768px)': {
     '.PhoneInput > .PhoneInputCountry > select': {
-      left: '180px',
+      left: '200px',
     },
     '.PhoneInput > .PhoneInputCountry > div': {
       left: '179px',

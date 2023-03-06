@@ -5,13 +5,13 @@ import SideBarFooter from './SideBarFooter';
 
 const useStyles = createStyles((theme) => ({
   sideBar: {
-    width: '235px',
+    width: '200px',
     height: '100vh',
     color: theme.colors.lmsLayout[5],
     borderRight: `1px solid ${theme.colors.lmsBorder[3]}`,
     position: 'fixed',
     top: '60px',
-    left: '-235px',
+    left: '-200px',
     zIndex: '110',
     backgroundColor: theme.colors.lmsSkin[0],
     transition: 'all 300ms ease-in-out',

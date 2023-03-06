@@ -7,6 +7,7 @@ import {
   Box,
   Popover,
   TextInput,
+  Group,
   Button as MantineButton,
 } from '@mantine/core';
 import { Link } from 'react-router-dom';
@@ -31,11 +32,12 @@ export function Course() {
     <Stack sx={{ width: '100%' }}>
       {/* <MainLoadingOverlay visibleOvarlay={visibleOvarlay} /> */}
 
-      <PageTitle>
-        <Title order={2}>Course Management</Title>
-        <Button component={Link} to="create" leftIcon={<SiAddthis size={14} />}>
-          Create New Course
-        </Button>
+      <PageTitle title="Course Management">
+        <Group>
+          <Button compact component={Link} to="create" leftIcon={<SiAddthis size={14} />}>
+            Create New Course
+          </Button>
+        </Group>
       </PageTitle>
 
       <Paper>
@@ -52,10 +54,10 @@ export function Course() {
         >
           <Tabs.List>
             <Tabs.Tab
-              icon={<MdVideoSettings size={20} />}
+              icon={<MdVideoSettings size={18} />}
               value="all"
               color="lmsPrimary"
-              sx={{ fontSize: '20px' }}
+              sx={{ fontSize: '16px' }}
               rightSection={
                 <Badge
                   sx={{ width: 20, height: 20, pointerEvents: 'none' }}
@@ -70,10 +72,10 @@ export function Course() {
               All Courses
             </Tabs.Tab>
             <Tabs.Tab
-              icon={<ImEye size={20} />}
+              icon={<ImEye size={18} />}
               value="publish"
               color="lmsPrimary"
-              sx={{ fontSize: '20px' }}
+              sx={{ fontSize: '16px' }}
               rightSection={
                 <Badge
                   sx={{ width: 20, height: 20, pointerEvents: 'none' }}
@@ -88,8 +90,8 @@ export function Course() {
               Publish
             </Tabs.Tab>
             <Tabs.Tab
-              icon={<RiDraftLine size={20} />}
-              sx={{ fontSize: '20px' }}
+              icon={<RiDraftLine size={18} />}
+              sx={{ fontSize: '16px' }}
               value="draft"
               color="lmsSecondary"
               rightSection={
@@ -106,8 +108,8 @@ export function Course() {
               Draft
             </Tabs.Tab>
             <Tabs.Tab
-              icon={<FiTrash2 size={20} />}
-              sx={{ fontSize: '20px' }}
+              icon={<FiTrash2 size={18} />}
+              sx={{ fontSize: '16px' }}
               value="trash"
               color="red"
               rightSection={

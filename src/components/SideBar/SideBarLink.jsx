@@ -9,7 +9,7 @@ const useStyles = createStyles((theme) => ({
     color: 'inherit',
   },
   sideBarLink: {
-    padding: '10px 24px',
+    padding: '4px 8px',
 
     // borderTopLeftRadius: '100px',
     // borderBottomLeftRadius: '100px',
@@ -18,7 +18,7 @@ const useStyles = createStyles((theme) => ({
 
     '&:hover': {
       backgroundColor: theme.colors.lmsLayout[2],
-      paddingRight: '16px',
+      paddingRight: '4px',
     },
   },
   sideBarLinkActive: {
@@ -46,7 +46,7 @@ export function SideBarLink({ children, href = 'notFound', setSidebarOpened }) {
         onClick={() => setSidebarOpened((o) => !o)}
       >
         <Group>{children}</Group>
-        <BiChevronRight size={16} className="htmlRtlIcon" />
+        {/* <BiChevronRight size={16} className="htmlRtlIcon" /> */}
       </Flex>
     </Link>
   );

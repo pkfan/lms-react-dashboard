@@ -4,6 +4,7 @@ export const imageDirectory = (directory = 3) => {
     'storage/images/cover',
     'storage/images/thumbnail',
     'storage/images/body',
+    'storage/images/other',
   ];
   return publicPaths[directory];
 };

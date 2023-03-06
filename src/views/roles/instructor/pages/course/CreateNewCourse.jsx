@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Stack, Tabs, Text, Paper, Group, Box, Menu, Button as MantineButton } from '@mantine/core';
-import Overlay from '@/components/common/Overlay';
 import { Link } from 'react-router-dom';
 import Button from '@/components/common/Button';
 import ButtonWhite from '@/components/common/ButtonWhite';
@@ -17,12 +16,53 @@ import {
   IconArrowsLeftRight,
 } from '@tabler/icons';
 
-import CourseStatusIcons from './CourseStatusIcons';
+import { TabStatusIcons as CourseStatusIcons } from '@/components/common/TabStatusIcons';
 
 import PageTitle from '@/components/common/PageTitle';
 
+// course steps
+import Basic from './steps/Basic';
+import Description from './steps/Description';
+import Requirements from './steps/Requirements';
+import Outcomes from './steps/Outcomes';
+import FAQ from './steps/FAQ';
+import Features from './steps/Features';
+import SEO from './steps/SEO';
+import ThumbnailAndCover from './steps/ThumbnailAndCover';
+import Chapters from './steps/Chapters';
+import { useGetCourseStepsQuery } from '../../api';
+
 export function CreateNewCourse() {
-  const [requiremtnsSwitch, setRequiremtnsSwitch] = useState(false);
+  const [newCourse, setNewCourse] = useState(null);
+
+  const {
+    isSuccess: isGetCourseStepsSuccess,
+    isFetching: isGetCourseStepsFetching,
+    isError: isGetCourseStepsError,
+    data: steps,
+    refetch: refetchSteps,
+  } = useGetCourseStepsQuery(newCourse?.id);
+
+  const [requiremtnsSwitch, setRequiremtnsSwitch] = useState(true);
+  const [outcomesSwitch, setOutcomesSwitch] = useState(true);
+  const [featuresSwitch, setFeaturesSwitch] = useState(true);
+  const [FAQswitch, setFAQswitch] = useState(true);
+
+  useEffect(() => {
+    if (isGetCourseStepsSuccess) {
+      console.log('isGetCourseStepsSuccess : ', steps);
+    }
+  }, [isGetCourseStepsSuccess, isGetCourseStepsFetching, isGetCourseStepsError]);
+
+  const currentTapStatusIcon = (step) => {
+    if (step && !step.enable) {
+      return <CourseStatusIcons status="disable" />;
+    } else if (step && step?.complete) {
+      return <CourseStatusIcons status="check" />;
+    } else {
+      return <CourseStatusIcons status="cross" />;
+    }
+  };
 
   return (
     <Stack sx={{ width: '100%' }}>
@@ -32,7 +72,7 @@ export function CreateNewCourse() {
         <Group>
           <Button
             compact
-            variant="lmsSecondary"
+            color="lmsSecondary"
             component={Link}
             to="/dashboard/student/index"
             leftIcon={<SiAddthis size={14} />}
@@ -41,7 +81,7 @@ export function CreateNewCourse() {
           </Button>
           <Button
             compact
-            variant="green"
+            color="green"
             component={Link}
             to="/dashboard/student/index"
             leftIcon={<SiAddthis size={14} />}
@@ -100,107 +140,101 @@ export function CreateNewCourse() {
             disabled={false}
             sx={{ fontSize: '16px' }}
             value="basic"
-            icon={<CourseStatusIcons status="cross" />}
+            icon={currentTapStatusIcon(steps?.basic)}
           >
             Basic
           </Tabs.Tab>
           <Tabs.Tab
-            disabled={false}
+            disabled={!steps?.basic?.complete}
             sx={{ fontSize: '16px' }}
             value="description"
-            icon={<CourseStatusIcons status="cross" />}
+            icon={currentTapStatusIcon(steps?.description)}
           >
             Description
           </Tabs.Tab>
           <Tabs.Tab
-            disabled={true}
             sx={{ fontSize: '16px' }}
+            disabled={!steps?.description?.complete}
             value="requirements"
-            icon={
-              requiremtnsSwitch ? (
-                <CourseStatusIcons status="cross" />
-              ) : (
-                <CourseStatusIcons status="cross" />
-              )
-            }
+            icon={currentTapStatusIcon(steps?.requirements)}
           >
             Requirements
           </Tabs.Tab>
           <Tabs.Tab
-            disabled
             sx={{ fontSize: '16px' }}
+            disabled={!steps?.requirements?.complete}
             value="outcomes"
-            icon={<CourseStatusIcons status="cross" />}
+            icon={currentTapStatusIcon(steps?.outcomes)}
           >
             Outcomes
           </Tabs.Tab>
           <Tabs.Tab
-            disabled
             sx={{ fontSize: '16px' }}
+            disabled={!steps?.outcomes?.complete}
             value="faq"
-            icon={<CourseStatusIcons status="cross" />}
+            icon={currentTapStatusIcon(steps?.faq)}
           >
             faq
           </Tabs.Tab>
           <Tabs.Tab
-            disabled
             sx={{ fontSize: '16px' }}
+            disabled={!steps?.faq?.complete}
             value="features"
-            icon={<CourseStatusIcons status="cross" />}
+            icon={currentTapStatusIcon(steps?.features)}
           >
             features
           </Tabs.Tab>
           <Tabs.Tab
-            disabled
             sx={{ fontSize: '16px' }}
+            // disabled={!steps?.features?.complete}
             value="thumnail"
-            icon={<CourseStatusIcons status="cross" />}
+            icon={currentTapStatusIcon(steps?.thumnail)}
           >
             thumnail
           </Tabs.Tab>
           <Tabs.Tab
-            disabled
             sx={{ fontSize: '16px' }}
+            disabled={!steps?.thumnail?.complete}
             value="seo"
-            icon={<CourseStatusIcons status="cross" />}
+            icon={currentTapStatusIcon(steps?.seo)}
           >
             SEO
           </Tabs.Tab>
           <Tabs.Tab
-            disabled
             sx={{ fontSize: '16px' }}
+            disabled={!steps?.seo?.complete}
             value="chapters"
-            icon={<CourseStatusIcons status="cross" />}
+            icon={currentTapStatusIcon(steps?.chapters)}
           >
             chapters
           </Tabs.Tab>
           <Tabs.Tab
-            disabled
             sx={{ fontSize: '16px' }}
+            disabled={!steps?.chapters?.complete}
             value="lessons"
-            icon={<CourseStatusIcons status="cross" />}
+            icon={currentTapStatusIcon(steps?.lessons)}
           >
             lessons
           </Tabs.Tab>
           <Tabs.Tab
-            disabled
             sx={{ fontSize: '16px' }}
+            disabled={true}
             value="quizes"
-            icon={<CourseStatusIcons status="cross" />}
+            icon={currentTapStatusIcon(steps?.quizes)}
           >
             quizes
           </Tabs.Tab>
           <Tabs.Tab
-            disabled
             sx={{ fontSize: '16px' }}
+            disabled={true}
             value="assignment"
             icon={<CourseStatusIcons status="cross" />}
           >
-            assignment
+            assignments
           </Tabs.Tab>
           <Tabs.Tab
-            disabled
             sx={{ fontSize: '16px' }}
+            disabled={true}
             value="exams"
             icon={<CourseStatusIcons status="cross" />}
           >
@@ -209,125 +243,63 @@ export function CreateNewCourse() {
         </Tabs.List>
 
         <Tabs.Panel value="basic" pl="xs">
-          <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-          </Paper>
+          <Basic setNewCourse={setNewCourse} course_id={newCourse?.id} />
         </Tabs.Panel>
 
         <Tabs.Panel value="description" pl="xs">
-          <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-            <Text>this is forst tab</Text>
-          </Paper>
+          {newCourse && steps && (
+            <Description refetchSteps={refetchSteps} course_id={newCourse?.id} />
+          )}
         </Tabs.Panel>
 
         <Tabs.Panel value="requirements" pl="xs">
-          <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-            <Group position="right">
-              <Switch
-                checkedSwitch={requiremtnsSwitch}
-                setCheckedSwitch={setRequiremtnsSwitch}
-                sx={{ transform: 'translateY(-8px)' }}
-              />
-            </Group>
-            <Box sx={{ position: 'relative' }}>
-              {!requiremtnsSwitch && <Overlay />}
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-              <Text>this is forst tab</Text>
-            </Box>
-          </Paper>
+          {newCourse && steps && (
+            <Requirements
+              isEnabled={steps.requirements.enable}
+              refetchSteps={refetchSteps}
+              course_id={newCourse?.id}
+            />
+          )}
         </Tabs.Panel>
         <Tabs.Panel value="outcomes" pl="xs">
-          <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-            <Text>outcomes</Text>
-          </Paper>
+          {newCourse && steps && (
+            <Outcomes
+              isEnabled={steps.outcomes.enable}
+              refetchSteps={refetchSteps}
+              course_id={newCourse?.id}
+            />
+          )}
         </Tabs.Panel>
         <Tabs.Panel value="faq" pl="xs">
-          <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-            <Text>faq</Text>
-          </Paper>
+          {newCourse && steps && (
+            <FAQ
+              isEnabled={steps.faq.enable}
+              refetchSteps={refetchSteps}
+              course_id={newCourse?.id}
+            />
+          )}
         </Tabs.Panel>
         <Tabs.Panel value="features" pl="xs">
-          <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-            <Text>features</Text>
-          </Paper>
+          {newCourse && steps && (
+            <Features
+              isEnabled={steps.features.enable}
+              refetchSteps={refetchSteps}
+              course_id={newCourse?.id}
+            />
+          )}
         </Tabs.Panel>
         <Tabs.Panel value="thumnail" pl="xs">
-          <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-            <Text>thumnail</Text>
-          </Paper>
+          <ThumbnailAndCover
+            thumbnail_id={newCourse?.thumbnail_id}
+            cover_id={newCourse?.cover_id}
+            course_id={newCourse?.id}
+          />
         </Tabs.Panel>
         <Tabs.Panel value="seo" pl="xs">
-          <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-            <Text>seo</Text>
-          </Paper>
+          <SEO />
         </Tabs.Panel>
         <Tabs.Panel value="chapters" pl="xs">
-          <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-            <Text>chapters</Text>
-          </Paper>
+          <Chapters />
         </Tabs.Panel>
         <Tabs.Panel value="lessons" pl="xs">
           <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>

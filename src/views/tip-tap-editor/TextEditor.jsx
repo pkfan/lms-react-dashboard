@@ -75,57 +75,53 @@ lowlight.registerLanguage('css', css);
 lowlight.registerLanguage('js', js);
 lowlight.registerLanguage('ts', ts);
 
-const imageUrls = [
-  'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-  'https://lh3.googleusercontent.com/-E4N22M-wKb4/YJaQ3X2ZsgI/AAAAAAAABBQ/0x2Q-XOVoV0tgBshHaRsiBILWlj2m8mZwCEwYBhgLKvQEANjnvE18udQneQW-nitkZI-KSZgYSyVsnax1B-QowgmlC_5ODtV47qDhsPqtPsdZ1IhTBLBYD6Ab49OdVOUcdT4JRoC-NXaE1-e8leT-zHpB14BZLi7UrM2cWf9o-XjJO5ZPZKBIo2sIZ4_4DJqpRpPNuQxX5vti9znigrGb6RxHaXrpzgPpXv_k_2_2x04UGYmQI_c8Py5OVTrVeWjpBKJqP6mnFtpRs8nzRR0vlOspoAQ1yt9tfGw-GKQam875kJQnes3gFj002H0F3ktH4wSpkiCvwAGXybRuP0H_4iTS45w9EnVvJ6Sfxq7wyF-g75HKqxXbSrpuSMR4Htg_p5OchCMZFWd5-8yXRJhqfUEn-0MM-_WSt63FCA82GoGidOhK__EUAYKj3xx0xEUPtu7dIUGRXGpzOXXdvRET3xO9Jy1Mswru9LXlYU4bWxf75urVyrO80sR10tqkuKS4Uag9N2vnuRCgJSDxtOTVK_nYDrk7KIb4xedcfXcDbTPYSZGrSTxciU87j6veD5PhFgqoR0XeyRUXDFkPIeW9I91Zxjl7Kw_XXMrSdApeXfMZLOQhLpRUPDOKiaEZVenkWN4D-726gxt6JHwQ0zHgJqHnocjNnyUCMOeKCEEdIuzu2mT5-XcCI9ineAjZBIHiF_sxYOFDO_-YnzWAnohDDN7RkRod6KcrSpWe_EZrSrxH8W4tB10jdiqJXo_qzUdqT8azUzqjK0ylyPUgsDUbzz6xxmW-_hbJl1slSotBcNyAhb5w-737Q4hFfBAKtlJSgpczW8mpUFGzUICLh0VAxg57Tqk7nf6cXmd3Tu_qRgx_lBHNSDC0-9ifBg/w140-h125-p/cs506.jpg',
-  'https://lh3.googleusercontent.com/-Bn7bdg68Cv8/YJaSWMvKMoI/AAAAAAAABBY/A1MxdF_BMJkpH90CoE5M47X3dJyqRujkwCEwYBhgLKvQEANjnvE18udQneQW-nitkZI-KSZgYSyVsnax1B-QowgmlC_5ODtV47qDhsPqtPsdZ1IhTBLBYD6Ab49OdVOUcdT4JRoC-NXaE1-e8leT-zHpB14BZLi7UrM2cWf9o-XjJO5ZPZKBIo2sIZ4_4DJqpRpPNuQxX5vti9znigrGb6RxHaXrpzgPpXv_k_2_2x04UGYmQI_c8Py5OVTrVeWjpBKJqP6mnFtpRs8nzRR0vlOspoAQ1yt9tfGw-GKQam875kJQnes3gFj002H0F3ktH4wSpkiCvwAGXybRuP0H_4iTS45w9EnVvJ6Sfxq7wyF-g75HKqxXbSrpuSMR4Htg_p5OchCMZFWd5-8yXRJhqfUEn-0MM-_WSt63FCA82GoGidOhK__EUAYKj3xx0xEUPtu7dIUGRXGpzOXXdvRET3xO9Jy1Mswru9LXlYU4bWxf75urVyrO80sR10tqkuKS4Uag9N2vnuRCgJSDxtOTVK_nYDrk7KIb4xedcfXcDbTPYSZGrSTxciU87j6veD5PhFgqoR0XeyRUXDFkPIeW9I91Zxjl7Kw_XXMrSdApeXfMZLOQhLpRUPDOKiaEZVenkWN4D-726gxt6JHwQ0zHgJqHnocjNnyUCMOeKCEEdIuzu2mT5-XcCI9ineAjZBIHiF_sxYOFDO_-YnzWAnohDDN7RkRod6KcrSpWe_EZrSrxH8W4tB10jdiqJXo_qzUdqT8azUzqjK0ylyPUgsDUbzz6xxmW-_hbJl1slSotBcNyAhb5w-737Q4hFfBAKtlJSgpczW8mpUFGzUICLh0VAxg57Tqk7nf6cXmd3Tu_qRgx_lBHNSDC0-9ifBg/w140-h85-p/cs202.jpg',
-  'https://lh3.googleusercontent.com/-XYmoaNb97C0/YzBwU94pHhI/AAAAAAAABIA/Wlpj0gUkKtcGm1OgDmUfeCmNFsJv9MQnACEwYBhgLKvQEANjnvE18udQneQW-nitkZI-KSZgYSyVsnax1B-QowgmlC_5ODtV47qDhsPqtPsdZ1IhTBLBYD6Ab49OdVOUcdT4JRoC-NXaE1-e8leT-zHpB14BZLi7UrM2cWf9o-XjJO5ZPZKBIo2sIZ4_4DJqpRpPNuQxX5vti9znigrGb6RxHaXrpzgPpXv_k_2_2x04UGYmQI_c8Py5OVTrVeWjpBKJqP6mnFtpRs8nzRR0vlOspoAQ1yt9tfGw-GKQam875kJQnes3gFj002H0F3ktH4wSpkiCvwAGXybRuP0H_4iTS45w9EnVvJ6Sfxq7wyF-g75HKqxXbSrpuSMR4Htg_p5OchCMZFWd5-8yXRJhqfUEn-0MM-_WSt63FCA82GoGidOhK__EUAYKj3xx0xEUPtu7dIUGRXGpzOXXdvRET3xO9Jy1Mswru9LXlYU4bWxf75urVyrO80sR10tqkuKS4Uag9N2vnuRCgJSDxtOTVK_nYDrk7KIb4xedcfXcDbTPYSZGrSTxciU87j6veD5PhFgqoR0XeyRUXDFkPIeW9I91Zxjl7Kw_XXMrSdApeXfMZLOQhLpRUPDOKiaEZVenkWN4D-726gxt6JHwQ0zHgJqHnocjNnyUCMOeKCEEdIuzu2mT5-XcCI9ineAjZBIHiF_sxYOFDO_-YnzWAnohDDN7RkRod6KcrSpWe_EZrSrxH8W4tB10jdiqJXo_qzUdqT8azUzqjK0ylyPUgsDUbzz6xxmW-_hbJl1slSotBcNyAhb5w-737Q4hFfBAKtlJSgpczW8mpUFGzUICLh0VAxg57Tqk7nf6cXmd3Tu_qRgx_lBHNSDC0-9ifBg/w115-h140-p/Picture1.png',
-  'https://lh3.googleusercontent.com/-_qdHVlZiLKU/YzBwVDV1UuI/AAAAAAAABII/hGFkDq8HYWUhk4mnxegOE2f7N2Tepy6eQCEwYBhgLKvQEANjnvE18udQneQW-nitkZI-KSZgYSyVsnax1B-QowgmlC_5ODtV47qDhsPqtPsdZ1IhTBLBYD6Ab49OdVOUcdT4JRoC-NXaE1-e8leT-zHpB14BZLi7UrM2cWf9o-XjJO5ZPZKBIo2sIZ4_4DJqpRpPNuQxX5vti9znigrGb6RxHaXrpzgPpXv_k_2_2x04UGYmQI_c8Py5OVTrVeWjpBKJqP6mnFtpRs8nzRR0vlOspoAQ1yt9tfGw-GKQam875kJQnes3gFj002H0F3ktH4wSpkiCvwAGXybRuP0H_4iTS45w9EnVvJ6Sfxq7wyF-g75HKqxXbSrpuSMR4Htg_p5OchCMZFWd5-8yXRJhqfUEn-0MM-_WSt63FCA82GoGidOhK__EUAYKj3xx0xEUPtu7dIUGRXGpzOXXdvRET3xO9Jy1Mswru9LXlYU4bWxf75urVyrO80sR10tqkuKS4Uag9N2vnuRCgJSDxtOTVK_nYDrk7KIb4xedcfXcDbTPYSZGrSTxciU87j6veD5PhFgqoR0XeyRUXDFkPIeW9I91Zxjl7Kw_XXMrSdApeXfMZLOQhLpRUPDOKiaEZVenkWN4D-726gxt6JHwQ0zHgJqHnocjNnyUCMOeKCEEdIuzu2mT5-XcCI9ineAjZBIHiF_sxYOFDO_-YnzWAnohDDN7RkRod6KcrSpWe_EZrSrxH8W4tB10jdiqJXo_qzUdqT8azUzqjK0ylyPUgsDUbzz6xxmW-_hbJl1slSotBcNyAhb5w-737Q4hFfBAKtlJSgpczW8mpUFGzUICLh0VAxg57Tqk7nf6cXmd3Tu_qRgx_lBHNSDC0-9ifBg/w32-h140-p/HomePage.png',
-  'https://lh3.googleusercontent.com/-YVEJgipOQLc/YzBwVhIY6xI/AAAAAAAABII/_kTeCWnCK4QR5HYO3AuECGBur9AZvvstwCEwYBhgLKvQEANjnvE18udQneQW-nitkZI-KSZgYSyVsnax1B-QowgmlC_5ODtV47qDhsPqtPsdZ1IhTBLBYD6Ab49OdVOUcdT4JRoC-NXaE1-e8leT-zHpB14BZLi7UrM2cWf9o-XjJO5ZPZKBIo2sIZ4_4DJqpRpPNuQxX5vti9znigrGb6RxHaXrpzgPpXv_k_2_2x04UGYmQI_c8Py5OVTrVeWjpBKJqP6mnFtpRs8nzRR0vlOspoAQ1yt9tfGw-GKQam875kJQnes3gFj002H0F3ktH4wSpkiCvwAGXybRuP0H_4iTS45w9EnVvJ6Sfxq7wyF-g75HKqxXbSrpuSMR4Htg_p5OchCMZFWd5-8yXRJhqfUEn-0MM-_WSt63FCA82GoGidOhK__EUAYKj3xx0xEUPtu7dIUGRXGpzOXXdvRET3xO9Jy1Mswru9LXlYU4bWxf75urVyrO80sR10tqkuKS4Uag9N2vnuRCgJSDxtOTVK_nYDrk7KIb4xedcfXcDbTPYSZGrSTxciU87j6veD5PhFgqoR0XeyRUXDFkPIeW9I91Zxjl7Kw_XXMrSdApeXfMZLOQhLpRUPDOKiaEZVenkWN4D-726gxt6JHwQ0zHgJqHnocjNnyUCMOeKCEEdIuzu2mT5-XcCI9ineAjZBIHiF_sxYOFDO_-YnzWAnohDDN7RkRod6KcrSpWe_EZrSrxH8W4tB10jdiqJXo_qzUdqT8azUzqjK0ylyPUgsDUbzz6xxmW-_hbJl1slSotBcNyAhb5w-737Q4hFfBAKtlJSgpczW8mpUFGzUICLh0VAxg57Tqk7nf6cXmd3Tu_qRgx_lBHNSDC0-9ifBg/w140-h118-p/Picture3.png',
-];
+// const content = `<h2 style="text-align: center;">Welcome to Mantine rich text editor</h2><p><code>RichTextEditor</code> component focuses on usability and is designed to be as simple as possible to bring a familiar editing experience to regular users. <code>RichTextEditor</code> is based on <a href="https://tiptap.dev/" rel="noopener noreferrer" target="_blank">Tiptap.dev</a> and supports all of its features:</p><ul><li>General text formatting: <strong>bold</strong>, <em>italic</em>, <u>underline</u>, <s>strike-through</s> </li><li>Headings (h1-h6)</li><li>Sub and super scripts (<sup>&lt;sup /&gt;</sup> and <sub>&lt;sub /&gt;</sub> tags)</li><li>Ordered and bullet lists</li><li>Text align&nbsp;</li><li>And all <a href="https://tiptap.dev/extensions" target="_blank" rel="noopener noreferrer">other extensions</a></li></ul>
+// <div id='math-test'>testing equation</div>
+// <table>
+//           <tbody>
+//             <tr>
+//               <th>Name</th>
+//               <th colspan="3">Description</th>
+//             </tr>
+//             <tr>
+//               <td>Cyndi Lauper</td>
+//               <td>singer</td>
+//               <td>songwriter</td>
+//               <td>actress</td>
+//             </tr>
+//           </tbody>
+//         </table>
+// {
+//   if (i % 15 == 0)
+//     console.log("FizzBuzz");
+//   else if (i % 3 == 0)
+//     console.log("Fizz");
+//   else if (i % 5 == 0)
+//     console.log("Buzz");
+//   else
+//     console.log(i);
+// }</code></pre>
+//         <p>
+//           Press Command/Ctrl + Enter to leave the fenced code block and continue typing in boring paragraphs.
+//         </p>
 
-const content = `<h2 style="text-align: center;">Welcome to Mantine rich text editor</h2><p><code>RichTextEditor</code> component focuses on usability and is designed to be as simple as possible to bring a familiar editing experience to regular users. <code>RichTextEditor</code> is based on <a href="https://tiptap.dev/" rel="noopener noreferrer" target="_blank">Tiptap.dev</a> and supports all of its features:</p><ul><li>General text formatting: <strong>bold</strong>, <em>italic</em>, <u>underline</u>, <s>strike-through</s> </li><li>Headings (h1-h6)</li><li>Sub and super scripts (<sup>&lt;sup /&gt;</sup> and <sub>&lt;sub /&gt;</sub> tags)</li><li>Ordered and bullet lists</li><li>Text align&nbsp;</li><li>And all <a href="https://tiptap.dev/extensions" target="_blank" rel="noopener noreferrer">other extensions</a></li></ul>
-<table>
-          <tbody>
-            <tr>
-              <th>Name</th>
-              <th colspan="3">Description</th>
-            </tr>
-            <tr>
-              <td>Cyndi Lauper</td>
-              <td>singer</td>
-              <td>songwriter</td>
-              <td>actress</td>
-            </tr>
-          </tbody>
-        </table>
-{
-  if (i % 15 == 0)
-    console.log("FizzBuzz");
-  else if (i % 3 == 0)
-    console.log("Fizz");
-  else if (i % 5 == 0)
-    console.log("Buzz");
-  else
-    console.log(i);
-}</code></pre>
-        <p>
-          Press Command/Ctrl + Enter to leave the fenced code block and continue typing in boring paragraphs.
-        </p>
-
-        <p><span style="font-family: Inter">Did you know that Inter is a really nice font for interfaces?</span></p>
-        <p><span style="font-family: Comic Sans MS, Comic Sans">It doesn’t look as professional as Comic Sans.</span></p>
-        <p><span style="font-family: serif">Serious people use serif fonts anyway.</span></p>
-        <p><span style="font-family: monospace">The cool kids can apply monospace fonts aswell.</span></p>
-        <p><span style="font-family: cursive">But hopefully we all can agree, that cursive fonts are the best.</span></p>
-  `;
-export function TextEditor() {
+//         <p><span style="font-family: Inter">Did you know that Inter is a really nice font for interfaces?</span></p>
+//         <p><span style="font-family: Comic Sans MS, Comic Sans">It doesn’t look as professional as Comic Sans.</span></p>
+//         <p><span style="font-family: serif">Serious people use serif fonts anyway.</span></p>
+//         <p><span style="font-family: monospace">The cool kids can apply monospace fonts aswell.</span></p>
+//         <p><span style="font-family: cursive">But hopefully we all can agree, that cursive fonts are the best.</span></p>
+//   `;
+export function TextEditor({
+  content,
+  setDescriptionHtml,
+  savingDescription,
+  saveButtonStyle,
+  ...others
+}) {
   const [changeImageWidthWithSlider, setChangeImageWidthWithSlider] = useState(50);
   const [openGallary, setOpenGallary] = useState(false);
   /////////
 
-  const [avatarSrc, setAvatarSrc] = useState('');
-  const [bodyPictureDefault, setBodyPictureDefault] = useState(true);
   const [bodyPictureAdded, setBodyPictureAdded] = useState({ file: null });
   const [bodyPictureSuccess, setBodyPictureSuccess] = useState({ response: null });
   const [bodyPictureError, setBodyPictureError] = useState({ response: null });
@@ -216,13 +212,33 @@ export function TextEditor() {
       }),
       History,
     ],
-    content,
+    content, // initial data
     autofocus: true,
   });
 
   if (!editor) {
     return null;
   }
+
+  //   const insertContentHtml = () => {
+  //     editor.commands.insertContent(`<math display='block'>
+  //  <semantics>
+  //   <mrow>
+  //    <mrow><mo>[</mo> <mrow>
+  //     <mi>f</mi><mi>d</mi><mi>s</mi><mi>a</mi>
+  //    </mrow> <mo>]</mo></mrow><mi>h</mi><mstyle displaystyle='true'>
+  //     <mo>&#x2211;</mo> <mrow>
+  //      <mi>s</mi><mi>d</mi><mi>a</mi><mi>f</mi><mi>d</mi><mi>s</mi><mi>a</mi>
+  //     </mrow>
+  //    </mstyle><mo>&#x2264;</mo><mo>&#x2202;</mo><mo>&#x2192;</mo><mi>&#x03C0;</mi><mi>&#x03B8;</mi>
+  //   </mrow>
+  //   <annotation encoding='MathType-MTEF'>MathType@MTEF@5@5@+=feaagCart1ev2aaatCvAUfeBSjuyZL2yd9gzLbvyNv2CaerbuLwBLnhiov2DGi1BTfMBaeXatLxBI9gBaerbd9wDYLwzYbItLDharqqr1ngBPrgifHhDYfgasaacH8srps0lbbf9q8WrFfeuY=Hhbbf9v8qqaqFr0xc9pk0xbba9q8WqFfea0=yr0RYxir=Jbba9q8aq0=yq=He9q8qqQ8frFve9Fve9Ff0dmeaabaqaciGacaGaaeqabaWaaeaaeaaakeaadaWadaqaaiaadAgacaWGKbGaam4CaiaadggaaiaawUfacaGLDbaacaWGObWaaabqaeaacaWGZbGaamizaiaadggacaWGMbGaamizaiaadohacaWGHbaaleqabeqdcqGHris5aOGaeyizImQaeyOaIyRaeyOKH4QaeqiWdaNaeqiUdehaaa@4F4C@</annotation>
+  //  </semantics>
+  // </math>
+  // `);
+  //     let test = editor.commands;
+  //     console.log('insertContentHtml focus', test);
+  //   };
 
   function addImageToTipTapDomEditorViaBody(imageUrl) {
     // setURL(imageUrl);
@@ -259,6 +275,7 @@ export function TextEditor() {
   const getFinalHtmlCode = () => {
     const html = editor.getHTML();
     console.log('html : ', html);
+    setDescriptionHtml(html);
   };
   const onClickChangeImageHandle = (value) => {
     // return if invalid window global image object
@@ -271,7 +288,7 @@ export function TextEditor() {
   };
 
   return (
-    <>
+    <Box {...others}>
       <RichTextEditor editor={editor}>
         <RichTextEditor.Toolbar sticky stickyOffset={60}>
           <RichTextEditor.ControlsGroup>
@@ -455,15 +472,6 @@ export function TextEditor() {
               className={editor.isActive('codeBlock') ? 'is-active' : ''}
             >
               <FaRedo size={16} />
-            </MantineButton>
-            <MantineButton
-              compact
-              variant="outline"
-              color="lmsLayout"
-              radius="xs"
-              onClick={getFinalHtmlCode}
-            >
-              <AiFillHtml5 size={16} />
             </MantineButton>
           </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
@@ -650,7 +658,14 @@ export function TextEditor() {
             <MantineText sx={{ fontWeight: 'bolder', fontSize: 12 }}>Resize Image</MantineText>
           </Flex>
 
-          <Button compact color="lmsLayout" leftIcon={<FaSave size={16} />}>
+          <Button
+            onClick={getFinalHtmlCode}
+            sx={saveButtonStyle}
+            compact
+            color="lmsLayout"
+            loading={savingDescription}
+            leftIcon={<FaSave size={16} />}
+          >
             save
           </Button>
         </RichTextEditor.Toolbar>
@@ -673,7 +688,7 @@ export function TextEditor() {
           />
         </Modal>
       )}
-    </>
+    </Box>
   );
 }
 

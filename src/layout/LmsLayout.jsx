@@ -9,7 +9,7 @@ const useStyles = createStyles((theme) => ({
     marginTop: '60px',
 
     [`@media (min-width: ${theme.breakpoints.sm}px)`]: {
-      marginLeft: '235px',
+      marginLeft: '200px',
     },
   },
   main: {
