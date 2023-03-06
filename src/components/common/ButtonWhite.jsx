@@ -13,7 +13,7 @@ export function ButtonWhite({ children, ...others }) {
         },
       })}
       variant="outline"
-      component="div"
+      // component="div"
       color="lmsLayout"
       {...others}
     >

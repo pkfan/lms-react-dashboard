@@ -31,7 +31,7 @@ import { showNotification } from '@mantine/notifications';
 import { IconCheck, IconX } from '@tabler/icons';
 import { useToggleStepMutation, useInsertOutcomesMutation } from '../../../api';
 
-export function Outcomes({ course_id, refetchSteps, isEnabled }) {
+export function Outcomes({ course, refetchSteps, isEnabled }) {
   const [
     toggleStep,
     {
@@ -112,13 +112,13 @@ export function Outcomes({ course_id, refetchSteps, isEnabled }) {
 
   const switchToggleEnable = (enable) => {
     console.log('enable : ', enable);
-    toggleStep({ course_id, step: 'outcomes', key: 'enable', value: enable });
+    toggleStep({ course_id: course.id, step: 'outcomes', key: 'enable', value: enable });
     setEnabled(enable);
   };
 
   const submitOutcomes = (outcomes) => {
     console.log('outcomes ....', outcomes);
-    insertOutcomes({ outcomes, course_id });
+    insertOutcomes({ outcomes, course_id: course.id });
   };
 
   return (
@@ -149,13 +149,7 @@ export function Outcomes({ course_id, refetchSteps, isEnabled }) {
           <DragDropInput
             buttonName="Add Outcome"
             placeholder="Course outcome e.g. you will become high demand graphic designer."
-            data={[
-              { name: 'John Doe' },
-              { name: 'Bill Love' },
-              { name: 'Nancy Eagle' },
-              { name: 'Lim Notch' },
-              { name: 'Susan Seven' },
-            ]}
+            data={course?.course_attributes?.outcomes || [{ name: '' }]}
             submitData={submitOutcomes}
             savingData={isOutcomesLoading}
           />

@@ -8,6 +8,7 @@ import getCourseSteps from './course-steps/getCourseSteps';
 import getDescription from './course-steps/getDescription';
 import getThumbnail from './course-steps/getThumbnail';
 import getCover from './course-steps/getCover';
+import getCourse from './course/getCourse';
 
 // mutate
 import toggleStep from './course-steps/toggleStep';
@@ -33,6 +34,7 @@ export const instructorApi = createApi({
     getDescription: getDescription(builder),
     getThumbnail: getThumbnail(builder),
     getCover: getCover(builder),
+    getCourse: getCourse(builder),
 
     // mutation
     createBasic: createBasic(builder),
@@ -57,6 +59,7 @@ export const {
   useGetDescriptionQuery,
   useGetThumbnailQuery,
   useGetCoverQuery,
+  useGetCourseQuery,
 
   // mutattion
   useCreateBasicMutation,

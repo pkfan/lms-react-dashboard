@@ -7,7 +7,7 @@ import { useInsertDescriptionMutation, useGetDescriptionQuery } from '../../../a
 import { showNotification } from '@mantine/notifications';
 import { IconCheck, IconX } from '@tabler/icons';
 
-export function Description({ refetchSteps, course_id }) {
+export function Description({ refetchSteps, course }) {
   const [descriptionHtml, setDescriptionHtml] = useState(null);
 
   const [
@@ -26,11 +26,11 @@ export function Description({ refetchSteps, course_id }) {
     isFetching: isGetDescriptionFetching,
     isError: isGetDescriptionError,
     data: descriptionData,
-  } = useGetDescriptionQuery(course_id);
+  } = useGetDescriptionQuery(course.id);
 
   useEffect(() => {
     if (descriptionHtml) {
-      insertDescription({ description: descriptionHtml, course_id });
+      insertDescription({ description: descriptionHtml, course_id: course.id });
     }
   }, [descriptionHtml]);
 

@@ -97,8 +97,8 @@ export function SubCategory({ categoryData, setHasSubCategory }) {
       showNotification({
         id: 'deleteSubCategorySuccess',
         autoClose: 3000,
-        title: 'Category Updated',
-        message: `category has been Updated.`,
+        title: 'Sub Category deleted',
+        message: `Sub category has been deleted.`,
         color: 'teal',
         icon: <IconCheck />,
         loading: false,

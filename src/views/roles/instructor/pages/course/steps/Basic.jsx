@@ -28,7 +28,8 @@ import { useCreateBasicMutation, useUpdateBasicMutation } from '@/views/roles/in
 import { showNotification } from '@mantine/notifications';
 import { IconX, IconCheck } from '@tabler/icons';
 
-export function Basic({ setNewCourse, course_id }) {
+export function Basic({ setNewCourse, course }) {
+  // console.log('course basic : ', course);
   const {
     isSuccess: isGetCategoriesWithSubCategoriesSuccess,
     isFetching: isGetCategoriesWithSubCategoriesFetching,
@@ -58,10 +59,15 @@ export function Basic({ setNewCourse, course_id }) {
 
   // console.log('createBasicData : ', createBasicData);
 
-  const [hasDiscount, setHasDiscount] = useState(true);
-  const [isFree, setIsFree] = useState(false);
-  const [studyLevel, setStudyLevel] = useState('0');
-  const [subCategoryId, setSubCategoryId] = useState();
+  // set initial values
+  const initStudyLevel = course?.study_level ? String(course?.study_level) : '0';
+  const initHasDiscount = course?.discount == 0 ? false : true;
+  const initIsFree = course?.price_dollar == 0 && course?.price_local == 0 ? true : false;
+
+  const [hasDiscount, setHasDiscount] = useState(initHasDiscount);
+  const [isFree, setIsFree] = useState(initIsFree);
+  const [studyLevel, setStudyLevel] = useState(initStudyLevel);
+  const [subCategoryId, setSubCategoryId] = useState(course?.sub_category_id);
   const [isSubmit, setIsSubmit] = useState(false);
 
   const validate = {
@@ -78,10 +84,10 @@ export function Basic({ setNewCourse, course_id }) {
 
   const form = useForm({
     initialValues: {
-      title: '',
-      price_dollar: null,
-      price_local: null,
-      discount: null,
+      title: course?.title || '',
+      price_dollar: course?.price_dollar,
+      price_local: course?.price_local,
+      discount: course?.discount,
     },
 
     validate,
@@ -156,11 +162,11 @@ export function Basic({ setNewCourse, course_id }) {
     }
 
     // register(values);
-    console.log(values);
-    if (!course_id) {
+    // console.log(values);
+    if (!course?.id) {
       createBasic(values);
     } else {
-      values['course_id'] = course_id;
+      values['course_id'] = course.id;
       updateBasic(values);
     }
   };

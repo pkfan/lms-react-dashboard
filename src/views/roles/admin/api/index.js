@@ -13,6 +13,7 @@ import getCategoryThumbnail from './category/getCategoryThumbnail';
 import postTest from './postTest';
 import createCategory from './category/createCategory';
 import updateCategory from './category/updateCategory';
+import deleteCategory from './category/deleteCategory';
 import createSubCategory from './category/createSubCategory';
 import deleteSubCategory from './category/deleteSubCategory';
 import insertCategoryThumbnail from './category/insertCategoryThumbnail';
@@ -34,6 +35,7 @@ export const adminApi = createApi({
     postTest: postTest(builder),
     createCategory: createCategory(builder),
     updateCategory: updateCategory(builder),
+    deleteCategory: deleteCategory(builder),
     createSubCategory: createSubCategory(builder),
     deleteSubCategory: deleteSubCategory(builder),
     insertCategoryThumbnail: insertCategoryThumbnail(builder),
@@ -55,6 +57,7 @@ export const {
   usePostTestMutation,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
   useCreateSubCategoryMutation,
   useDeleteSubCategoryMutation,
   useInsertCategoryThumbnailMutation,

@@ -31,7 +31,7 @@ import { showNotification } from '@mantine/notifications';
 import { IconCheck, IconX } from '@tabler/icons';
 import { useToggleStepMutation, useInsertFaqMutation } from '../../../api';
 
-export function FAQ({ course_id, refetchSteps, isEnabled }) {
+export function FAQ({ course, refetchSteps, isEnabled }) {
   const [
     toggleStep,
     {
@@ -112,13 +112,13 @@ export function FAQ({ course_id, refetchSteps, isEnabled }) {
 
   const switchToggleEnable = (enable) => {
     console.log('enable : ', enable);
-    toggleStep({ course_id, step: 'faq', key: 'enable', value: enable });
+    toggleStep({ course_id: course.id, step: 'faq', key: 'enable', value: enable });
     setEnabled(enable);
   };
 
   const submitFaq = (faq) => {
     console.log('faq ....', faq);
-    insertFaq({ faq, course_id });
+    insertFaq({ faq, course_id: course.id });
   };
 
   return (
@@ -150,13 +150,7 @@ export function FAQ({ course_id, refetchSteps, isEnabled }) {
             buttonName="Add FAQ"
             placeholder_1="Question: Is this course right for you?"
             placeholder_2="Answer: Yes! after taking this course, you will become a professional in your career."
-            data={[
-              { question: 'John Doe', answer: 'john@mantine.dev' },
-              { question: 'Bill Love', answer: 'bill@mantine.dev' },
-              { question: 'Nancy Eagle', answer: 'nanacy@mantine.dev' },
-              { question: 'Lim Notch', answer: 'lim@mantine.dev' },
-              { question: 'Susan Seven', answer: 'susan@mantine.dev' },
-            ]}
+            data={course?.course_attributes?.faqs || [{ question: '', answer: '' }]}
             submitData={submitFaq}
             savingData={isFaqLoading}
           />

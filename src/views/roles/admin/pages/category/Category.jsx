@@ -82,6 +82,7 @@ export function Category() {
     isFetching: isGetCategoriesFetching,
     isError: isGetCategoriesError,
     data: getCategoriesData,
+    refetch: getCategoriesRefetch,
   } = useGetCategoriesQuery({ page: activePage, search });
 
   return (
@@ -113,19 +114,21 @@ export function Category() {
             justifyContent: 'end',
           }}
         >
-          <MantineButton
-            compact
-            sx={(theme) => ({
-              height: 40,
-              paddingLeft: 8,
-              paddingRight: 8,
-            })}
-            color="lmsLayout"
-            variant="transparent"
-            onClick={getAllCategories}
-          >
-            All Category
-          </MantineButton>
+          {isGetCategoriesSuccess && (
+            <MantineButton
+              compact
+              sx={(theme) => ({
+                height: 40,
+                paddingLeft: 8,
+                paddingRight: 8,
+              })}
+              color="lmsLayout"
+              variant="transparent"
+              onClick={getAllCategories}
+            >
+              All Category ({getCategoriesData.meta.total})
+            </MantineButton>
+          )}
 
           <Popover width={300} trapFocus position="bottom-end" withArrow shadow="md">
             <Popover.Target>
@@ -177,7 +180,11 @@ export function Category() {
         {isGetCategoriesSuccess && (
           <CategoryList>
             {getCategoriesData.data.map((category) => (
-              <CategoryCard key={category.id} category={category} />
+              <CategoryCard
+                key={category.id}
+                category={category}
+                getCategoriesRefetch={getCategoriesRefetch}
+              />
             ))}
             {getCategoriesData.data.length <= 0 && (
               <NotFoundImage width={450} message="Category Not Found" />

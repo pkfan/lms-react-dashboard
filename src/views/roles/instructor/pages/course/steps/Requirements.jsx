@@ -8,7 +8,7 @@ import { useToggleStepMutation, useInsertRequirementsMutation } from '../../../a
 import { showNotification } from '@mantine/notifications';
 import { IconCheck, IconX } from '@tabler/icons';
 
-export function Requirements({ course_id, refetchSteps, isEnabled }) {
+export function Requirements({ course, refetchSteps, isEnabled }) {
   const [
     toggleStep,
     {
@@ -89,13 +89,13 @@ export function Requirements({ course_id, refetchSteps, isEnabled }) {
 
   const switchToggleEnable = (enable) => {
     console.log('enable : ', enable);
-    toggleStep({ course_id, step: 'requirements', key: 'enable', value: enable });
+    toggleStep({ course_id: course.id, step: 'requirements', key: 'enable', value: enable });
     setEnabled(enable);
   };
 
   const submitRequirements = (requirements) => {
     console.log('requirements ....', requirements);
-    insertRequirements({ requirements, course_id });
+    insertRequirements({ requirements, course_id: course.id });
   };
 
   return (
@@ -126,6 +126,7 @@ export function Requirements({ course_id, refetchSteps, isEnabled }) {
           <DragDropInput
             buttonName="Add Requirement"
             placeholder="Course requirement e.g. A computer with internet connection is required to take this course "
+            data={course?.course_attributes?.requirements || [{ name: '' }]}
             submitData={submitRequirements}
             savingData={isInsertRequirementsLoading}
           />

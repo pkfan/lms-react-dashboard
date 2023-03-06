@@ -31,7 +31,7 @@ import { showNotification } from '@mantine/notifications';
 import { IconCheck, IconX } from '@tabler/icons';
 import { useToggleStepMutation, useInsertFeaturesMutation } from '../../../api';
 
-export function Features({ course_id, refetchSteps, isEnabled }) {
+export function Features({ course, refetchSteps, isEnabled }) {
   const [
     toggleStep,
     {
@@ -112,13 +112,13 @@ export function Features({ course_id, refetchSteps, isEnabled }) {
 
   const switchToggleEnable = (enable) => {
     console.log('enable : ', enable);
-    toggleStep({ course_id, step: 'features', key: 'enable', value: enable });
+    toggleStep({ course_id: course.id, step: 'features', key: 'enable', value: enable });
     setEnabled(enable);
   };
 
   const submitFeatures = (features) => {
     console.log('features ....', features);
-    insertFeatures({ features, course_id });
+    insertFeatures({ features, course_id: course.id });
   };
 
   return (
@@ -149,13 +149,7 @@ export function Features({ course_id, refetchSteps, isEnabled }) {
           <DragDropInput
             buttonName="Add Feature"
             placeholder="Course Feature e.g. This course contain high quality content and great benefits for students."
-            data={[
-              { name: 'John Doe' },
-              { name: 'Bill Love' },
-              { name: 'Nancy Eagle' },
-              { name: 'Lim Notch' },
-              { name: 'Susan Seven' },
-            ]}
+            data={course?.course_attributes?.features || [{ name: '' }]}
             submitData={submitFeatures}
             savingData={isFeaturesLoading}
           />

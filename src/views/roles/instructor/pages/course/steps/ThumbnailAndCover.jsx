@@ -24,7 +24,7 @@ import {
   useInsertThumbnailMutation,
 } from '../../../api';
 
-export function ThumbnailAndCover({ thumbnail_id, cover_id, course_id }) {
+export function ThumbnailAndCover({ thumbnail_id, cover_id, course_id, refetchSteps }) {
   const [openThumbnailGallary, setOpenThumbnailGallary] = useState(false);
   const [openCoverGallary, setOpenCoverGallary] = useState(false);
   const [thumbnailData, setThumbnailData] = useState({ imageId: null, imageUrl: null });
@@ -65,6 +65,12 @@ export function ThumbnailAndCover({ thumbnail_id, cover_id, course_id }) {
       isError: isInsertCoverError,
     },
   ] = useInsertCoverMutation();
+
+  useEffect(() => {
+    if (isInsertThumbnailSuccess) {
+      refetchSteps();
+    }
+  }, [isInsertThumbnailSuccess]);
 
   useEffect(() => {
     if (isGetThumbnailSuccess) {

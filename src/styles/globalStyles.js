@@ -163,7 +163,11 @@ export const globalStyles = () => ({
   '.image-resizer:hover .resize-trigger': { opacity: 1 },
 
   '.mantine-Button-root:hover': {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'var(--layout-1)',
+  },
+
+  '.mantine-Modal-close:hover': {
+    background: 'var(--layout-2)',
   },
   '#your-id > [data-active]': {
     backgroundColor: 'pink',

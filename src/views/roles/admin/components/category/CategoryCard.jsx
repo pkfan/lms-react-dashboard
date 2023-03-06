@@ -1,16 +1,66 @@
+import { useEffect } from 'react';
 import { Grid, Image, Box, Title, Text, Flex, Group, Divider } from '@mantine/core';
 import CategoryCardAction from './CategoryCardAction';
+import { useDisclosure } from '@mantine/hooks';
 import { FaEdit } from 'react-icons/fa';
 import { ImEye } from 'react-icons/im';
 import { MdOutlineQuiz, MdOutlineAssignment, MdDeleteForever } from 'react-icons/md';
 import getImageUrl from '@/helpers/getImageUrl';
 import { Link } from 'react-router-dom';
 import config from '@/config';
+import DeleteModal from '@/components/common/modals/DeleteModal';
+import { useDeleteCategoryMutation } from '../../api';
+import { showNotification } from '@mantine/notifications';
+import { IconCheck, IconX } from '@tabler/icons';
 
-export function CategoryCard({ category }) {
+export function CategoryCard({ category, getCategoriesRefetch }) {
+  const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(false);
   const imageSrc = category.image
     ? getImageUrl(category.image)
     : `${config.domainUrl}/storage/images/400X400.png`;
+
+  const [
+    deleteCategory,
+    {
+      isLoading: isDeleteCategoryLoading,
+      isSuccess: isDeleteCategorySuccess,
+      error: deleteCategoryError,
+      data: deleteCategoryData,
+      isError: isDeleteCategoryError,
+    },
+  ] = useDeleteCategoryMutation();
+
+  useEffect(() => {
+    if (isDeleteCategorySuccess) {
+      showNotification({
+        id: 'deleteCategorySuccess',
+        autoClose: 3000,
+        title: 'Category deleted',
+        message: `category has been deleted.`,
+        color: 'teal',
+        icon: <IconCheck />,
+        loading: false,
+      });
+      getCategoriesRefetch();
+      closeModal();
+    }
+    if (isDeleteCategoryError) {
+      // setCategoryId(data.id);
+      showNotification({
+        id: 'deleteCategoryData',
+        autoClose: 6000,
+        title: 'Error!!!',
+        message: deleteCategoryError.errors,
+        color: 'red',
+        icon: <IconX />,
+        loading: false,
+      });
+    }
+  }, [isDeleteCategorySuccess, isDeleteCategoryError]);
+
+  const confirmDelete = () => {
+    deleteCategory(category.id);
+  };
 
   return (
     <Flex
@@ -58,11 +108,27 @@ export function CategoryCard({ category }) {
           >
             <FaEdit size={24} />
           </CategoryCardAction>
-          <CategoryCardAction tooltip="Delete Category">
+          <CategoryCardAction onClick={openModal} tooltip="Delete Category">
             <MdDeleteForever size={24} />
           </CategoryCardAction>
         </Flex>
       </Box>
+      <DeleteModal
+        title="Delete Category"
+        opened={openedModal}
+        confirm={confirmDelete}
+        close={closeModal}
+        isDeleting={isDeleteCategoryLoading}
+      >
+        <Text>Are you sure you want to delete ({category.name}) category?</Text>
+        <br />
+        <Text>
+          If you delete this category, then all courses of this category will disappear from SEARCH
+          results.
+        </Text>
+        <br />
+        <Text>Remember! you can EDIT/UPDATE this category, instead of delete.</Text>
+      </DeleteModal>
     </Flex>
   );
 }
