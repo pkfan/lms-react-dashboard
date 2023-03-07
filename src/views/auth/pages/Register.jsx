@@ -189,9 +189,9 @@ export function Register() {
 
   const validateOtherFields = (values) => {
     let hasNotValidValues = false;
-    let state_id = '';
-    let city_id = '';
-    let phone = '';
+    let state_id = null;
+    let city_id = null;
+    let phone = null;
 
     // states validation
 
@@ -223,9 +223,10 @@ export function Register() {
       setIsInvalidFields({ ...isInvalidFields, phone: true });
     }
 
-    if (hasNotValidValues) {
-      return null;
-    }
+    // uncommnet if all fields are required
+    // if (hasNotValidValues) {
+    //   return null;
+    // }
 
     values['country_code'] = countryCode;
 

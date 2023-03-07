@@ -3,6 +3,7 @@ import { AiOutlineDashboard, AiFillSetting } from 'react-icons/ai';
 import { MdOutlineVideoLibrary, MdPayment } from 'react-icons/md';
 import { ImManWoman } from 'react-icons/im';
 import { GiRomanToga } from 'react-icons/gi';
+import { GrGroup } from 'react-icons/gr';
 
 import SideBarLinks from '@/components/SideBar/SideBarLinks';
 import SideBarLink from '@/components/SideBar/SideBarLink';
@@ -11,7 +12,7 @@ export function InstructorSidebarLinks({ setSidebarOpened }) {
   return (
     <SideBarLinks>
       <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/instructor/instructor">
-        <GiRomanToga size={20} style={{ opicity: 0.6 }} />
+        <GrGroup size={20} style={{ opicity: 0.6 }} />
         <Text fw={500} fz={16}>
           Intructors
         </Text>

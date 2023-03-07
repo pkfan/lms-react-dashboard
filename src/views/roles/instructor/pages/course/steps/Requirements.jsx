@@ -1,5 +1,6 @@
+import _ from 'lodash';
 import { useState, useEffect } from 'react';
-import { Stack, Flex, Group, Paper, Loader } from '@mantine/core';
+import { Stack, Flex, Group, Paper, Loader, Text } from '@mantine/core';
 import Overlay from '@/components/common/Overlay';
 
 import SwtichText from '@/components/common/SwitchText';
@@ -33,25 +34,17 @@ export function Requirements({ course, refetchSteps, isEnabled }) {
 
   useEffect(() => {
     if (isToggleStepSuccess) {
-      const toggleMessage = enabled ? 'Enabled' : 'Disabled';
-      showNotification({
-        id: 'toggleStepSuccess',
-        autoClose: 3000,
-        title: `Requirements ${toggleMessage}.`,
-        message: `Requirements has been ${toggleMessage}.`,
-        color: 'teal',
-        icon: <IconCheck />,
-        loading: false,
-      });
-      console.log('toggleStepData : ', toggleStepData);
       refetchSteps();
     }
     if (isToggleStepError) {
+      const error = _.isObject(toggleStepError.errors)
+        ? 'data is invalid.'
+        : toggleStepError.errors;
       showNotification({
         id: 'toggleStepError',
         autoClose: 6000,
         title: 'Error!!!',
-        message: toggleStepError.errors,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,
@@ -73,11 +66,14 @@ export function Requirements({ course, refetchSteps, isEnabled }) {
       refetchSteps();
     }
     if (isInsertRequirementsError) {
+      const error = _.isObject(insertRequirementsError.errors)
+        ? 'data is invalid.'
+        : insertRequirementsError.errors;
       showNotification({
         id: 'insertRequiremntsError',
         autoClose: 6000,
         title: 'Error!!!',
-        message: insertRequirementsError.errors,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,
@@ -101,9 +97,11 @@ export function Requirements({ course, refetchSteps, isEnabled }) {
   return (
     <>
       <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-        <Flex w="100%" align="center" justify="end">
+        <Flex w="100%" align="center" justify="space-between">
+          <Text>
+            <b>Course:</b> {course.title}
+          </Text>
           <Group position="right">
-            {isToggleStepLoading && <Loader size="xs" />}
             <SwtichText
               onLabel="Enabled"
               offLabel="Disabled"

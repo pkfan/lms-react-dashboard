@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useState, useEffect } from 'react';
 import { Stack, Tabs, Group, Flex, Loader } from '@mantine/core';
 import Button from '@/components/common/Button';
@@ -36,11 +37,14 @@ export function UpdateCategory() {
       console.log('getCategoryData', getCategoryData.name);
     }
     if (isGetCategoryError) {
+      const error = _.isObject(getCategoryError.errors)
+        ? 'data is invalid.'
+        : getCategoryError.errors;
       showNotification({
         id: 'createCategoryError',
         autoClose: 6000,
         title: 'Error!!!',
-        message: getCategoryError.errors,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,

@@ -208,18 +208,13 @@ export function CreateUpdateCourse({ course, pageTitle, setCourse = () => {} }) 
           )}
         </Tabs.Panel>
         <Tabs.Panel value="thumbnail" pl="xs">
-          <ThumbnailAndCover
-            thumbnail_id={course?.thumbnail_id}
-            cover_id={course?.cover_id}
-            course_id={course?.id}
-            refetchSteps={refetchSteps}
-          />
+          {course && steps && <ThumbnailAndCover refetchSteps={refetchSteps} course={course} />}
         </Tabs.Panel>
         <Tabs.Panel value="seo" pl="xs">
-          <SEO />
+          {course && steps && <SEO refetchSteps={refetchSteps} course={course} />}
         </Tabs.Panel>
         <Tabs.Panel value="chapters" pl="xs">
-          <Chapters />
+          {course && steps && <Chapters refetchSteps={refetchSteps} course={course} />}
         </Tabs.Panel>
         <Tabs.Panel value="lessons" pl="xs">
           <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>

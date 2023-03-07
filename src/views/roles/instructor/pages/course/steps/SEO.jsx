@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import _ from 'lodash';
 import {
   TextInput,
   Stack,
@@ -11,6 +12,7 @@ import {
   Textarea,
   Progress,
   Box,
+  Text,
 } from '@mantine/core';
 import Button from '@/components/common/Button';
 
@@ -26,38 +28,136 @@ import SwtichText from '@/components/common/SwitchText';
 import textareaStyleFull from '@/styles/textareaStyleFull';
 import { FcGoogle } from 'react-icons/fc';
 import slugify from 'slugify';
+import { useInsertSeoMutation } from '../../../api';
+import { showNotification } from '@mantine/notifications';
+import { IconCheck, IconX } from '@tabler/icons';
 
-export function SEO() {
+// google
+const getProgress = ({ textContent, totalLength = 60, yellowValue = 50 }) => {
+  let currentLength = textContent.length;
+
+  let percentage = Math.ceil((currentLength / totalLength) * 100);
+
+  let color;
+  if (percentage <= yellowValue) {
+    color = 'yellow';
+  } else if (percentage > yellowValue && percentage <= 100) {
+    color = 'green';
+  } else {
+    color = 'red';
+  }
+  return { value: percentage, color };
+};
+
+export function SEO({ course, refetchSteps }) {
+  const [
+    insertSeo,
+    {
+      isSuccess: isInsertSeoSuccess,
+      isLoading: isInsertSeoLoading,
+      isError: isInsertSeoError,
+      error: insertSeoError,
+    },
+  ] = useInsertSeoMutation();
+
+  useEffect(() => {
+    if (isInsertSeoSuccess) {
+      showNotification({
+        id: 'insertSeoSuccess',
+        autoClose: 3000,
+        title: `Seo Created`,
+        message: `Seo has been created.`,
+        color: 'teal',
+        icon: <IconCheck />,
+        loading: false,
+      });
+      refetchSteps();
+    }
+
+    if (isInsertSeoError) {
+      const error = _.isObject(insertSeoError.errors)
+        ? 'Input data is invalid.'
+        : insertSeoError.errors;
+
+      showNotification({
+        id: 'insertSeoError',
+        autoClose: 6000,
+        title: 'Error!!!',
+        message: error,
+        color: 'red',
+        icon: <IconX />,
+        loading: false,
+      });
+
+      console.log('insertSeoError.errors : ', insertSeoError.errors);
+    }
+  }, [isInsertSeoSuccess, isInsertSeoError]);
+
+  ////////////////////////
   const [save, setSave] = useState(false);
 
-  const [googleTitle, setGoogleTitle] = useState('');
-  const [googleTitleProgress, setGoogleTitleProgress] = useState({ value: 0, color: '' });
+  const initGoogleTitle = course?.course_attributes?.seo?.googleTitle || '';
+  const [googleTitle, setGoogleTitle] = useState(initGoogleTitle);
+  const [googleTitleProgress, setGoogleTitleProgress] = useState(
+    getProgress({
+      textContent: googleTitle,
+      totalLength: 60,
+      yellowValue: 60,
+    }),
+  );
 
-  const [googleDescription, setGoogleDescription] = useState('');
-  const [googleDescriptionProgress, setGoogleDescriptionProgress] = useState({
-    value: 0,
-    color: '',
-  });
+  const initGoogleDescription = course?.course_attributes?.seo?.googleDescription || '';
+  const [googleDescription, setGoogleDescription] = useState(initGoogleDescription);
+  const [googleDescriptionProgress, setGoogleDescriptionProgress] = useState(
+    getProgress({
+      textContent: googleDescription,
+      totalLength: 155,
+      yellowValue: 75,
+    }),
+  );
 
-  const [facebookTitle, setFacebookTitle] = useState('');
-  const [facebookTitleProgress, setFacebookTitleProgress] = useState({ value: 0, color: '' });
+  const initFacebookTitle = course?.course_attributes?.seo?.facebookTitle || '';
+  const [facebookTitle, setFacebookTitle] = useState(initFacebookTitle);
+  const [facebookTitleProgress, setFacebookTitleProgress] = useState(
+    getProgress({
+      textContent: facebookTitle,
+      totalLength: 60,
+      yellowValue: 60,
+    }),
+  );
 
-  const [facebookDescription, setFacebookDescription] = useState('');
-  const [facebookDescriptionProgress, setFacebookDescriptionProgress] = useState({
-    value: 0,
-    color: '',
-  });
+  const initFacebookDescription = course?.course_attributes?.seo?.facebookDescription || '';
+  const [facebookDescription, setFacebookDescription] = useState(initFacebookDescription);
+  const [facebookDescriptionProgress, setFacebookDescriptionProgress] = useState(
+    getProgress({
+      textContent: facebookDescription,
+      totalLength: 155,
+      yellowValue: 75,
+    }),
+  );
 
-  const [twitterTitle, setTwitterTitle] = useState('');
-  const [twitterTitleProgress, setTwitterTitleProgress] = useState({ value: 0, color: '' });
+  const initTwitterTitle = course?.course_attributes?.seo?.twitterTitle || '';
+  const [twitterTitle, setTwitterTitle] = useState(initTwitterTitle);
+  const [twitterTitleProgress, setTwitterTitleProgress] = useState(
+    getProgress({
+      textContent: twitterTitle,
+      totalLength: 60,
+      yellowValue: 60,
+    }),
+  );
 
-  const [twitterDescription, setTwitterDescription] = useState('');
-  const [twitterDescriptionProgress, setTwitterDescriptionProgress] = useState({
-    value: 0,
-    color: '',
-  });
+  const initTwitterDescription = course?.course_attributes?.seo?.twitterDescription || '';
+  const [twitterDescription, setTwitterDescription] = useState(initTwitterDescription);
+  const [twitterDescriptionProgress, setTwitterDescriptionProgress] = useState(
+    getProgress({
+      textContent: twitterDescription,
+      totalLength: 155,
+      yellowValue: 75,
+    }),
+  );
 
-  const [slug, setSlug] = useState('');
+  const initSlug = course?.slug || '';
+  const [slug, setSlug] = useState(initSlug);
 
   const createSlugify = (slug) => {
     let finalSlug = slugify(slug, {
@@ -70,6 +170,7 @@ export function SEO() {
     });
 
     setSlug(finalSlug);
+    return finalSlug;
   };
 
   const onChangeSlug = (event) => {
@@ -77,142 +178,117 @@ export function SEO() {
   };
 
   // google
-  const onChangeGoogleTitleProgress = () => {
-    const totalLength = 70;
-    let currentLength = googleTitle.length;
-
-    let percentage = Math.ceil((currentLength / totalLength) * 100);
-
-    let color;
-    if (percentage <= 50) {
-      color = 'yellow';
-    } else if (percentage > 50 && percentage <= 100) {
-      color = 'green';
-    } else {
-      color = 'red';
-    }
-    setGoogleTitleProgress({ value: percentage, color });
-  };
-  const onChangeGoogleDescriptionProgress = () => {
-    const totalLength = 155;
-    let currentLength = googleDescription.length;
-
-    let percentage = Math.ceil((currentLength / totalLength) * 100);
-
-    let color;
-    if (percentage < 75) {
-      color = 'yellow';
-    } else if (percentage >= 75 && percentage <= 100) {
-      color = 'green';
-    } else {
-      color = 'red';
-    }
-    setGoogleDescriptionProgress({ value: percentage, color });
-  };
-
   const onChangeGoogleTitle = (event) => {
     setGoogleTitle(event.target.value);
     createSlugify(event.target.value);
-    onChangeGoogleTitleProgress();
+
+    // onChangeGoogleTitleProgress();
+    const googleProgress = getProgress({
+      textContent: googleTitle,
+      totalLength: 60,
+      yellowValue: 60,
+    });
+    setGoogleTitleProgress(googleProgress);
   };
 
   const onChangeGoogleDescription = (event) => {
     setGoogleDescription(event.target.value);
-    onChangeGoogleDescriptionProgress();
+    // onChangeGoogleDescriptionProgress();
+    const googleProgress = getProgress({
+      textContent: googleDescription,
+      totalLength: 155,
+      yellowValue: 75,
+    });
+    setGoogleDescriptionProgress(googleProgress);
   };
 
   // facebook
-  const onChangeFacebookTitleProgress = () => {
-    const totalLength = 60;
-    let currentLength = facebookTitle.length;
-
-    let percentage = Math.ceil((currentLength / totalLength) * 100);
-
-    let color;
-    if (percentage <= 50) {
-      color = 'yellow';
-    } else if (percentage > 50 && percentage <= 100) {
-      color = 'green';
-    } else {
-      color = 'red';
-    }
-    setFacebookTitleProgress({ value: percentage, color });
-  };
-  const onChangeFacebookDescriptionProgress = () => {
-    const totalLength = 155;
-    let currentLength = facebookDescription.length;
-
-    let percentage = Math.ceil((currentLength / totalLength) * 100);
-
-    let color;
-    if (percentage < 75) {
-      color = 'yellow';
-    } else if (percentage >= 75 && percentage <= 100) {
-      color = 'green';
-    } else {
-      color = 'red';
-    }
-    setFacebookDescriptionProgress({ value: percentage, color });
-  };
-
   const onChangeFacebookTitle = (event) => {
     setFacebookTitle(event.target.value);
-    onChangeFacebookTitleProgress();
+    // onChangeFacebookTitleProgress();
+    const facebookProgress = getProgress({
+      textContent: facebookTitle,
+      totalLength: 60,
+      yellowValue: 50,
+    });
+    setFacebookTitleProgress(facebookProgress);
   };
 
   const onChangeFacebookDescription = (event) => {
     setFacebookDescription(event.target.value);
-    onChangeFacebookDescriptionProgress();
+    // onChangeFacebookDescriptionProgress();
+    const facebookProgress = getProgress({
+      textContent: facebookDescription,
+      totalLength: 155,
+      yellowValue: 75,
+    });
+    setFacebookDescriptionProgress(facebookProgress);
   };
 
   // twitter
-  const onChangeTwitterTitleProgress = () => {
-    const totalLength = 60;
-    let currentLength = twitterTitle.length;
-
-    let percentage = Math.ceil((currentLength / totalLength) * 100);
-
-    let color;
-    if (percentage <= 50) {
-      color = 'yellow';
-    } else if (percentage > 50 && percentage <= 100) {
-      color = 'green';
-    } else {
-      color = 'red';
-    }
-    setTwitterTitleProgress({ value: percentage, color });
-  };
-  const onChangeTwitterDescriptionProgress = () => {
-    const totalLength = 155;
-    let currentLength = twitterDescription.length;
-
-    let percentage = Math.ceil((currentLength / totalLength) * 100);
-
-    let color;
-    if (percentage < 75) {
-      color = 'yellow';
-    } else if (percentage >= 75 && percentage <= 100) {
-      color = 'green';
-    } else {
-      color = 'red';
-    }
-    setTwitterDescriptionProgress({ value: percentage, color });
-  };
-
   const onChangeTwitterTitle = (event) => {
     setTwitterTitle(event.target.value);
-    onChangeTwitterTitleProgress();
+    // onChangeTwitterTitleProgress();
+    const twitterProgress = getProgress({
+      textContent: twitterTitle,
+      totalLength: 60,
+      yellowValue: 50,
+    });
+    setTwitterTitleProgress(twitterProgress);
   };
 
   const onChangeTwitterDescription = (event) => {
     setTwitterDescription(event.target.value);
-    onChangeTwitterDescriptionProgress();
+    // onChangeTwitterDescriptionProgress();
+    const twitterProgress = getProgress({
+      textContent: twitterDescription,
+      totalLength: 155,
+      yellowValue: 75,
+    });
+    setTwitterDescriptionProgress(twitterProgress);
+  };
+
+  const onSubmitForm = () => {
+    setSave(true);
+    if (
+      slug &&
+      googleTitle &&
+      googleDescription &&
+      facebookTitle &&
+      facebookDescription &&
+      twitterTitle &&
+      twitterDescription
+    ) {
+      const seoData = {
+        slug: createSlugify(slug),
+        seo: {
+          googleTitle,
+          googleDescription,
+          facebookTitle,
+          facebookDescription,
+          twitterTitle,
+          twitterDescription,
+        },
+        course_id: course.id,
+      };
+      console.log('test pass and ready to submit, SEO : ', seoData);
+      insertSeo(seoData);
+    }
   };
 
   return (
     <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-      <Flex w="100%" align="center" justify="end">
-        <Button compact color="lmsLayout" leftIcon={<FaSave size={16} />}>
+      <Flex w="100%" align="center" justify="space-between">
+        <Text>
+          <b>Course:</b> {course.title}
+        </Text>
+        <Button
+          onClick={onSubmitForm}
+          compact
+          color="lmsLayout"
+          leftIcon={<FaSave size={16} />}
+          loading={isInsertSeoLoading}
+        >
           save
         </Button>
       </Flex>
@@ -243,22 +319,23 @@ export function SEO() {
             icon={<BsFileFontFill size={16} style={{ opacity: 0.7 }} />}
             placeholder="create course title for Search Engine Optimization."
           />
-          {googleTitle && (
-            <Progress
-              sx={inputStylesFull}
-              color={googleTitleProgress.color}
-              radius="xl"
-              value={googleTitleProgress.value}
-              striped
-            />
-          )}
+
+          <Progress
+            sx={inputStylesFull}
+            color={googleTitleProgress.color}
+            radius="xl"
+            value={googleTitleProgress.value}
+            striped
+          />
         </Stack>
         <TextInput
           sx={inputStylesFull}
           withAsterisk
           label="Course Slug (URL)"
           name="slug"
-          error={save && !slug && 'Please, type course slug for URL.'}
+          error={
+            insertSeoError?.errors?.slug || (save && !slug && 'Please, type course slug for URL.')
+          }
           value={slug}
           onChange={onChangeSlug}
           required
@@ -279,15 +356,14 @@ export function SEO() {
             placeholder="write meta description."
             minRows={4}
           />
-          {googleDescription && (
-            <Progress
-              sx={inputStylesFull}
-              color={googleDescriptionProgress.color}
-              radius="xl"
-              value={googleDescriptionProgress.value}
-              striped
-            />
-          )}
+
+          <Progress
+            sx={inputStylesFull}
+            color={googleDescriptionProgress.color}
+            radius="xl"
+            value={googleDescriptionProgress.value}
+            striped
+          />
         </Stack>
 
         <Divider my="sm" variant="dashed" />
@@ -309,15 +385,14 @@ export function SEO() {
             icon={<BsFileFontFill size={16} style={{ opacity: 0.7 }} />}
             placeholder="create course title for socail media."
           />
-          {facebookTitle && (
-            <Progress
-              sx={inputStylesFull}
-              color={facebookTitleProgress.color}
-              radius="xl"
-              value={facebookTitleProgress.value}
-              striped
-            />
-          )}
+
+          <Progress
+            sx={inputStylesFull}
+            color={facebookTitleProgress.color}
+            radius="xl"
+            value={facebookTitleProgress.value}
+            striped
+          />
         </Stack>
 
         <Stack w="100%" spacing="xs">
@@ -333,15 +408,14 @@ export function SEO() {
             placeholder="write facebook and social media description."
             minRows={4}
           />
-          {facebookDescription && (
-            <Progress
-              sx={inputStylesFull}
-              color={facebookDescriptionProgress.color}
-              radius="xl"
-              value={facebookDescriptionProgress.value}
-              striped
-            />
-          )}
+
+          <Progress
+            sx={inputStylesFull}
+            color={facebookDescriptionProgress.color}
+            radius="xl"
+            value={facebookDescriptionProgress.value}
+            striped
+          />
         </Stack>
 
         {/* twitter  */}
@@ -364,15 +438,14 @@ export function SEO() {
             icon={<BsFileFontFill size={16} style={{ opacity: 0.7 }} />}
             placeholder="create course title for twitter card."
           />
-          {twitterTitle && (
-            <Progress
-              sx={inputStylesFull}
-              color={twitterTitleProgress.color}
-              radius="xl"
-              value={twitterTitleProgress.value}
-              striped
-            />
-          )}
+
+          <Progress
+            sx={inputStylesFull}
+            color={twitterTitleProgress.color}
+            radius="xl"
+            value={twitterTitleProgress.value}
+            striped
+          />
         </Stack>
 
         <Stack w="100%" spacing="xs">
@@ -388,19 +461,23 @@ export function SEO() {
             placeholder="write twitter card description."
             minRows={4}
           />
-          {twitterDescription && (
-            <Progress
-              sx={inputStylesFull}
-              color={twitterDescriptionProgress.color}
-              radius="xl"
-              value={twitterDescriptionProgress.value}
-              striped
-            />
-          )}
+
+          <Progress
+            sx={inputStylesFull}
+            color={twitterDescriptionProgress.color}
+            radius="xl"
+            value={twitterDescriptionProgress.value}
+            striped
+          />
         </Stack>
       </Stack>
       <Flex w="100%" align="center" justify="center" py={32}>
-        <Button color="lmsLayout" leftIcon={<FaSave size={16} />}>
+        <Button
+          onClick={onSubmitForm}
+          color="lmsLayout"
+          leftIcon={<FaSave size={16} />}
+          loading={isInsertSeoLoading}
+        >
           save
         </Button>
       </Flex>

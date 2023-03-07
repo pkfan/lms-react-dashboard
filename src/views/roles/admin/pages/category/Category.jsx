@@ -19,7 +19,7 @@ import Button from '@/components/common/Button';
 import { SiAddthis } from 'react-icons/si';
 import { MdVideoSettings } from 'react-icons/md';
 import { RiDraftLine } from 'react-icons/ri';
-import { FiTrash2 } from 'react-icons/fi';
+import { FiRefreshCw } from 'react-icons/fi';
 import { ImEye, ImFilter, ImSearch } from 'react-icons/im';
 import Paper from '@/components/common/Paper';
 import PageTitle from '@/components/common/PageTitle';
@@ -138,6 +138,7 @@ export function Category() {
                   height: 40,
                   paddingLeft: 8,
                   paddingRight: 8,
+                  borderLeft: `1px solid ${theme.colors.lmsLayout[3]}`,
                 })}
                 leftIcon={<ImSearch size={16} />}
                 color="lmsLayout"
@@ -162,6 +163,22 @@ export function Category() {
               </Stack>
             </Popover.Dropdown>
           </Popover>
+
+          <MantineButton
+            compact
+            leftIcon={<FiRefreshCw size={20} />}
+            sx={(theme) => ({
+              height: 40,
+              paddingLeft: 8,
+              paddingRight: 8,
+              borderLeft: `1px solid ${theme.colors.lmsLayout[3]}`,
+            })}
+            color="lmsLayout"
+            variant="transparent"
+            onClick={getCategoriesRefetch}
+          >
+            Refresh
+          </MantineButton>
         </Box>
         {isGetCategoriesFetching && (
           <>

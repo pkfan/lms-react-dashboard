@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import _ from 'lodash';
 import {
   TextInput,
   Stack,
@@ -76,13 +77,14 @@ export function SubCategory({ categoryData, setHasSubCategory }) {
       getSubCategoriesRefetch();
     }
     if (isCreateSubCategoryError) {
-      console.log('isCreateSubCategoryError', createSubCategoryError);
-      // setCategoryId(data.id);
+      const error = _.isObject(createSubCategoryError.errors)
+        ? 'data is invalid.'
+        : createSubCategoryError.errors;
       showNotification({
         id: 'createSubCategoryError',
         autoClose: 6000,
         title: 'Error!!!',
-        message: createSubCategoryError.errors,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,
@@ -106,13 +108,15 @@ export function SubCategory({ categoryData, setHasSubCategory }) {
       getSubCategoriesRefetch();
     }
     if (isDeleteSubCategoryError) {
-      console.log('isDeleteSubCategoryError', deleteSubCategoryError);
-      // setCategoryId(data.id);
+      const error = _.isObject(deleteSubCategoryError.errors)
+        ? 'data is invalid.'
+        : deleteSubCategoryError.errors;
+
       showNotification({
         id: 'deleteSubCategoryError',
         autoClose: 6000,
         title: 'Error!!!',
-        message: deleteSubCategoryError.errors,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,

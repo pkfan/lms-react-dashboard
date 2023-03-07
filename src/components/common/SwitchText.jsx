@@ -5,6 +5,7 @@ export function SwtichText({
   offLabel = 'Disabled',
   checked,
   setChecked = () => {},
+  color = 'teal',
 }) {
   return (
     <Switch
@@ -12,7 +13,7 @@ export function SwtichText({
       onLabel={onLabel}
       offLabel={offLabel}
       size="md"
-      color="teal"
+      color={color}
       checked={checked}
       onChange={(event) => setChecked(event.currentTarget.checked)}
     />

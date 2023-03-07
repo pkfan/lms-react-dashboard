@@ -24,7 +24,7 @@ import {
   useInsertThumbnailMutation,
 } from '../../../api';
 
-export function ThumbnailAndCover({ thumbnail_id, cover_id, course_id, refetchSteps }) {
+export function ThumbnailAndCover({ course, refetchSteps }) {
   const [openThumbnailGallary, setOpenThumbnailGallary] = useState(false);
   const [openCoverGallary, setOpenCoverGallary] = useState(false);
   const [thumbnailData, setThumbnailData] = useState({ imageId: null, imageUrl: null });
@@ -35,14 +35,14 @@ export function ThumbnailAndCover({ thumbnail_id, cover_id, course_id, refetchSt
     isFetching: isGetThumbnailFetching,
     isError: isGetThumbnailError,
     data: getThumbnailData,
-  } = useGetThumbnailQuery(thumbnail_id);
+  } = useGetThumbnailQuery(course.thumbnail_id);
 
   const {
     isSuccess: isGetCoverSuccess,
     isFetching: isGetCoverFetching,
     isError: isGetCoverError,
     data: getCoverData,
-  } = useGetCoverQuery(cover_id);
+  } = useGetCoverQuery(course.cover_id);
 
   const [
     insertThumbnail,
@@ -96,23 +96,22 @@ export function ThumbnailAndCover({ thumbnail_id, cover_id, course_id, refetchSt
 
   const insertThumbnailDetail = (imageDetail) => {
     console.log('image detail : ', imageDetail);
-    insertThumbnail({ image_id: imageDetail.imageId, course_id });
+    insertThumbnail({ image_id: imageDetail.imageId, course_id: course.id });
     setThumbnailData(imageDetail);
   };
   const insertCoverDetail = (imageDetail) => {
     console.log('image detail : ', imageDetail);
-    insertCover({ image_id: imageDetail.imageId, course_id });
+    insertCover({ image_id: imageDetail.imageId, course_id: course.id });
     setCoverData(imageDetail);
   };
 
   return (
     <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-      <Flex w="100%" align="center" justify="end">
-        <Button compact color="lmsLayout" leftIcon={<FaSave size={16} />}>
-          save
-        </Button>
+      <Flex w="100%" align="center" justify="space-between">
+        <Text>
+          <b>Course:</b> {course.title}
+        </Text>
       </Flex>
-
       <Stack
         spacing="lg"
         py={16}
@@ -207,11 +206,6 @@ export function ThumbnailAndCover({ thumbnail_id, cover_id, course_id, refetchSt
           imageUploadRelativeUrl="/instructor/course/cover/upload"
         />
       </Stack>
-      <Flex w="100%" align="center" justify="center" py={32}>
-        <Button color="lmsLayout" leftIcon={<FaSave size={16} />}>
-          save
-        </Button>
-      </Flex>
     </Paper>
   );
 }

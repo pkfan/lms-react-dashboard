@@ -4,23 +4,34 @@ import baseQuery from '@/api/baseQuery';
 
 // query
 import getCategoriesWithSubCategories from './category/getCategoriesWithSubCategories';
-import getCourseSteps from './course-steps/getCourseSteps';
-import getDescription from './course-steps/getDescription';
-import getThumbnail from './course-steps/getThumbnail';
-import getCover from './course-steps/getCover';
 import getCourse from './course/getCourse';
 
-// mutate
-import toggleStep from './course-steps/toggleStep';
-import createBasic from './course-steps/createBasic';
-import updateBasic from './course-steps/updateBasic';
-import insertDescription from './course-steps/insertDescription';
-import insertRequirements from './course-steps/insertRequirements';
-import insertOutcomes from './course-steps/insertOutcomes';
-import insertFaq from './course-steps/insertFaq';
-import insertFeatures from './course-steps/insertFeatures';
-import insertThumbnail from './course-steps/insertThumbnail';
-import insertCover from './course-steps/insertCover';
+import {
+  getCourseSteps,
+  getDescription,
+  getThumbnail,
+  getCover,
+  toggleStep,
+  createBasic,
+  updateBasic,
+  insertDescription,
+  insertRequirements,
+  insertOutcomes,
+  insertFaq,
+  insertFeatures,
+  insertThumbnail,
+  insertCover,
+  insertSeo,
+} from './course-steps';
+
+import {
+  createChapter,
+  getChapter,
+  getChapters,
+  updateChapter,
+  updateChapterVisibility,
+  deleteChapter,
+} from './chapter';
 
 // Define a service using a base URL and expected endpoints
 export const instructorApi = createApi({
@@ -35,6 +46,8 @@ export const instructorApi = createApi({
     getThumbnail: getThumbnail(builder),
     getCover: getCover(builder),
     getCourse: getCourse(builder),
+    getChapter: getChapter(builder),
+    getChapters: getChapters(builder),
 
     // mutation
     createBasic: createBasic(builder),
@@ -47,6 +60,11 @@ export const instructorApi = createApi({
     insertFeatures: insertFeatures(builder),
     insertThumbnail: insertThumbnail(builder),
     insertCover: insertCover(builder),
+    insertSeo: insertSeo(builder),
+    createChapter: createChapter(builder),
+    updateChapter: updateChapter(builder),
+    updateChapterVisibility: updateChapterVisibility(builder),
+    deleteChapter: deleteChapter(builder),
   }),
 });
 
@@ -60,6 +78,8 @@ export const {
   useGetThumbnailQuery,
   useGetCoverQuery,
   useGetCourseQuery,
+  useGetChapterQuery,
+  useGetChaptersQuery,
 
   // mutattion
   useCreateBasicMutation,
@@ -72,4 +92,9 @@ export const {
   useInsertFeaturesMutation,
   useInsertThumbnailMutation,
   useInsertCoverMutation,
+  useInsertSeoMutation,
+  useCreateChapterMutation,
+  useUpdateChapterMutation,
+  useUpdateChapterVisibilityMutation,
+  useDeleteChapterMutation,
 } = instructorApi;

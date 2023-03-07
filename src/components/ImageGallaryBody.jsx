@@ -25,6 +25,7 @@ import { IMAGE_EXTENSIONS } from '@/constants/imageExtensions';
 import resumableUpload from '@/helpers/resumableUpload';
 
 import { useForm, isEmail, hasLength } from '@mantine/form';
+import { NotFoundImage } from './images/NotFoundImage';
 
 export function ImageGallaryBody({
   setImageDetail,
@@ -137,6 +138,41 @@ export function ImageGallaryBody({
                 );
               })}
             </Flex>
+          )}
+          {isGetImagesSuccess && imagesData.data.length <= 0 && (
+            <Stack
+              justify="center"
+              align="center"
+              sx={{ padding: 100, position: 'absolute', top: '0px', width: '100%', zIndex: -1 }}
+            >
+              <NotFoundImage width={450} message="Images not found" />
+            </Stack>
+          )}
+          {isGetImagesError && (
+            <Stack
+              justify="center"
+              align="center"
+              sx={(theme) => ({
+                color: theme.colors.red[5],
+                padding: 30,
+                position: 'absolute',
+                top: '100px',
+                width: '100%',
+                zIndex: -1,
+              })}
+            >
+              <BiError size={150} />
+              <Title order={4}>Error in loading your images, refresh browser.</Title>
+            </Stack>
+          )}
+          {isGetImagesFetching && (
+            <Stack
+              justify="center"
+              align="center"
+              sx={{ padding: 100, position: 'absolute', top: '100px', width: '100%' }}
+            >
+              <Loader />
+            </Stack>
           )}
         </Tabs.Panel>
 

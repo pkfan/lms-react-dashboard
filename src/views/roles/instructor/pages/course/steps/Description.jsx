@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useState, useEffect } from 'react';
 import { Paper, Flex, Loader, Text } from '@mantine/core';
 import Button from '@/components/common/Button';
@@ -48,11 +49,14 @@ export function Description({ refetchSteps, course }) {
       refetchSteps();
     }
     if (isInsertDescriptionError) {
+      const error = _.isObject(insertDescriptionError.errors)
+        ? 'data is invalid.'
+        : insertDescriptionError.errors;
       showNotification({
         id: 'insertDescriptionError',
         autoClose: 6000,
         title: 'Error!!!',
-        message: insertDescriptionError.errors,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,

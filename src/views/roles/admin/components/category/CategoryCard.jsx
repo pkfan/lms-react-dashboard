@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useEffect } from 'react';
 import { Grid, Image, Box, Title, Text, Flex, Group, Divider } from '@mantine/core';
 import CategoryCardAction from './CategoryCardAction';
@@ -45,12 +46,15 @@ export function CategoryCard({ category, getCategoriesRefetch }) {
       closeModal();
     }
     if (isDeleteCategoryError) {
-      // setCategoryId(data.id);
+      const error = _.isObject(deleteCategoryError.errors)
+        ? 'data is invalid.'
+        : deleteCategoryError.errors;
+
       showNotification({
         id: 'deleteCategoryData',
         autoClose: 6000,
         title: 'Error!!!',
-        message: deleteCategoryError.errors,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useState, useEffect } from 'react';
 import {
   TextInput,
@@ -14,10 +15,11 @@ import {
 } from '@mantine/core';
 import Button from '@/components/common/Button';
 
-import { FaLink, FaSave, FaMoneyBillWave, FaDollarSign, FaPercent } from 'react-icons/fa';
+import { FaUnlockAlt, FaSave, FaMoneyBillWave, FaDollarSign, FaPercent } from 'react-icons/fa';
 import { BsFileFontFill } from 'react-icons/bs';
 import { BiCategory } from 'react-icons/bi';
-import { TbShoppingCartDiscount } from 'react-icons/tb';
+import { GoWatch } from 'react-icons/go';
+import { GrUnlock, GrLock } from 'react-icons/gr';
 
 import inputStylesFull from '@/styles/inputStylesFull';
 import { useForm, isEmail, hasLength } from '@mantine/form';
@@ -61,14 +63,18 @@ export function Basic({ setNewCourse, course }) {
 
   // set initial values
   const initStudyLevel = course?.study_level ? String(course?.study_level) : '0';
-  const initHasDiscount = course?.discount == 0 ? false : true;
-  const initIsFree = course?.price_dollar == 0 && course?.price_local == 0 ? true : false;
+  const initHasDiscount = Boolean(course?.discount);
+  const initIsFree = !(Boolean(course?.price_dollar) || Boolean(course?.price_local));
 
   const [hasDiscount, setHasDiscount] = useState(initHasDiscount);
   const [isFree, setIsFree] = useState(initIsFree);
   const [studyLevel, setStudyLevel] = useState(initStudyLevel);
   const [subCategoryId, setSubCategoryId] = useState(course?.sub_category_id);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [hasDripContent, setHasDripContent] = useState(Boolean(course?.drip_content));
+  const [hasTimeAccessLimitContent, setHasTimeAccessLimitContent] = useState(
+    Boolean(course?.access_days),
+  );
 
   const validate = {
     title: hasLength({ min: 3 }, 'Too short'),
@@ -81,6 +87,10 @@ export function Basic({ setNewCourse, course }) {
       validate['discount'] = (value) => (value == null ? 'Please enter course discount' : null);
     }
   }
+  if (hasTimeAccessLimitContent) {
+    validate['access_days'] = (value) =>
+      value == null ? 'Please Enter DAYS or disable it.' : null;
+  }
 
   const form = useForm({
     initialValues: {
@@ -88,6 +98,7 @@ export function Basic({ setNewCourse, course }) {
       price_dollar: course?.price_dollar,
       price_local: course?.price_local,
       discount: course?.discount,
+      access_days: course?.access_days,
     },
 
     validate,
@@ -107,11 +118,14 @@ export function Basic({ setNewCourse, course }) {
       setNewCourse(createBasicData.course);
     }
     if (isCreateBasicError) {
+      const error = _.isObject(createBasicError.errors)
+        ? 'data is invalid.'
+        : createBasicError.errors;
       showNotification({
         id: 'createBasicError',
         autoClose: 6000,
         title: 'Error!!!',
-        message: createBasicError.errors,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,
@@ -132,11 +146,14 @@ export function Basic({ setNewCourse, course }) {
       });
     }
     if (isUpdateBasicError) {
+      const error = _.isObject(updateBasicError.errors)
+        ? 'data is invalid.'
+        : updateBasicError.errors;
       showNotification({
         id: 'updateBasicError',
         autoClose: 6000,
         title: 'Error!!!',
-        message: updateBasicError.errors,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,
@@ -153,16 +170,21 @@ export function Basic({ setNewCourse, course }) {
     values['sub_category_id'] = subCategoryId;
 
     if (isFree) {
-      values['price_dollar'] = 0;
-      values['price_local'] = 0;
-      values['discount'] = 0;
+      values['price_dollar'] = null;
+      values['price_local'] = null;
+      values['discount'] = null;
     }
     if (!hasDiscount) {
-      values['discount'] = 0;
+      values['discount'] = null;
     }
+    if (!hasTimeAccessLimitContent) {
+      values['access_days'] = null;
+    }
+    values['drip_content'] = hasDripContent;
 
     // register(values);
-    // console.log(values);
+    console.log(values);
+
     if (!course?.id) {
       createBasic(values);
     } else {
@@ -341,6 +363,49 @@ export function Basic({ setNewCourse, course }) {
               )}
             </>
           )}
+
+          <Divider my="sm" variant="dashed" />
+          <Flex align="center" gap={24} sx={{ padding: '0 32px' }}>
+            {hasDripContent && <GrLock size={20} style={{ opacity: 0.7 }} />}
+            {!hasDripContent && <GrUnlock size={20} style={{ opacity: 0.7 }} />}
+            <Title order={5}> Drip/Lock This Course Content</Title>
+            <SwtichText
+              onLabel="Locked"
+              offLabel="Unlocked"
+              checked={hasDripContent}
+              setChecked={setHasDripContent}
+            />
+          </Flex>
+          <Text px={32}>
+            Drip content is the practice of releasing your Course Lessons to your students in parts.
+            In other words, student must watch current lecture to unlock next lecture.
+          </Text>
+          <Divider my="sm" variant="dashed" />
+
+          <Flex align="center" gap={24} sx={{ padding: '0 32px' }}>
+            <Title order={5}> Is this course has access (time period) limit?</Title>
+            <SwtichText
+              onLabel="YES"
+              offLabel="NO"
+              checked={hasTimeAccessLimitContent}
+              setChecked={setHasTimeAccessLimitContent}
+            />
+          </Flex>
+          {hasTimeAccessLimitContent && (
+            <NumberInput
+              withAsterisk
+              sx={inputStylesFull}
+              label="Course Time/Access Period Limit in DAYS"
+              description="Course Access time is the period limit in which student must finish his/her course, otherwise course will be locked/expired."
+              placeholder="DAYS for course access time."
+              defaultValue={null}
+              icon={<GoWatch size={16} />}
+              min={1}
+              name="access_days"
+              {...form.getInputProps('access_days')}
+            />
+          )}
+
           <Divider my="sm" variant="dashed" />
 
           <Radio.Group

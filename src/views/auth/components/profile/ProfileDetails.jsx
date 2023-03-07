@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useRef, useEffect, useState } from 'react';
 import { Text, Avatar, Flex, Title, Anchor, Box, Loader, Group, Skeleton } from '@mantine/core';
 import Paper from '@/components/common/Paper';
@@ -94,12 +95,16 @@ export function ProfileDetails() {
     }
 
     if (profilePictureError.response) {
+      const error = _.isObject(profilePictureError.errors)
+        ? 'Input data is invalid.'
+        : profilePictureError.errors;
+
       console.log('profilePictureError.response.message : ', profilePictureError.response);
       showNotification({
         id: 'profilePicture',
         autoClose: 30000,
         title: 'Failed',
-        message: profilePictureError.response.message,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useState, useEffect } from 'react';
 import { TextInput, Stack, Paper, Textarea, Flex, Title, Divider, Radio } from '@mantine/core';
 import Button from '@/components/common/Button';
@@ -66,13 +67,15 @@ export function Category({ categoryData, setCategoryData, enabled = false }) {
       form.setFieldValue('description', '');
     }
     if (isCreateCategoryError) {
-      console.log('isCreateCategoryError', createCategoryError);
-      // setCategoryData(data.id);
+      const error = _.isObject(createCategoryError.errors)
+        ? 'Input data is invalid.'
+        : createCategoryError.errors;
+
       showNotification({
         id: 'createCategoryError',
         autoClose: 6000,
         title: 'Error!!!',
-        message: createCategoryError.errors,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,
@@ -96,13 +99,14 @@ export function Category({ categoryData, setCategoryData, enabled = false }) {
       });
     }
     if (isUpdateCategoryError) {
-      console.log('isupdateCategoryError', updateCategoryError);
-      // setCategoryData(data.id);
+      const error = _.isObject(updateCategoryError.errors)
+        ? 'Input data is invalid.'
+        : updateCategoryError.errors;
       showNotification({
         id: 'updateCategoryError',
         autoClose: 6000,
         title: 'Error!!!',
-        message: updateCategoryError.errors,
+        message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,
