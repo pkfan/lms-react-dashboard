@@ -134,7 +134,7 @@ export function ChapterCreateForm({
         <Flex align="center" gap={24} sx={{ padding: '0 32px' }}>
           {!isPrivate && <ImEye size={20} style={{ opacity: 0.7 }} />}
           {isPrivate && <ImEyeBlocked size={20} style={{ opacity: 0.7 }} />}
-          <Title order={5}> Course Visibility</Title>
+          <Title order={5}> Chapter Visibility</Title>
           <SwtichText
             onLabel="private"
             offLabel="public"

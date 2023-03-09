@@ -3,6 +3,7 @@ import { isValidSize } from './SizeFromBytes';
 
 export function resumableUpload({
   domElement,
+  domDropElement,
   url = null,
   fileExtenstions = ['jpg', 'jpeg', 'png', 'webp'],
   maxFiles = undefined,
@@ -51,6 +52,9 @@ export function resumableUpload({
 
   if (domElement) {
     resumable.assignBrowse(domElement);
+    if (domDropElement) {
+      resumable.assignDrop(domDropElement);
+    }
   } else if (imageFileViaPaste) {
     resumable.addFile(imageFileViaPaste);
   } else {

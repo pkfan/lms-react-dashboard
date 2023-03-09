@@ -13,7 +13,8 @@ const Errors = ({ errors }) => {
 };
 
 function Alert({ errors, title, color }) {
-  if (_.isArray(errors)) {
+  if (_.isObject(errors)) {
+    errors = Object.values(errors);
   }
 
   return (

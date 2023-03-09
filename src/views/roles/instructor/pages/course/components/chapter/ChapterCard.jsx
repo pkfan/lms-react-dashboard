@@ -88,6 +88,10 @@ export function ChapterCard({ chapter, refetchChapters }) {
   ] = useUpdateChapterVisibilityMutation();
 
   useEffect(() => {
+    if (isUpdateChapterVisibilitySuccess) {
+      refetchChapters();
+    }
+
     if (isUpdateChapterVisibilityError) {
       const error = _.isObject(updateChapterVisibilityError.errors)
         ? 'Input data is invalid.'
@@ -103,7 +107,7 @@ export function ChapterCard({ chapter, refetchChapters }) {
         loading: false,
       });
     }
-  }, [isUpdateChapterVisibilityError]);
+  }, [isUpdateChapterVisibilityError, isUpdateChapterVisibilitySuccess]);
 
   const setChapterVisibility = (isPrivateVisibility) => {
     const values = {};
@@ -214,9 +218,6 @@ export function ChapterCard({ chapter, refetchChapters }) {
               </ActionIconWithTooltip>
               <ActionIconWithTooltip tooltip="Delete Chapter" onClick={openDeleteModal}>
                 <MdDeleteForever size={24} />
-              </ActionIconWithTooltip>
-              <ActionIconWithTooltip tooltip="Upload/Edit Lessons">
-                <RiVideoUploadLine size={24} />
               </ActionIconWithTooltip>
             </Flex>
             <Flex align="center" justify="center" gap={8} wrap="wrap">

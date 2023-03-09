@@ -4,7 +4,7 @@ import baseQuery from '@/api/baseQuery';
 
 // query
 import getCategoriesWithSubCategories from './category/getCategoriesWithSubCategories';
-import getCourse from './course/getCourse';
+import { getCourses, getCourse } from './course';
 
 import {
   getCourseSteps,
@@ -46,6 +46,7 @@ export const instructorApi = createApi({
     getThumbnail: getThumbnail(builder),
     getCover: getCover(builder),
     getCourse: getCourse(builder),
+    getCourses: getCourses(builder),
     getChapter: getChapter(builder),
     getChapters: getChapters(builder),
 
@@ -78,6 +79,7 @@ export const {
   useGetThumbnailQuery,
   useGetCoverQuery,
   useGetCourseQuery,
+  useGetCoursesQuery,
   useGetChapterQuery,
   useGetChaptersQuery,
 

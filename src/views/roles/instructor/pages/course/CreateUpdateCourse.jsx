@@ -13,6 +13,7 @@ import Features from './steps/Features';
 import SEO from './steps/SEO';
 import ThumbnailAndCover from './steps/ThumbnailAndCover';
 import Chapters from './steps/Chapters';
+import Lessons from './steps/Lessons';
 import { useGetCourseStepsQuery } from '../../api';
 
 export function CreateUpdateCourse({ course, pageTitle, setCourse = () => {} }) {
@@ -217,9 +218,7 @@ export function CreateUpdateCourse({ course, pageTitle, setCourse = () => {} }) 
           {course && steps && <Chapters refetchSteps={refetchSteps} course={course} />}
         </Tabs.Panel>
         <Tabs.Panel value="lessons" pl="xs">
-          <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
-            <Text>lessons</Text>
-          </Paper>
+          {course && steps && <Lessons course={course} />}
         </Tabs.Panel>
         <Tabs.Panel value="quizes" pl="xs">
           <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
