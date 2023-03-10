@@ -1,5 +1,5 @@
 import Resumable from 'resumablejs';
-import { isValidSize } from './SizeFromBytes';
+import { isValidSize } from './sizeFromBytes';
 
 export function resumableUpload({
   domElement,
@@ -33,6 +33,7 @@ export function resumableUpload({
     target: url,
     //   query: { _token: window.csrf_token }, // CSRF token
     fileType: fileExtenstions,
+    // fileType: fileExtenstions,
     // fileType: ['ts', 'mp4', 'html'],
     // fileType: ['mp4','mp3'],
     // fileType: ['ts'],

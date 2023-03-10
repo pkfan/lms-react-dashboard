@@ -23,14 +23,20 @@ export const lessonsUploadSlice = createSlice({
     createLessonsSuccessObj: (state, action) => {
       // state.value += action.payload;
       state.lessonFiles.filesSuccess[action.payload.uniqueIdentifier] = action.payload.success;
-      console.log('=====createLessonsSuccessObj; state.lessonFiles', current(state));
-      console.log('=======createLessonsSuccessObj; action', action);
+      // console.log('=====createLessonsSuccessObj; state.lessonFiles', current(state));
+      // console.log('=======createLessonsSuccessObj; action', action);
     },
     createLessonsErrorObj: (state, action) => {
       // state.value += action.payload;
       state.lessonFiles.filesError[action.payload.uniqueIdentifier] = action.payload.error;
-      console.log('=====createLessonsErrorObj; state.lessonFiles', current(state));
-      console.log('=======createLessonsErrorObj; action', action);
+      // console.log('=====createLessonsErrorObj; state.lessonFiles', current(state));
+      // console.log('=======createLessonsErrorObj; action', action);
+    },
+    clearUploadLessonsData: (state) => {
+      // state.value += action.payload;
+      state.lessonFiles = { addedFiles: [], filesProgress: {}, filesSuccess: {}, filesError: {} };
+      // console.log('=====createLessonsErrorObj; state.lessonFiles', current(state));
+      // console.log('=======createLessonsErrorObj; action', action);
     },
   },
 });
@@ -41,6 +47,7 @@ export const {
   createLessonsProgressObj,
   createLessonsSuccessObj,
   createLessonsErrorObj,
+  clearUploadLessonsData,
 } = lessonsUploadSlice.actions;
 
 export default lessonsUploadSlice.reducer;

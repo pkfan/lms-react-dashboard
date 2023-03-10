@@ -1,7 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
-import { Flex, Stack, Title } from '@mantine/core';
+import { Flex, Stack, Title, Box } from '@mantine/core';
 import { FaCloudUploadAlt } from 'react-icons/fa';
+import { FiRefreshCw } from 'react-icons/fi';
 import { BsUpload } from 'react-icons/bs';
+import Button from '@/components/common/Button';
 import ButtonWhite from '@/components/common/ButtonWhite';
 import config from '@/config';
 import resumableUpload from '@/helpers/resumableUpload';
@@ -12,13 +14,14 @@ import {
   createLessonsProgressObj as createLessonsProgressObjAction,
   createLessonsSuccessObj as createLessonsSuccessObjAction,
   createLessonsErrorObj as createLessonsErrorObjAction,
+  clearUploadLessonsData as clearUploadLessonsDataAction,
 } from '@/views/roles/instructor/slice/lessonsUploadSlice';
 
 export function UploadLessons({ courseId, chapterId }) {
   const lessonsUploadDispatch = useDispatch();
   const lessonsUploadFiles = useSelector((state) => state.lessonsUpload.lessonFiles);
 
-  const elementRef = useRef();
+  // const elementRef = useRef();
   const elementDropRef = useRef();
 
   const setLessonsAddedWrapper = ({ file }) => {
@@ -52,23 +55,23 @@ export function UploadLessons({ courseId, chapterId }) {
   // resubeable effect
   useEffect(() => {
     // console.log('resumableUpload effect called');
-    const divElement = elementRef.current;
+    // const divElement = elementRef.current;
     const divDropElement = elementDropRef.current;
 
     // if (divElement) {
     //   divElement.setAttribute('resumableuploadcall', 'false');
     // }
-    console.log('divElement', divElement);
+    // console.log('divElement', divElement);
 
     const lessonsUploadRelativeUrl = `/upload/${courseId}/${chapterId}`;
 
     resumableUpload({
-      domElement: divElement,
+      domElement: divDropElement,
       domDropElement: divDropElement,
       url: config.baseUrl + lessonsUploadRelativeUrl,
       maxFiles: 10,
       maxFileSize: '1500-MB',
-      fileExtenstions: ['mp4'],
+      fileExtenstions: [], // allow all extensions for lessons
       onAdded: setLessonsAddedWrapper,
       onProgress: setLessonsProgressWrapper,
       onSuccess: setLessonsSuccessWrapper,
@@ -76,10 +79,18 @@ export function UploadLessons({ courseId, chapterId }) {
     });
   }, [courseId, chapterId]);
 
+  const refreshToClearStoreLessons = () => {
+    lessonsUploadDispatch(clearUploadLessonsDataAction());
+  };
+
   return (
     <>
-      <Flex ref={elementRef} w="100%" justify="end" align="center" py={12}>
-        <ButtonWhite leftIcon={<BsUpload size={18} />}>Upload Lessons</ButtonWhite>
+      <Flex w="100%" justify="end" align="center" py={12}>
+        <Box>
+          <ButtonWhite leftIcon={<FiRefreshCw size={18} />} onClick={refreshToClearStoreLessons}>
+            Clear
+          </ButtonWhite>
+        </Box>
       </Flex>
 
       <Stack>
@@ -93,10 +104,15 @@ export function UploadLessons({ courseId, chapterId }) {
         justify="center"
         align="center"
         ref={elementDropRef}
-        sx={(theme) => ({ color: theme.colors.lmsPrimary[6], width: '100%', height: '100%' })}
+        sx={(theme) => ({
+          cursor: 'pointer',
+          color: theme.colors.lmsPrimary[6],
+          width: '100%',
+          height: '100%',
+        })}
       >
         <FaCloudUploadAlt size={150} />
-        <Title order={4}> Drag & Drop Lessons.</Title>
+        <Title order={4}>Choose OR Drag & Drop Lessons.</Title>
       </Stack>
     </>
   );

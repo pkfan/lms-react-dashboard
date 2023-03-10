@@ -13,10 +13,14 @@ import {
 } from '@mantine/core';
 
 import { useSelector } from 'react-redux';
+import { format, formatDistance, formatRelative, subDays } from 'date-fns';
 import { FaEdit } from 'react-icons/fa';
 import { RiVideoUploadLine } from 'react-icons/ri';
 import { MdMenuBook, MdOutlineAssignment, MdDeleteForever } from 'react-icons/md';
 import { IconCheck, IconX } from '@tabler/icons';
+import { createFileSize } from '@/helpers/sizeFromBytes';
+import getExtensionFromFileName from '@/helpers/getExtensionFromFileName';
+import ExtensionFileSvg from '@/components/ExtensionFileSvg';
 
 export function LessonsRingProgress({ addedFile }) {
   const lessonsUploadFiles = useSelector((state) => state.lessonsUpload.lessonFiles);
@@ -25,6 +29,10 @@ export function LessonsRingProgress({ addedFile }) {
   let progress = filesProgress[addedFile.uniqueIdentifier] || 0;
   let isSuccess = filesSuccess[addedFile.uniqueIdentifier];
   let isError = filesError[addedFile.uniqueIdentifier];
+
+  let lastModified = formatDistance(new Date(addedFile.lastModified), new Date(), {
+    addSuffix: true,
+  });
 
   return (
     <>
@@ -68,8 +76,12 @@ export function LessonsRingProgress({ addedFile }) {
           })}
         >
           <Stack align="center" justify="center" spacing="xs">
-            <MdMenuBook size={48} style={{ opacity: 0.7 }} />
-            {/* <Title order={4}>Chapter {chapter.number}</Title> */}
+            {/* <MdMenuBook size={48} style={{ opacity: 0.7 }} /> */}
+            <ExtensionFileSvg
+              extension={getExtensionFromFileName(addedFile.name)}
+              size={60}
+              style={{ opacity: 0.7 }}
+            />
           </Stack>
         </Grid.Col>
         <Grid.Col
@@ -81,9 +93,9 @@ export function LessonsRingProgress({ addedFile }) {
             <Title order={5}> {addedFile.name}</Title>
             {!isError ? (
               <>
-                <Text fz={12}>Size: {addedFile.size}</Text>
-                <Text fz={12}>type: {addedFile.type}</Text>
-                <Text fz={12}>lastModified: {addedFile.lastModified}</Text>
+                <Text fz={12}>Size: {createFileSize(addedFile.size)}</Text>
+                {/* <Text fz={12}>type: {addedFile.type}</Text> */}
+                <Text fz={12}>Last Modified: {lastModified}</Text>
               </>
             ) : (
               <Text fz={12} color="red">

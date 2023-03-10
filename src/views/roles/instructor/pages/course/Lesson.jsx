@@ -32,8 +32,11 @@ import queryString from 'query-string';
 import { useGetCoursesQuery, useGetChaptersQuery } from '../../api';
 import { IconX } from '@tabler/icons';
 import UploadLessons from './components/lesson/UploadLessons';
+import { useDispatch } from 'react-redux';
+import { clearUploadLessonsData as clearUploadLessonsDataAction } from '@/views/roles/instructor/slice/lessonsUploadSlice';
 
 export function Lesson() {
+  const lessonsUploadDispatch = useDispatch();
   const [reInitResumeable, setReInitResumeable] = useState(false);
 
   const [activeTab, setActiveTab] = useState('upload');
@@ -59,6 +62,7 @@ export function Lesson() {
 
   useEffect(() => {
     console.log('chapterid and course id chage from aprent');
+    lessonsUploadDispatch(clearUploadLessonsDataAction());
 
     setReInitResumeable(true);
 
