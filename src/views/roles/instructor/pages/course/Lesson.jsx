@@ -12,6 +12,7 @@ import {
   Loader,
   Flex,
   Text,
+  Anchor,
 } from '@mantine/core';
 import { Link, useLocation } from 'react-router-dom';
 import Pagination from '@/components/common/Pagination';
@@ -149,7 +150,7 @@ export function Lesson() {
           </Flex>
         ) : (
           <>
-            {isGetChaptersSuccess && chapters.length > 0 && (
+            {isGetChaptersSuccess && chapters.length > 0 ? (
               <Select
                 searchable
                 nothingFound="No Found"
@@ -175,6 +176,28 @@ export function Lesson() {
                   item.label.toLowerCase().includes(value.toLowerCase().trim())
                 }
               />
+            ) : (
+              <>
+                {courseId && (
+                  <Flex
+                    align="center"
+                    justify="center"
+                    sx={(theme) => ({ color: theme.colors.red[5] })}
+                  >
+                    <IconX size={16} />
+                    <Text>
+                      Chapter NOT found from this course, first{' '}
+                      <Anchor
+                        component={Link}
+                        to={`/dashboard/instructor/course/${courseId}/update`}
+                      >
+                        create chapter
+                      </Anchor>{' '}
+                      then upload lessons.
+                    </Text>
+                  </Flex>
+                )}
+              </>
             )}
           </>
         )}

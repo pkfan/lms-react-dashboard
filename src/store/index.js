@@ -8,10 +8,12 @@ import { adminApi } from '@/views/roles/admin/api';
 import { instructorApi } from '@/views/roles/instructor/api';
 import { baseApi } from '@/api/base';
 import jobsReducer from '@/views/jobs/jobsSlice';
+import lessonsUploadReducer from '@/views/roles/instructor/slice/lessonsUploadSlice';
 
 export const store = configureStore({
   reducer: {
     jobs: jobsReducer,
+    lessonsUpload: lessonsUploadReducer,
     // Add the generated reducer as a specific top-level slice
     [baseApi.reducerPath]: baseApi.reducer,
     [jobsApi.reducerPath]: jobsApi.reducer,
