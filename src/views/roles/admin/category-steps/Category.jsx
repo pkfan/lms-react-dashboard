@@ -67,21 +67,26 @@ export function Category({ categoryData, setCategoryData, enabled = false }) {
       form.setFieldValue('description', '');
     }
     if (isCreateCategoryError) {
-      const error = _.isObject(createCategoryError.errors)
-        ? 'Input data is invalid.'
-        : createCategoryError.errors;
+      let error;
+
+      if (_.isObject(createCategoryError.errors) && createCategoryError.errors.name) {
+        form.setFieldError('name', createCategoryError.errors.name);
+        error = 'Input data is invalid.';
+      } else if (_.isObject(createCategoryError.errors)) {
+        error = 'Input data is invalid.';
+      } else {
+        error = createCategoryError.errors;
+      }
 
       showNotification({
         id: 'createCategoryError',
-        autoClose: 6000,
+        autoClose: 12000,
         title: 'Error!!!',
         message: error,
         color: 'red',
         icon: <IconX />,
         loading: false,
       });
-
-      form.setFieldError('name', createCategoryError.errors);
     }
   }, [isCreateCategorySuccess, isCreateCategoryError]);
   useEffect(() => {

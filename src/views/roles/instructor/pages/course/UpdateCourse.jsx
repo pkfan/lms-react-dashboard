@@ -18,6 +18,8 @@ export function UpdateCourse() {
     // error: getCourseError,
   } = useGetCourseQuery(courseId);
 
+  console.log('======== getCourseData', getCourseData);
+
   return (
     <>
       {isGetCourseError && (

@@ -123,6 +123,7 @@ export function FAQ({ course, refetchSteps, isEnabled }) {
             <b>Course:</b> {course.title}
           </Text>
           <Group position="right">
+            {isToggleStepLoading && <Loader size="xs" />}
             <SwtichText
               onLabel="Enabled"
               offLabel="Disabled"

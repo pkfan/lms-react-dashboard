@@ -3,6 +3,8 @@ import { Box, createStyles } from '@mantine/core';
 import { Outlet, useNavigate } from 'react-router-dom';
 import FullPageLoader from '@/components/common/FullPageLoader';
 import { useGetAuthUserQuery } from '@/views/auth/api';
+import { useDispatch } from 'react-redux';
+import { setAuthUser as setAuthUserAction } from '@/views/auth/slice/authSlice';
 
 const useStyles = createStyles((theme) => ({
   lmsLayout: {
@@ -26,20 +28,31 @@ export function LmsLayout({ children }) {
   const { classes } = useStyles();
 
   const navigate = useNavigate();
-  const { isError, isFetching, isSuccess } = useGetAuthUserQuery();
+  const {
+    isSuccess: isAuthUserSuccess,
+    isFetching: isAuthUserFetching,
+    isError: isAuthUserError,
+    data: authUserData,
+  } = useGetAuthUserQuery();
+
+  const authUserDispatch = useDispatch();
 
   useEffect(() => {
-    if (isError) {
-      console.log('isError login useEffect lmsLayout', isError);
+    if (isAuthUserError) {
+      console.log('isAuthUserError login useEffect lmsLayout', isAuthUserError);
       navigate('/lms/login');
     }
-  }, [isError]);
+    if (isAuthUserSuccess) {
+      // console.log('=========authuserdata==========', setAuthUserAction(authUserData));
+      authUserDispatch(setAuthUserAction(authUserData));
+    }
+  }, [isAuthUserError, isAuthUserSuccess]);
 
   return (
     <>
-      {isFetching && <FullPageLoader />}
+      {isAuthUserFetching && <FullPageLoader />}
 
-      {isSuccess && (
+      {isAuthUserSuccess && (
         <Box className={classes.lmsLayout}>
           {children}
           <Box component="main" className={classes.main}>

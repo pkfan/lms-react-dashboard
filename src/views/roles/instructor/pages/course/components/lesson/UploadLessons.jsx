@@ -17,7 +17,7 @@ import {
   clearUploadLessonsData as clearUploadLessonsDataAction,
 } from '@/views/roles/instructor/slice/lessonsUploadSlice';
 
-export function UploadLessons({ courseId, chapterId }) {
+export function UploadLessons({ courseId, chapterId, setReInitResumeable }) {
   const lessonsUploadDispatch = useDispatch();
   const lessonsUploadFiles = useSelector((state) => state.lessonsUpload.lessonFiles);
 
@@ -63,7 +63,7 @@ export function UploadLessons({ courseId, chapterId }) {
     // }
     // console.log('divElement', divElement);
 
-    const lessonsUploadRelativeUrl = `/upload/${courseId}/${chapterId}`;
+    const lessonsUploadRelativeUrl = `/instructor/course/lesson/upload/${courseId}/${chapterId}`;
 
     resumableUpload({
       domElement: divDropElement,
@@ -81,6 +81,11 @@ export function UploadLessons({ courseId, chapterId }) {
 
   const refreshToClearStoreLessons = () => {
     lessonsUploadDispatch(clearUploadLessonsDataAction());
+    setReInitResumeable(true);
+
+    setTimeout(() => {
+      setReInitResumeable(false);
+    }, 1000);
   };
 
   return (
@@ -93,12 +98,12 @@ export function UploadLessons({ courseId, chapterId }) {
         </Box>
       </Flex>
 
-      <Stack>
+      <Flex direction="column" p={16} mt={16} gap={36} w="85%" mx="auto">
         {lessonsUploadFiles.addedFiles.length > 0 &&
           lessonsUploadFiles.addedFiles.map((addedFile) => (
             <LessonsRingProgress key={addedFile.uniqueIdentifier} addedFile={addedFile} />
           ))}
-      </Stack>
+      </Flex>
 
       <Stack
         justify="center"

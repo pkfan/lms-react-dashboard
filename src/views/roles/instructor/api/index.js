@@ -1,8 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-
 import baseQuery from '@/api/baseQuery';
 
 // query
+import getInstructors from './getInstructors';
+import setCourseInstructors from './setCourseInstructors';
+
 import getCategoriesWithSubCategories from './category/getCategoriesWithSubCategories';
 import { getCourses, getCourse } from './course';
 
@@ -33,6 +35,8 @@ import {
   deleteChapter,
 } from './chapter';
 
+import { getLessons, updateLesson, deleteLesson, sortLessons } from './lesson';
+
 // Define a service using a base URL and expected endpoints
 export const instructorApi = createApi({
   baseQuery,
@@ -49,6 +53,8 @@ export const instructorApi = createApi({
     getCourses: getCourses(builder),
     getChapter: getChapter(builder),
     getChapters: getChapters(builder),
+    getLessons: getLessons(builder),
+    getInstructors: getInstructors(builder),
 
     // mutation
     createBasic: createBasic(builder),
@@ -66,6 +72,10 @@ export const instructorApi = createApi({
     updateChapter: updateChapter(builder),
     updateChapterVisibility: updateChapterVisibility(builder),
     deleteChapter: deleteChapter(builder),
+    updateLesson: updateLesson(builder),
+    deleteLesson: deleteLesson(builder),
+    sortLessons: sortLessons(builder),
+    setCourseInstructors: setCourseInstructors(builder),
   }),
 });
 
@@ -82,6 +92,8 @@ export const {
   useGetCoursesQuery,
   useGetChapterQuery,
   useGetChaptersQuery,
+  useGetLessonsQuery,
+  useGetInstructorsQuery,
 
   // mutattion
   useCreateBasicMutation,
@@ -99,4 +111,8 @@ export const {
   useUpdateChapterMutation,
   useUpdateChapterVisibilityMutation,
   useDeleteChapterMutation,
+  useUpdateLessonMutation,
+  useDeleteLessonMutation,
+  useSortLessonsMutation,
+  useSetCourseInstructorsMutation,
 } = instructorApi;

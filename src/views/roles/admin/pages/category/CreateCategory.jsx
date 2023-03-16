@@ -49,6 +49,7 @@ export function CreateCategory() {
                 setCategoryData(null);
                 setHasSubCategory(false);
                 setHasThumbnail(false);
+                setDisabledOverlay(true);
               }}
             >
               Add More

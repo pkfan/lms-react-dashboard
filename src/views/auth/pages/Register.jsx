@@ -105,6 +105,8 @@ export function Register() {
     },
   ] = useRegisterMutation();
 
+  console.log('register registerError email', registerError?.errors?.email);
+
   const [phoneNumberValue, setPhoneNumberValue] = useState('');
   // console.log('phoneNumberValue', phoneNumberValue);
   const { classes } = useStyles();
@@ -313,6 +315,7 @@ export function Register() {
                 icon={<MdEmail size={16} style={{ opacity: 0.7 }} />}
                 placeholder="your@email.com"
                 {...form.getInputProps('email')}
+                error={registerError?.errors?.email}
               />
 
               <CountrySelect

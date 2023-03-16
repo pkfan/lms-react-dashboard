@@ -17,6 +17,7 @@ import Overlay from '@/components/common/Overlay';
 
 import Button from '@/components/common/Button';
 import Switch from '@/components/common/Switch';
+import { Link } from 'react-router-dom';
 
 import { FaLink, FaSave, FaMoneyBillWave, FaDollarSign, FaPercent } from 'react-icons/fa';
 import { BsUpload } from 'react-icons/bs';
@@ -52,9 +53,15 @@ export function Lessons({ course }) {
           })}
         >
           <Stack w="70%" mx="auto" justify="center" align="center">
-            <RiVideoUploadFill size={150} style={{ opacity: 0.6 }} />
+            <RiVideoUploadFill size={150} style={{ opacity: 0.7 }} />
 
-            <Button type="submit" color="lmsLayout" leftIcon={<BsUpload size={18} />}>
+            <Button
+              component={Link}
+              to="/dashboard/instructor/lessons"
+              type="submit"
+              color="lmsLayout"
+              leftIcon={<BsUpload size={18} />}
+            >
               Upload Lessons and Files
             </Button>
           </Stack>

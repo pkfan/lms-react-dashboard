@@ -30,6 +30,8 @@ import { FaKey } from 'react-icons/fa';
 
 import inputStyles from '@/styles/inputStyles';
 import Logo from '@/components/Logo';
+import { useDispatch } from 'react-redux';
+import { setAuthUser as setAuthUserAction } from '@/views/auth/slice/authSlice';
 
 import {
   useGetAuthUserQuery,
@@ -116,6 +118,8 @@ export function Login() {
     },
   });
 
+  const authUserDispatch = useDispatch();
+
   useEffect(() => {
     // delete user other browser sessions
     if (isLoginSuccess) {
@@ -127,6 +131,8 @@ export function Login() {
       deleteOtherSessionRecords();
     }
     if (isAuthUserSuccess || isLoginSuccess) {
+      authUserDispatch(setAuthUserAction(authUserData));
+
       if (authUserData && !authUserData?.email_verified_at) {
         navigate('/lms/email/verification');
       } else {

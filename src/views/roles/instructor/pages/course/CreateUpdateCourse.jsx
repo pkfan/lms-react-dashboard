@@ -88,7 +88,7 @@ export function CreateUpdateCourse({ course, pageTitle, setCourse = () => {} }) 
           </Tabs.Tab>
           <Tabs.Tab
             sx={{ fontSize: '16px' }}
-            disabled={!steps?.requirements?.complete}
+            disabled={steps?.requirements?.enable == false ? false : !steps?.requirements?.complete}
             value="outcomes"
             icon={currentTapStatusIcon(steps?.outcomes)}
           >
@@ -96,7 +96,7 @@ export function CreateUpdateCourse({ course, pageTitle, setCourse = () => {} }) 
           </Tabs.Tab>
           <Tabs.Tab
             sx={{ fontSize: '16px' }}
-            disabled={!steps?.outcomes?.complete}
+            disabled={steps?.outcomes?.enable == false ? false : !steps?.outcomes?.complete}
             value="faq"
             icon={currentTapStatusIcon(steps?.faq)}
           >
@@ -104,7 +104,7 @@ export function CreateUpdateCourse({ course, pageTitle, setCourse = () => {} }) 
           </Tabs.Tab>
           <Tabs.Tab
             sx={{ fontSize: '16px' }}
-            disabled={!steps?.faq?.complete}
+            disabled={steps?.faq?.enable == false ? false : !steps?.faq?.complete}
             value="features"
             icon={currentTapStatusIcon(steps?.features)}
           >
@@ -112,7 +112,7 @@ export function CreateUpdateCourse({ course, pageTitle, setCourse = () => {} }) 
           </Tabs.Tab>
           <Tabs.Tab
             sx={{ fontSize: '16px' }}
-            disabled={!steps?.features?.complete}
+            disabled={steps?.features?.enable == false ? false : !steps?.features?.complete}
             value="thumbnail"
             icon={currentTapStatusIcon(steps?.thumbnail)}
           >

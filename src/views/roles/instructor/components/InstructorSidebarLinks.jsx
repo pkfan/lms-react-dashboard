@@ -2,7 +2,7 @@ import { Text } from '@mantine/core';
 import { AiOutlineDashboard, AiFillSetting } from 'react-icons/ai';
 import { MdOutlineVideoLibrary, MdPayment } from 'react-icons/md';
 import { ImManWoman } from 'react-icons/im';
-import { GiRomanToga } from 'react-icons/gi';
+import { MdOutlineVideoCameraFront } from 'react-icons/md';
 import { GrGroup } from 'react-icons/gr';
 
 import SideBarLinks from '@/components/SideBar/SideBarLinks';
@@ -11,12 +11,6 @@ import SideBarLink from '@/components/SideBar/SideBarLink';
 export function InstructorSidebarLinks({ setSidebarOpened }) {
   return (
     <SideBarLinks>
-      <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/instructor/instructor">
-        <GrGroup size={20} style={{ opicity: 0.6 }} />
-        <Text fw={500} fz={16}>
-          Intructors
-        </Text>
-      </SideBarLink>
       <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/instructor/index">
         <AiOutlineDashboard size={20} />
         <Text fw={500} fz={16}>
@@ -30,7 +24,12 @@ export function InstructorSidebarLinks({ setSidebarOpened }) {
           Courses
         </Text>
       </SideBarLink>
-
+      <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/instructor/lessons">
+        <MdOutlineVideoCameraFront size={20} style={{ opicity: 0.6 }} />
+        <Text fw={500} fz={16}>
+          Lessons
+        </Text>
+      </SideBarLink>
       <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/instructor/student">
         <ImManWoman size={20} />
         <Text fw={500} fz={16}>

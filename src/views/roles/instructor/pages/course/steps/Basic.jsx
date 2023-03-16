@@ -25,10 +25,14 @@ import inputStylesFull from '@/styles/inputStylesFull';
 import { useForm, isEmail, hasLength } from '@mantine/form';
 import SwtichText from '@/components/common/SwitchText';
 
-import { useGetCategoriesWithSubCategoriesQuery } from '@/views/roles/instructor/api';
+import {
+  useGetCategoriesWithSubCategoriesQuery,
+  useGetInstructorsQuery,
+} from '@/views/roles/instructor/api';
 import { useCreateBasicMutation, useUpdateBasicMutation } from '@/views/roles/instructor/api';
 import { showNotification } from '@mantine/notifications';
 import { IconX, IconCheck } from '@tabler/icons';
+import CourseInstructors from './CourseInstructors';
 
 export function Basic({ setNewCourse, course }) {
   // console.log('course basic : ', course);
@@ -69,7 +73,13 @@ export function Basic({ setNewCourse, course }) {
   const [hasDiscount, setHasDiscount] = useState(initHasDiscount);
   const [isFree, setIsFree] = useState(initIsFree);
   const [studyLevel, setStudyLevel] = useState(initStudyLevel);
-  const [subCategoryId, setSubCategoryId] = useState(course?.sub_category_id);
+
+  const initCatWithSubCat = course?.category_id
+    ? `${course?.category_id}-${course?.sub_category_id}`
+    : null;
+
+  const [catWithSubCatId, setCatWithSubCatId] = useState(initCatWithSubCat);
+
   const [isSubmit, setIsSubmit] = useState(false);
   const [hasDripContent, setHasDripContent] = useState(Boolean(course?.drip_content));
   const [hasTimeAccessLimitContent, setHasTimeAccessLimitContent] = useState(
@@ -81,8 +91,7 @@ export function Basic({ setNewCourse, course }) {
   };
 
   if (!isFree) {
-    validate['price_dollar'] = (value) => (value == null ? 'Please enter course price' : null);
-    validate['price_local'] = (value) => (value == null ? 'Please enter course price' : null);
+    validate['price'] = (value) => (value == null ? 'Please enter course price' : null);
     if (hasDiscount) {
       validate['discount'] = (value) => (value == null ? 'Please enter course discount' : null);
     }
@@ -95,8 +104,7 @@ export function Basic({ setNewCourse, course }) {
   const form = useForm({
     initialValues: {
       title: course?.title || '',
-      price_dollar: course?.price_dollar,
-      price_local: course?.price_local,
+      price: course?.price,
       discount: course?.discount,
       access_days: course?.access_days,
     },
@@ -163,15 +171,19 @@ export function Basic({ setNewCourse, course }) {
 
   const onSubmitHandle = (values) => {
     setIsSubmit(true);
-    if (!subCategoryId) {
+
+    if (!catWithSubCatId) {
       return;
     }
+
     values['study_level'] = studyLevel;
-    values['sub_category_id'] = subCategoryId;
+    const [category_id, sub_category_id] = catWithSubCatId.split('-');
+
+    values['category_id'] = Number(category_id);
+    values['sub_category_id'] = Number(sub_category_id);
 
     if (isFree) {
-      values['price_dollar'] = null;
-      values['price_local'] = null;
+      values['price'] = null;
       values['discount'] = null;
     }
     if (!hasDiscount) {
@@ -204,7 +216,11 @@ export function Basic({ setNewCourse, course }) {
       // const item = { value: 'rick', label: 'Rick', group: 'Used to be a pickle' };
 
       catWithSubCat.sub_categories.forEach((subCat) => {
-        items.push({ value: subCat.id, label: subCat.name, group: catWithSubCat.name });
+        items.push({
+          value: `${catWithSubCat.id}-${subCat.id}`,
+          label: subCat.name,
+          group: catWithSubCat.name,
+        });
       });
 
       // {
@@ -232,8 +248,8 @@ export function Basic({ setNewCourse, course }) {
   };
 
   return (
-    <form onSubmit={form.onSubmit(() => onSubmitHandle(form.values))}>
-      <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
+    <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
+      <form onSubmit={form.onSubmit(() => onSubmitHandle(form.values))}>
         <Flex w="100%" align="center" justify="end">
           <Button
             type="submit"
@@ -294,17 +310,19 @@ export function Basic({ setNewCourse, course }) {
               sx={inputStylesFull}
               label="Course Category"
               placeholder="select course category"
-              error={isSubmit && !subCategoryId && 'Please choose a category for course.'}
+              error={isSubmit && !catWithSubCatId && 'Please choose a category for course.'}
               data={transformCategoriesWithSubCategoriesData()}
               icon={<BiCategory size={16} />}
-              value={subCategoryId}
-              onChange={setSubCategoryId}
+              value={catWithSubCatId}
+              onChange={setCatWithSubCatId}
               filter={(value, item) =>
                 item.label.toLowerCase().includes(value.toLowerCase().trim())
               }
             />
           )}
+
           <Divider my="sm" variant="dashed" />
+
           <Flex align="center" gap={24} sx={{ padding: '0 32px' }}>
             <Title order={5}> Is This a free course?</Title>
             <SwtichText onLabel="YES" offLabel="NO" checked={isFree} setChecked={setIsFree} />
@@ -314,26 +332,13 @@ export function Basic({ setNewCourse, course }) {
               <NumberInput
                 withAsterisk
                 sx={inputStylesFull}
-                label="Course International Price"
-                description="Create course international price in dollars"
+                label="Course Price"
                 placeholder="Write Your Course Price"
-                defaultValue={null}
-                icon={<FaDollarSign size={16} style={{ opacity: 0.7 }} />}
-                min={1}
-                name="price_dollar"
-                {...form.getInputProps('price_dollar')}
-              />
-              <NumberInput
-                withAsterisk
-                sx={inputStylesFull}
-                label="Course National Price"
-                description="Create course national price in local currency of your country."
-                placeholder="Write Your Course Price in Dollar"
                 defaultValue={null}
                 icon={<FaMoneyBillWave size={16} style={{ opacity: 0.7 }} />}
                 min={1}
-                name="price_local"
-                {...form.getInputProps('price_local')}
+                name="price"
+                {...form.getInputProps('price')}
               />
 
               <Divider my="sm" variant="dashed" />
@@ -433,8 +438,9 @@ export function Basic({ setNewCourse, course }) {
             </Button>
           </Flex>
         </Stack>
-      </Paper>
-    </form>
+      </form>
+      <CourseInstructors course={course} />
+    </Paper>
   );
 }
 

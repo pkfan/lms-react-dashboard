@@ -10,7 +10,7 @@ export default function createResponseErrors(response) {
 
     const errorsObj = {};
     for (const [key, value] of errorsArray) {
-      errorsObj[key] = value;
+      errorsObj[key] = String(value);
     }
 
     errors = errorsObj;
@@ -26,6 +26,7 @@ export default function createResponseErrors(response) {
     errors = response.data;
   }
   console.log('createResponseErrors', response);
+  console.log('createResponseErrors transform', errors);
 
   return { status: response.status, errors };
 }

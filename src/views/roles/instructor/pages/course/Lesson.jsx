@@ -34,12 +34,14 @@ import { IconX } from '@tabler/icons';
 import UploadLessons from './components/lesson/UploadLessons';
 import { useDispatch } from 'react-redux';
 import { clearUploadLessonsData as clearUploadLessonsDataAction } from '@/views/roles/instructor/slice/lessonsUploadSlice';
+import AllLessons from './components/lesson/AllLessons';
+import SortLessons from './components/lesson/SortLessons';
 
 export function Lesson() {
   const lessonsUploadDispatch = useDispatch();
   const [reInitResumeable, setReInitResumeable] = useState(false);
 
-  const [activeTab, setActiveTab] = useState('upload');
+  const [activeTab, setActiveTab] = useState('all');
   const {
     isSuccess: isGetCoursesSuccess,
     isFetching: isGetCoursesFetching,
@@ -91,7 +93,7 @@ export function Lesson() {
     <Stack sx={{ width: '100%' }}>
       {/* <MainLoadingOverlay visibleOvarlay={visibleOvarlay} /> */}
 
-      <PageTitle title="Upload Lessons">
+      <PageTitle title="Lessons Management">
         <Group>
           <Button
             compact
@@ -118,6 +120,7 @@ export function Lesson() {
         )}
         {isGetCoursesSuccess && (
           <Select
+            disabled={courses.length <= 0}
             searchable
             nothingFound="No Found"
             dropdownPosition="bottom"
@@ -140,6 +143,12 @@ export function Lesson() {
             onChange={setCourseId}
             filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
           />
+        )}
+        {isGetCoursesSuccess && courses.length <= 0 && (
+          <Flex align="center" justify="center" sx={(theme) => ({ color: theme.colors.red[5] })}>
+            <IconX size={16} />
+            <Text>You do not have any course, please create course in order to upload lessons.</Text>
+          </Flex>
         )}
 
         {isGetChaptersError && (
@@ -227,16 +236,6 @@ export function Lesson() {
               value="all"
               color="lmsPrimary"
               sx={{ fontSize: '16px' }}
-              rightSection={
-                <Badge
-                  sx={{ width: 20, height: 20, pointerEvents: 'none' }}
-                  variant="filled"
-                  color="lmsPrimary"
-                  p={0}
-                >
-                  4
-                </Badge>
-              }
             >
               All Lessons
             </Tabs.Tab>
@@ -259,10 +258,13 @@ export function Lesson() {
             </Tabs.Tab>
           </Tabs.List>
           <Tabs.Panel value="all">
-            <NotFoundImage
-              width={450}
-              message="There are no lessons, please select course and chapter from above or just create course & chapter then upload lessons"
-            />
+            {chapterId && <AllLessons chapterId={chapterId} />}
+            {!chapterId && (
+              <NotFoundImage
+                width={450}
+                message="Please choose Course and chapter from above to load lessons."
+              />
+            )}
           </Tabs.Panel>
           <Tabs.Panel value="upload">
             {reInitResumeable ? (
@@ -272,12 +274,38 @@ export function Lesson() {
             ) : (
               <>
                 {courseId && chapterId && (
-                  <UploadLessons courseId={courseId} chapterId={chapterId} />
+                  <UploadLessons
+                    courseId={courseId}
+                    chapterId={chapterId}
+                    setReInitResumeable={setReInitResumeable}
+                  />
                 )}
               </>
             )}
           </Tabs.Panel>
-          <Tabs.Panel value="sort">third panel</Tabs.Panel>
+          <Tabs.Panel value="sort">
+            {reInitResumeable ? (
+              <Flex align="center" justify="center" p={50}>
+                <Loader size="md" />
+              </Flex>
+            ) : (
+              <>
+                {courseId && chapterId && (
+                  <SortLessons
+                    // courseId={courseId}
+                    chapterId={chapterId}
+                    // setReInitResumeable={setReInitResumeable}
+                  />
+                )}
+              </>
+            )}
+            {!chapterId && (
+              <NotFoundImage
+                width={450}
+                message="Please choose Course and chapter from above to sort lessons."
+              />
+            )}
+          </Tabs.Panel>
         </Tabs>
       </Paper>
     </Stack>
