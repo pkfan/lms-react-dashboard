@@ -1,9 +1,13 @@
-import { Box, Text, Group } from '@mantine/core';
+import { Box, Text, Group, Indicator, ActionIcon, Tooltip } from '@mantine/core';
 
 import Logo from '@/components/Logo';
+import { FaBell } from 'react-icons/fa';
+import { MdMessage } from 'react-icons/md';
+import { TbGridDots } from 'react-icons/tb';
 
 import { Burger } from './Burger';
 import DropdownMenu from '@/views/auth/components/profile/DropdownMenu';
+import FullScreenToggle from './FullScreenToggle';
 
 function TopBar({ sx, sidebarOpened, setSidebarOpened }) {
   const topBarStyle = (theme) => ({
@@ -34,9 +38,39 @@ function TopBar({ sx, sidebarOpened, setSidebarOpened }) {
         <Logo />
         <Text>Lms Pro</Text>
       </Group>
-      <Box>
+      <Group align="center">
+        <Tooltip label="Quick Access" color="lmsLayout" withArrow arrowPosition="center">
+          <ActionIcon
+            variant="outline"
+            sx={(theme) => ({ '&:hover': { backgroundColor: theme.colors.lmsLayout[1] } })}
+          >
+            <TbGridDots size={18} />
+          </ActionIcon>
+        </Tooltip>
+
+        <Tooltip label="Messenger" color="lmsLayout" withArrow arrowPosition="center">
+          <Indicator inline label="21" color="red" disabled size={16}>
+            <ActionIcon
+              variant="outline"
+              sx={(theme) => ({ '&:hover': { backgroundColor: theme.colors.lmsLayout[1] } })}
+            >
+              <MdMessage size={18} />
+            </ActionIcon>
+          </Indicator>
+        </Tooltip>
+        <Tooltip label="Notifications" color="lmsLayout" withArrow arrowPosition="center">
+          <Indicator inline label="21" color="red" disabled size={16}>
+            <ActionIcon
+              variant="outline"
+              sx={(theme) => ({ '&:hover': { backgroundColor: theme.colors.lmsLayout[1] } })}
+            >
+              <FaBell size={18} />
+            </ActionIcon>
+          </Indicator>
+        </Tooltip>
+        <FullScreenToggle />
         <DropdownMenu />
-      </Box>
+      </Group>
     </Box>
   );
 }

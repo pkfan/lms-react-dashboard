@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 
 import { FaLink, FaSave, FaMoneyBillWave, FaDollarSign, FaPercent } from 'react-icons/fa';
 import { BsUpload } from 'react-icons/bs';
-import { RiVideoUploadFill } from 'react-icons/ri';
+import { MdShopTwo } from 'react-icons/md';
 import { TiSortAlphabeticallyOutline } from 'react-icons/ti';
 
 import inputStylesFull from '@/styles/inputStylesFull';
@@ -52,8 +52,14 @@ export function Lessons({ course }) {
             position: 'relative',
           })}
         >
-          <Stack w="70%" mx="auto" justify="center" align="center">
-            <RiVideoUploadFill size={150} style={{ opacity: 0.7 }} />
+          <Stack
+            w="70%"
+            mx="auto"
+            justify="center"
+            align="center"
+            sx={(theme) => ({ color: theme.colors.lmsSecondary[6] })}
+          >
+            <MdShopTwo size={150} />
 
             <Button
               component={Link}

@@ -20,17 +20,6 @@ export default function createBasic(builder) {
       return createResponseErrors(response);
     },
     invalidatesTags: ['Course'],
-    // // onQueryStarted is useful for optimistic updates
-    // // The 2nd parameter is the destructured `MutationLifecycleApi`
-    // async onQueryStarted(
-    //   arg,
-    //   { dispatch, getState, queryFulfilled, requestId, extra, getCacheEntry },
-    // ) {},
-    // // The 2nd parameter is the destructured `MutationCacheLifecycleApi`
-    // async onCacheEntryAdded(
-    //   arg,
-    //   { dispatch, getState, extra, requestId, cacheEntryRemoved, cacheDataLoaded, getCacheEntry },
-    // ) {},
   });
 
   return createBasicQuery;

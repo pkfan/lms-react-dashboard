@@ -6,6 +6,9 @@ import { useGetAuthUserQuery } from '@/views/auth/api';
 import { useGetUserAvatarQuery } from '@/views/auth/api';
 import createImageUrl from '@/helpers/createImageUrl';
 
+import { useSelector } from 'react-redux';
+import { getImageUrl } from '@/helpers/getImageUrl';
+
 const useStyles = createStyles((theme) => ({
   footer: {
     position: 'absolute',
@@ -31,20 +34,18 @@ export function SideBarFooter({ lmsRole }) {
   const { data: authUserData, isSuccess: isAuthUserSuccess } = useGetAuthUserQuery();
   const { isSuccess: isUserAvatarSuccess, data: userAvatarData } = useGetUserAvatarQuery();
   const [avatarSrc, setAvatarSrc] = useState('');
+  const authUser = useSelector((state) => state.authSlice.auth.user);
 
   useEffect(() => {
-    if (isUserAvatarSuccess && userAvatarData) {
-      const url = createImageUrl({
-        directory: userAvatarData.directory,
-        imageName: userAvatarData.file_name,
-      });
+    if (authUser?.avatar) {
+      const url = getImageUrl(authUser?.avatar);
       setAvatarSrc(url);
     }
-  }, [isUserAvatarSuccess, userAvatarData]);
+  }, [authUser]);
 
   return (
     <>
-      {isAuthUserSuccess && lmsRole != 'profile' && (
+      {authUser?.avatar && lmsRole != 'profile' && (
         <Box component={Link} to="/dashboard/profile" className={classes.footer}>
           <Flex justify="space-between" align="center">
             <Avatar

@@ -4,6 +4,8 @@ import baseQuery from '@/api/baseQuery';
 
 // query
 import getImages from './getImages';
+import getImage from './getImage';
+import getCoursesTest from './getCoursesTest';
 
 // mutate
 // import postTest from './postTest';
@@ -12,10 +14,12 @@ import getImages from './getImages';
 export const baseApi = createApi({
   baseQuery,
   reducerPath: 'base',
-  tagTypes: ['Base'],
+  tagTypes: ['Base', 'Image'],
   endpoints: (builder) => ({
     // query
     getImages: getImages(builder),
+    getImage: getImage(builder),
+    getCoursesTest: getCoursesTest(builder),
 
     // mutation
     // postTest: postTest(builder),
@@ -27,6 +31,8 @@ export const baseApi = createApi({
 export const {
   // query
   useGetImagesQuery,
+  useGetImageQuery,
+  useGetCoursesTestQuery,
 
   // mutattion
   // usePostTestMutation,

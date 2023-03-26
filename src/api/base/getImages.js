@@ -17,7 +17,7 @@ export default function getImages(builder) {
       console.log('/getImages error response : ', response);
       return createResponseErrors(response);
     },
-    providesTags: ['TextEditor'],
+    providesTags: ['Image'],
   });
 
   return imagesQuery;

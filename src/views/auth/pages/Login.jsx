@@ -136,7 +136,15 @@ export function Login() {
       if (authUserData && !authUserData?.email_verified_at) {
         navigate('/lms/email/verification');
       } else {
-        navigate('/dashboard/student/index');
+        const redirectUrl = sessionStorage.getItem('login-redirect-url');
+
+        if (redirectUrl) {
+          // reset session storage
+          sessionStorage.setItem('login-redirect-url', null);
+          navigate(redirectUrl);
+        } else {
+          navigate('/dashboard/student/index');
+        }
       }
       updateLoadingNotificationSuccess({
         id: 'login',

@@ -41,12 +41,12 @@ export function Category() {
 
   useEffect(() => {
     const query = location.search;
-    const { page, search } = queryString.parse(query);
+    const { page, searchString } = queryString.parse(query);
     if (page) {
       setPage(Number(page));
     }
-    if (search) {
-      setSearch(search);
+    if (searchString) {
+      setSearch(searchString);
     }
   }, []);
 

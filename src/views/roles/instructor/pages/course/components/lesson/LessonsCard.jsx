@@ -14,12 +14,20 @@ import DeleteModal from '@/components/common/modals/DeleteModal';
 import ExtensionFileSvg from '@/components/ExtensionFileSvg';
 import EditLessonModal from './EditLessonModal';
 import { format, formatDistance, formatRelative, subDays } from 'date-fns';
+import ConfirmPasswordModal from '@/components/ConfirmPasswordModal';
 
 export function LessonsCard({ lesson, refetchLessons }) {
   const [openedEditLessonModal, { open: openEditLessonModal, close: closeEditLessonModal }] =
     useDisclosure(false);
   const [openedDeleteModal, { open: openDeleteModal, close: closeDeleteModal }] =
     useDisclosure(false);
+
+  // confirm password
+  const [isConfirmPassword, setIsConfirmPassword] = useState(false);
+  const [
+    openedConfirmPasswordModal,
+    { open: openConfirmPasswordModal, close: closeConfirmPasswordModal },
+  ] = useDisclosure(false);
 
   let uploadedDate = formatDistance(new Date(lesson.created_at), new Date(), {
     addSuffix: true,
@@ -118,6 +126,14 @@ export function LessonsCard({ lesson, refetchLessons }) {
     }
   }, [isDeleteSuccess, isDeleteError]);
 
+  const deleteActionWrapper = () => {
+    if (!isConfirmPassword) {
+      openConfirmPasswordModal();
+    } else {
+      openDeleteModal();
+    }
+  };
+
   const confirmDelete = () => {
     deleteLesson({ lesson_id: lesson.id });
   };
@@ -176,7 +192,7 @@ export function LessonsCard({ lesson, refetchLessons }) {
               <ActionIconWithTooltip tooltip="Edit Lesson" onClick={openEditLessonModal}>
                 <FaEdit size={24} />
               </ActionIconWithTooltip>
-              <ActionIconWithTooltip tooltip="Delete Lesson" onClick={openDeleteModal}>
+              <ActionIconWithTooltip tooltip="Delete Lesson" onClick={deleteActionWrapper}>
                 <MdDeleteForever size={24} />
               </ActionIconWithTooltip>
             </Flex>
@@ -189,6 +205,11 @@ export function LessonsCard({ lesson, refetchLessons }) {
         isLessonLoading={isUpdateLessonLoading}
         opened={openedEditLessonModal}
         close={closeEditLessonModal}
+      />
+      <ConfirmPasswordModal
+        setIsConfirmPassword={setIsConfirmPassword}
+        opened={openedConfirmPasswordModal}
+        close={closeConfirmPasswordModal}
       />
       <DeleteModal
         title="Delete lesson"

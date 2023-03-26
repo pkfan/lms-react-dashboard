@@ -22,7 +22,7 @@ import insertCategoryThumbnail from './category/insertCategoryThumbnail';
 export const adminApi = createApi({
   baseQuery,
   reducerPath: 'admin',
-  tagTypes: ['Admin', 'Category'],
+  tagTypes: ['Admin', 'Category', 'Image'],
   endpoints: (builder) => ({
     // query
     getTest: getTest(builder),

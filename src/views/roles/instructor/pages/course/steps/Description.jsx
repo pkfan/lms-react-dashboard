@@ -91,6 +91,12 @@ export function Description({ refetchSteps, course }) {
           content={descriptionData}
         />
       )}
+      {isInsertDescriptionError && (
+        <Flex align="center" justify="center" sx={(theme) => ({ color: theme.colors.red[5] })}>
+          <IconX size={16} />
+          <Text>{insertDescriptionError.errors.description}</Text>
+        </Flex>
+      )}
     </Paper>
   );
 }

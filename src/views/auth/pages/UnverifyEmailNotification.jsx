@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { createStyles, Flex, Paper, Text, Alert } from '@mantine/core';
 import Button from '@/components/common/Button';
 import { IconAlertCircle } from '@tabler/icons';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 import {
   showLoadingNotification,
@@ -61,6 +61,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function UnverifyEmailNotification() {
+  const loginRedirectUrl = useLocation();
   const navigate = useNavigate();
   const { classes } = useStyles();
   const {
@@ -96,6 +97,10 @@ export function UnverifyEmailNotification() {
     }
 
     if (isAuthUserError) {
+      sessionStorage.setItem(
+        'login-redirect-url',
+        loginRedirectUrl.pathname + loginRedirectUrl.search,
+      );
       navigate('/lms/login');
     }
   }, [isUnverifyEmailNotificationSuccess, isAuthUserError, isUnverifyEmailNotificationError]);

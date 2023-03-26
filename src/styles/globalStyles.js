@@ -18,6 +18,27 @@ export const globalStyles = () => ({
     background: 'var(--primary-7)',
   },
 
+  // react-data-table-component scroll styles
+  '.react-data-table::-webkit-scrollbar': {
+    width: '7px',
+    height: '7px',
+  },
+
+  /* Track */
+  '.react-data-table::-webkit-scrollbar-track': {
+    background: 'var(--skin-0)',
+  },
+
+  /* Handle */
+  '.react-data-table::-webkit-scrollbar-thumb': {
+    background: 'var(--layout-6)',
+  },
+
+  /* Handle on hover */
+  '.react-data-table::-webkit-scrollbar-thumb:hover': {
+    background: 'var(--layout-7)',
+  },
+
   body: {
     backgroundColor: 'var(--layout-2)',
     color: 'var(--layout-7)',

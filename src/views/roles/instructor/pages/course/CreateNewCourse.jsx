@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import CreateUpdateCourse from './CreateUpdateCourse';
-import {
-  IconSettings,
-  IconPhoto,
-  IconMessageCircle,
-} from '@tabler/icons';
-import { Group, Box, Menu, Button as MantineButton } from '@mantine/core';
+import { IconSettings, IconPhoto, IconMessageCircle } from '@tabler/icons';
+import { Group, Box, Menu, Button as MantineButton, ActionIcon } from '@mantine/core';
 
 import { Link } from 'react-router-dom';
 import Button from '@/components/common/Button';
@@ -13,9 +9,9 @@ import ButtonWhite from '@/components/common/ButtonWhite';
 import Switch from '@/components/common/Switch';
 import { SiAddthis } from 'react-icons/si';
 import { FaChevronDown } from 'react-icons/fa';
+import { MdGrid4X4 } from 'react-icons/md';
 
 import PageTitle from '@/components/common/PageTitle';
-
 
 const pageTitle = () => (
   <PageTitle title="Add New Course">
@@ -41,7 +37,7 @@ const pageTitle = () => (
       <Box>
         <Menu shadow="md">
           <Menu.Target>
-            <MantineButton
+            {/* <MantineButton
               compact
               sx={(theme) => ({
                 backgroundImage: `linear-gradient(${theme.colors.lmsLayout[0]}, ${theme.colors.lmsLayout[3]})`,
@@ -58,7 +54,16 @@ const pageTitle = () => (
               rightIcon={<FaChevronDown size={14} />}
             >
               More
-            </MantineButton>
+            </MantineButton> */}
+            <ActionIcon
+              variant="transparent"
+              sx={(theme) => ({
+                backgroundColor: theme.white,
+                '&:hover': { backgroundColor: theme.colors.lmsLayout[1] },
+              })}
+            >
+              <MdGrid4X4 size={18} />
+            </ActionIcon>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -73,7 +78,6 @@ const pageTitle = () => (
 );
 
 export function CreateNewCourse() {
-
   const [course, setCourse] = useState(null);
   return <CreateUpdateCourse pageTitle={pageTitle()} course={course} setCourse={setCourse} />;
 }

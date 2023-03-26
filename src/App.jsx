@@ -1,15 +1,15 @@
 import ReactRouter from '@/routes/ReactRouter';
 import { useGetTestQuery } from '@/views/auth/api';
-import TextEditor from '@/views/tip-tap-editor/TextEditor';
-import DragDropInput from './views/roles/instructor/pages/course/components/DragDropInput';
+import MyDataTable from './components/MyDataTable';
+import Example from './components/DataTabelComponentExampls/Example';
 
 function App() {
   useGetTestQuery();
   return (
     <div className="App">
       <ReactRouter />
-      {/* <TextEditor /> */}
-      {/* <DragDropInput /> */}
+      {/* <MyDataTable /> */}
+      {/* <Example /> */}
     </div>
   );
 }

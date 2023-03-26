@@ -8,12 +8,9 @@ export default function deleteOtherSessionRecords(builder) {
       data: {},
     }),
     transformResponse: (response) => {
-      // console.log('sessiont browser endpoint response', response);
       return response;
     },
     transformErrorResponse: (response) => {
-      // console.log('sessiont browser endpoint errors', response);
-
       return createResponseErrors(response);
     },
   });

@@ -13,20 +13,20 @@ import { BiUser } from 'react-icons/bi';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { useGetUserAvatarQuery } from '@/views/auth/api';
 import createImageUrl from '@/helpers/createImageUrl';
+import { useSelector } from 'react-redux';
+import { getImageUrl } from '@/helpers/getImageUrl';
 
 export function DropdownMenu() {
-  const { isSuccess: isUserAvatarSuccess, data: userAvatarData } = useGetUserAvatarQuery();
   const [avatarSrc, setAvatarSrc] = useState('');
 
+  const authUser = useSelector((state) => state.authSlice.auth.user);
+
   useEffect(() => {
-    if (isUserAvatarSuccess && userAvatarData) {
-      const url = createImageUrl({
-        directory: userAvatarData.directory,
-        imageName: userAvatarData.file_name,
-      });
+    if (authUser?.avatar) {
+      const url = getImageUrl(authUser?.avatar);
       setAvatarSrc(url);
     }
-  }, [isUserAvatarSuccess, userAvatarData]);
+  }, [authUser]);
 
   return (
     <Menu shadow="md" width={200}>

@@ -25,7 +25,7 @@ const transformInstructors = (users) => {
   //   },
 
   return users.map((user) => ({
-    image: user.image ? getImageUrl(user.image) : '',
+    image: user.avatar ? getImageUrl(user.avatar) : '',
     label: user.full_name,
     value: user.id,
   }));

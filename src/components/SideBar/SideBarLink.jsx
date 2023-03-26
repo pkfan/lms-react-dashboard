@@ -9,16 +9,16 @@ const useStyles = createStyles((theme) => ({
     color: 'inherit',
   },
   sideBarLink: {
-    padding: '4px 8px',
-
+    // padding: '4px 8px',
+    // margin: '0 16px',
     // borderTopLeftRadius: '100px',
     // borderBottomLeftRadius: '100px',
-    borderRadius: '4px',
+    // borderRadius: '4px',
     transition: 'all 300ms ease-in',
 
     '&:hover': {
       backgroundColor: theme.colors.lmsLayout[2],
-      paddingRight: '4px',
+      // paddingRight: '4px',
     },
   },
   sideBarLinkActive: {
@@ -40,12 +40,15 @@ export function SideBarLink({ children, href = 'notFound', setSidebarOpened }) {
   return (
     <Link to={href} className={classes.reactRouterLink}>
       <Flex
+        px={8}
+        py={8}
+        // mx={16}
         justify="space-between"
         align="center"
         className={cx(classes.sideBarLink, { [classes.sideBarLinkActive]: isActive })}
         onClick={() => setSidebarOpened((o) => !o)}
       >
-        <Group>{children}</Group>
+        <Group sx={{ gap: 8 }}>{children}</Group>
         {/* <BiChevronRight size={16} className="htmlRtlIcon" /> */}
       </Flex>
     </Link>

@@ -19,7 +19,7 @@ export default function postBodyImage(builder) {
 
       return createResponseErrors(response);
     },
-    invalidatesTags: ['Auth'],
+    invalidatesTags: ['Image'],
     // // onQueryStarted is useful for optimistic updates
     // // The 2nd parameter is the destructured `MutationLifecycleApi`
     // async onQueryStarted(

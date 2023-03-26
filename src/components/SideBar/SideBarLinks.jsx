@@ -5,9 +5,10 @@ const useStyles = createStyles(() => ({
     maxHeight: 'calc(100vh - 60px - 64px)',
   },
   sideBarLinks: {
-    margin: '16px',
+    // margin: '16px',
     // marginLeft: '16px',
-    // marginTop: '16px',
+    marginTop: '16px',
+    gap: 0,
   },
 }));
 

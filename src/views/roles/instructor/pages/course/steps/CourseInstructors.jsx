@@ -48,7 +48,7 @@ export function CourseInstructors({ course }) {
     }
 
     let isOwner = false;
-    course?.instructors?.map((instructor) => {
+    course?.not_rejected_instructors?.map((instructor) => {
       if (
         instructor.id == authUser?.id &&
         courseInstructorRelation(instructor.pivot.course_relation) == 'owner'
@@ -60,12 +60,13 @@ export function CourseInstructors({ course }) {
     return isOwner;
   };
 
-  const initInstructors = course?.instructors?.map((instructor) => instructor.id) || [];
+  const initInstructors =
+    course?.not_rejected_instructors?.map((instructor) => instructor.id) || [];
   const [selectedInstructorsIds, setSelectedInstructorsIds] = useState(initInstructors);
   const [editInstructors, setEditInstructors] = useState(false);
 
-  console.log('======== selectedInstructorsIds', selectedInstructorsIds);
-  console.log('======== authUser', authUser);
+  // console.log('======== selectedInstructorsIds', selectedInstructorsIds);
+  // console.log('======== authUser', authUser);
 
   const {
     isSuccess: isGetInstructorsSuccess,
@@ -123,7 +124,7 @@ export function CourseInstructors({ course }) {
     // INVITE = 1;
 
     const oldCourseInstructors = {};
-    course?.instructors?.forEach((instructor) => {
+    course?.not_rejected_instructors?.forEach((instructor) => {
       //   set old status data for updation
       oldCourseInstructors[instructor.id] = {
         status: instructor.pivot.status, // pending

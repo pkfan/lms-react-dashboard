@@ -25,10 +25,7 @@ import inputStylesFull from '@/styles/inputStylesFull';
 import { useForm, isEmail, hasLength } from '@mantine/form';
 import SwtichText from '@/components/common/SwitchText';
 
-import {
-  useGetCategoriesWithSubCategoriesQuery,
-  useGetInstructorsQuery,
-} from '@/views/roles/instructor/api';
+import { useGetCategoriesWithSubCategoriesQuery } from '@/views/roles/instructor/api';
 import { useCreateBasicMutation, useUpdateBasicMutation } from '@/views/roles/instructor/api';
 import { showNotification } from '@mantine/notifications';
 import { IconX, IconCheck } from '@tabler/icons';

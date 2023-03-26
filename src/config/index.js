@@ -11,12 +11,15 @@ const config = {
   //laravel websocket config
   laravelEcho: {
     broadcaster: 'pusher',
-    key: 'cGtmYW5hbWlyQGdtYWlsLmNvbQ',
-    // wsHost: window.location.hostname,
-    wsHost: '127.0.0.1',
+    key: 'gfdasafdsaf',
+    wsHost: window.location.hostname,
+    // wsHost: '127.0.0.1',
     wsPort: 6001,
-    forceTLS: false,
     disableStats: true,
+
+    forceTLS: false,
+    // encrypted: true,  //ably
+    cluster: 'mt1',
   },
 };
 

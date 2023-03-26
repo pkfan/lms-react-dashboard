@@ -6,7 +6,16 @@ import getInstructors from './getInstructors';
 import setCourseInstructors from './setCourseInstructors';
 
 import getCategoriesWithSubCategories from './category/getCategoriesWithSubCategories';
-import { getCourses, getCourse } from './course';
+import {
+  getCourses,
+  getCourse,
+  getCoursesWithDetail,
+  deleteCourse,
+  getInvitesCourses,
+  updateInviteCourse,
+  getTrashCourses,
+  restoreTrashCourse,
+} from './course';
 
 import {
   getCourseSteps,
@@ -41,7 +50,7 @@ import { getLessons, updateLesson, deleteLesson, sortLessons } from './lesson';
 export const instructorApi = createApi({
   baseQuery,
   reducerPath: 'instructor',
-  tagTypes: ['Instructor', 'Course'],
+  tagTypes: ['Instructor', 'Course', 'Category', 'Chapter', 'Image', 'CourseSteps', 'Lesson'],
   endpoints: (builder) => ({
     // query
     getCategoriesWithSubCategories: getCategoriesWithSubCategories(builder),
@@ -51,10 +60,13 @@ export const instructorApi = createApi({
     getCover: getCover(builder),
     getCourse: getCourse(builder),
     getCourses: getCourses(builder),
+    getCoursesWithDetail: getCoursesWithDetail(builder),
     getChapter: getChapter(builder),
     getChapters: getChapters(builder),
     getLessons: getLessons(builder),
     getInstructors: getInstructors(builder),
+    getInvitesCourses: getInvitesCourses(builder),
+    getTrashCourses: getTrashCourses(builder),
 
     // mutation
     createBasic: createBasic(builder),
@@ -76,6 +88,9 @@ export const instructorApi = createApi({
     deleteLesson: deleteLesson(builder),
     sortLessons: sortLessons(builder),
     setCourseInstructors: setCourseInstructors(builder),
+    deleteCourse: deleteCourse(builder),
+    updateInviteCourse: updateInviteCourse(builder),
+    restoreTrashCourse: restoreTrashCourse(builder),
   }),
 });
 
@@ -90,10 +105,13 @@ export const {
   useGetCoverQuery,
   useGetCourseQuery,
   useGetCoursesQuery,
+  useGetCoursesWithDetailQuery,
   useGetChapterQuery,
   useGetChaptersQuery,
   useGetLessonsQuery,
   useGetInstructorsQuery,
+  useGetInvitesCoursesQuery,
+  useGetTrashCoursesQuery,
 
   // mutattion
   useCreateBasicMutation,
@@ -115,4 +133,7 @@ export const {
   useDeleteLessonMutation,
   useSortLessonsMutation,
   useSetCourseInstructorsMutation,
+  useDeleteCourseMutation,
+  useUpdateInviteCourseMutation,
+  useRestoreTrashCourseMutation,
 } = instructorApi;
