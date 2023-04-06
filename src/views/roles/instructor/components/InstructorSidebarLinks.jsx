@@ -44,6 +44,9 @@ export function InstructorSidebarLinks({ setSidebarOpened }) {
             Dashboard
           </Text>
         </SideBarLink>
+        <Text fw={700} color="lmsSecondary" fz={12} pl={4}>
+          Education
+        </Text>
         <Accordion.Item value="course">
           <Accordion.Control icon={<MdOutlineVideoLibrary size={20} />}>
             <Text fw={500} fz={16}>
@@ -74,8 +77,13 @@ export function InstructorSidebarLinks({ setSidebarOpened }) {
             </SubSideBarLink>
             <SubSideBarLink
               setSidebarOpened={setSidebarOpened}
-              href="/dashboard/instructor/course/create"
+              href="/dashboard/instructor/course/attachments"
             >
+              <Text fw={500} fz={14}>
+                Courses Attachments
+              </Text>
+            </SubSideBarLink>
+            <SubSideBarLink setSidebarOpened={setSidebarOpened} href="#">
               <Text fw={500} fz={14}>
                 Courses Comments
               </Text>

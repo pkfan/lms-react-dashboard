@@ -22,6 +22,7 @@ import { Course as InstructorCourse } from '@/views/roles/instructor/pages/cours
 import { CreateNewCourse as InstructorCreateNewCourse } from '@/views/roles/instructor/pages/course/CreateNewCourse';
 import { UpdateCourse as InstructorUpdateCourse } from '@/views/roles/instructor/pages/course/UpdateCourse';
 import { Lesson as InstructorLesson } from '@/views/roles/instructor/pages/course/Lesson';
+import { CourseAttachment as InstructorCourseAttachment } from '@/views/roles/instructor/pages/course/CourseAttachment';
 
 // admin
 import AdminLmsLayout from '@/layout/AdminLmsLayout';
@@ -73,6 +74,7 @@ export function ReactRouter() {
             <Route index element={<InstructorCourse />} />
             <Route path="create" element={<InstructorCreateNewCourse />} />
             <Route path=":id/update" element={<InstructorUpdateCourse />} />
+            <Route path="attachments" element={<InstructorCourseAttachment />} />
           </Route>
           <Route path="lessons">
             <Route index element={<InstructorLesson />} />

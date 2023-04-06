@@ -10,6 +10,7 @@ function App() {
       <ReactRouter />
       {/* <MyDataTable /> */}
       {/* <Example /> */}
+      {/* <h1>App loaded...</h1> */}
     </div>
   );
 }

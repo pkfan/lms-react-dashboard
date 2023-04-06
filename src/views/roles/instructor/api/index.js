@@ -45,12 +45,22 @@ import {
 } from './chapter';
 
 import { getLessons, updateLesson, deleteLesson, sortLessons } from './lesson';
+import { getAttachments, updateAttachment, deleteAttachment, sortAttachments } from './attachment';
 
 // Define a service using a base URL and expected endpoints
 export const instructorApi = createApi({
   baseQuery,
   reducerPath: 'instructor',
-  tagTypes: ['Instructor', 'Course', 'Category', 'Chapter', 'Image', 'CourseSteps', 'Lesson'],
+  tagTypes: [
+    'Instructor',
+    'Course',
+    'Category',
+    'Chapter',
+    'Image',
+    'CourseSteps',
+    'Lesson',
+    'Attachment',
+  ],
   endpoints: (builder) => ({
     // query
     getCategoriesWithSubCategories: getCategoriesWithSubCategories(builder),
@@ -64,6 +74,7 @@ export const instructorApi = createApi({
     getChapter: getChapter(builder),
     getChapters: getChapters(builder),
     getLessons: getLessons(builder),
+    getAttachments: getAttachments(builder),
     getInstructors: getInstructors(builder),
     getInvitesCourses: getInvitesCourses(builder),
     getTrashCourses: getTrashCourses(builder),
@@ -87,6 +98,9 @@ export const instructorApi = createApi({
     updateLesson: updateLesson(builder),
     deleteLesson: deleteLesson(builder),
     sortLessons: sortLessons(builder),
+    updateAttachment: updateAttachment(builder),
+    deleteAttachment: deleteAttachment(builder),
+    sortAttachments: sortAttachments(builder),
     setCourseInstructors: setCourseInstructors(builder),
     deleteCourse: deleteCourse(builder),
     updateInviteCourse: updateInviteCourse(builder),
@@ -109,6 +123,7 @@ export const {
   useGetChapterQuery,
   useGetChaptersQuery,
   useGetLessonsQuery,
+  useGetAttachmentsQuery,
   useGetInstructorsQuery,
   useGetInvitesCoursesQuery,
   useGetTrashCoursesQuery,
@@ -132,6 +147,9 @@ export const {
   useUpdateLessonMutation,
   useDeleteLessonMutation,
   useSortLessonsMutation,
+  useUpdateAttachmentMutation,
+  useDeleteAttachmentMutation,
+  useSortAttachmentsMutation,
   useSetCourseInstructorsMutation,
   useDeleteCourseMutation,
   useUpdateInviteCourseMutation,

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import CreateUpdateCourse from './CreateUpdateCourse';
-import { IconSettings, IconPhoto, IconMessageCircle } from '@tabler/icons';
 import { Group, Box, Menu, Button as MantineButton, ActionIcon } from '@mantine/core';
 
 import { Link } from 'react-router-dom';
@@ -8,8 +7,8 @@ import Button from '@/components/common/Button';
 import ButtonWhite from '@/components/common/ButtonWhite';
 import Switch from '@/components/common/Switch';
 import { SiAddthis } from 'react-icons/si';
-import { FaChevronDown } from 'react-icons/fa';
-import { MdGrid4X4 } from 'react-icons/md';
+import { ImEyeBlocked, ImEye } from 'react-icons/im';
+import { BsThreeDots } from 'react-icons/bs';
 
 import PageTitle from '@/components/common/PageTitle';
 
@@ -62,14 +61,13 @@ const pageTitle = () => (
                 '&:hover': { backgroundColor: theme.colors.lmsLayout[1] },
               })}
             >
-              <MdGrid4X4 size={18} />
+              <BsThreeDots size={18} />
             </ActionIcon>
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
-            <Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>
-            <Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item>
+            <Menu.Item icon={<ImEye size={14} />}>Publish</Menu.Item>
+            <Menu.Item icon={<ImEyeBlocked size={14} />}>Private</Menu.Item>
           </Menu.Dropdown>
         </Menu>
       </Box>

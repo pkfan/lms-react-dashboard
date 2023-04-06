@@ -45,27 +45,27 @@ export function SideBarFooter({ lmsRole }) {
 
   return (
     <>
-      {authUser?.avatar && lmsRole != 'profile' && (
-        <Box component={Link} to="/dashboard/profile" className={classes.footer}>
-          <Flex justify="space-between" align="center">
-            <Avatar
-              className={classes.avatar}
-              radius="sm"
-              src={avatarSrc}
-              sx={{ backgroundColor: '#000' }}
-            />
-            <Box>
-              <Text fw={700} fz="sm" sx={{ textTransform: 'capitalize' }}>
-                {authUserData?.full_name}
-              </Text>
-              <Text fz="xs" sx={{ textTransform: 'uppercase' }}>
-                {lmsRole}
-              </Text>
-            </Box>
-            <IconChevronRight size={18} className="htmlRtlIcon" />
-          </Flex>
-        </Box>
-      )}
+      {/* {authUser?.avatar && lmsRole != 'profile' && ( */}
+      <Box component={Link} to="/dashboard/profile" className={classes.footer}>
+        <Flex justify="space-between" align="center">
+          <Avatar
+            className={classes.avatar}
+            radius="sm"
+            src={avatarSrc}
+            sx={{ backgroundColor: '#000' }}
+          />
+          <Box>
+            <Text fw={700} fz="sm" sx={{ textTransform: 'capitalize' }}>
+              {authUserData?.full_name}
+            </Text>
+            <Text fz="xs" sx={{ textTransform: 'uppercase' }}>
+              {lmsRole}
+            </Text>
+          </Box>
+          <IconChevronRight size={18} className="htmlRtlIcon" />
+        </Flex>
+      </Box>
+      {/* )} */}
     </>
   );
 }

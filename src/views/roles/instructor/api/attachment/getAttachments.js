@@ -1,20 +1,22 @@
 import createResponseErrors from '@/helpers/createResponseErrors';
 
-export default function getCourse(builder) {
-  const getCourseQuery = builder.query({
+export function getAttachments(builder) {
+  const getAttachmentsQuery = builder.query({
     query: (courseId) => ({
-      url: `/instructor/course/${courseId}`,
+      url: `/instructor/course/attachments/${courseId}`,
       method: 'GET',
     }),
     transformResponse: (response) => {
-      console.log('getCourseQuery response', response);
+      console.log('getAttachmentsQuery response', response);
       return response.data;
     },
     transformErrorResponse: (response) => {
       return createResponseErrors(response);
     },
-    // providesTags: ['Course'],
+    providesTags: ['Attachment'],
   });
 
-  return getCourseQuery;
+  return getAttachmentsQuery;
 }
+
+export default getAttachments;

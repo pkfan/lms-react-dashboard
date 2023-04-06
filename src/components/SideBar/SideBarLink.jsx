@@ -23,7 +23,7 @@ const useStyles = createStyles((theme) => ({
   },
   sideBarLinkActive: {
     // backgroundColor: `${theme.colors.lmsPrimary[6]}!important`,
-    backgroundImage: `linear-gradient(${theme.colors.lmsPrimary[4]}, ${theme.colors.lmsPrimary[9]})`,
+    backgroundImage: `linear-gradient(${theme.colors.lmsLayout[4]}, ${theme.colors.lmsLayout[9]})`,
     color: theme.colors.lmsPrimary[0],
     paddingRight: '16px',
   },
