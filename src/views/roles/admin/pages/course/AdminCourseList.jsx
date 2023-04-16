@@ -48,6 +48,10 @@ import randomNumber from '@/helpers/randomNumber';
 export function AdminCourseList() {
   const [courseTitle, setCourseTitle] = useState('');
   const [instructorId, setInstructorId] = useState(null);
+  const [coursePrice, setCoursePrice] = useState(null);
+  const [courseDiscount, setCourseDiscount] = useState(null);
+  const [courseStars, setCourseStars] = useState(null);
+  const [courseComments, setCourseComments] = useState(null);
 
   const [submitFilter, setSubmitFilter] = useState(null);
 
@@ -358,10 +362,23 @@ export function AdminCourseList() {
     let urlQuery = query.for('admin/courses'); // the model you're selecting
     // .where('title', 'me')
 
-    if (submitFilter) {
-      if (courseTitle) {
-        urlQuery = urlQuery.where('title', courseTitle); // where the models `name` is 'Bob'
-      }
+    if (courseTitle) {
+      urlQuery = urlQuery.where('title', courseTitle); // where the models `name` is 'Bob'
+    }
+    if (instructorId) {
+      urlQuery = urlQuery.where('instructorId', instructorId);
+    }
+    if (coursePrice) {
+      urlQuery = urlQuery.where('price', coursePrice);
+    }
+    if (courseDiscount) {
+      urlQuery = urlQuery.where('discount', courseDiscount);
+    }
+    if (courseStars) {
+      urlQuery = urlQuery.where('stars', courseStars);
+    }
+    if (courseComments) {
+      urlQuery = urlQuery.where('comments', courseComments);
     }
 
     urlQuery
@@ -409,6 +426,16 @@ export function AdminCourseList() {
   const submitFilterWrapper = (randomNumber) => {
     setSubmitFilter(randomNumber);
     closeRightFilter();
+    setCurrentPage(1);
+  };
+
+  const clear = () => {
+    setCourseTitle('');
+    setInstructorId(null);
+    setCoursePrice(null);
+    setCourseDiscount(null);
+    setCourseStars(null);
+    setCourseComments(null);
   };
 
   return (
@@ -501,7 +528,7 @@ export function AdminCourseList() {
           )}
           {isGetCoursesSuccess && coursesWithDetailData.data.length <= 0 && (
             <Stack justify="center" align="center" sx={{ width: '100%' }}>
-              <ConfuseImage width={450} message="There is no course invitation" />
+              <ConfuseImage width={450} message="" />
             </Stack>
           )}
           {/* {isGetCoursesSuccess && coursesWithDetailData.data.length > 0 && ( */}
@@ -549,7 +576,16 @@ export function AdminCourseList() {
           setInstructorId={setInstructorId}
           courseTitle={courseTitle}
           setCourseTitle={setCourseTitle}
+          coursePrice={coursePrice}
+          setCoursePrice={setCoursePrice}
+          courseDiscount={courseDiscount}
+          setCourseDiscount={setCourseDiscount}
+          courseStars={courseStars}
+          setCourseStars={setCourseStars}
+          courseComments={courseComments}
+          setCourseComments={setCourseComments}
           submitFilterWrapper={submitFilterWrapper}
+          clear={clear}
         />
       </Drawer>
     </>
