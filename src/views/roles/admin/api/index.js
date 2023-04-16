@@ -2,6 +2,9 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import baseQuery from '@/api/baseQuery';
 
+import getInstructors from './getInstructors';
+import { getCourses } from './course';
+
 // query
 import getTest from './getTest';
 import getCategory from './category/getCategory';
@@ -22,7 +25,7 @@ import insertCategoryThumbnail from './category/insertCategoryThumbnail';
 export const adminApi = createApi({
   baseQuery,
   reducerPath: 'admin',
-  tagTypes: ['Admin', 'Category', 'Image'],
+  tagTypes: ['Admin', 'Course', 'Category', 'Image'],
   endpoints: (builder) => ({
     // query
     getTest: getTest(builder),
@@ -30,6 +33,9 @@ export const adminApi = createApi({
     getSubCategories: getSubCategories(builder),
     getCategoryThumbnail: getCategoryThumbnail(builder),
     getCategories: getCategories(builder),
+
+    getCourses: getCourses(builder),
+    getInstructors: getInstructors(builder),
 
     // mutation
     postTest: postTest(builder),
@@ -51,6 +57,9 @@ export const {
   useGetSubCategoriesQuery,
   useGetCategoryThumbnailQuery,
   useGetCategoriesQuery,
+
+  useGetCoursesQuery,
+  useGetInstructorsQuery,
 
   // mutattion
 

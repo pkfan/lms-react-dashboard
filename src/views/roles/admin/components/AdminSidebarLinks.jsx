@@ -45,12 +45,7 @@ export function AdminSidebarLinks({ setSidebarOpened }) {
             Dashboard
           </Text>
         </SideBarLink>
-        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/admin/index">
-          <AiOutlineDashboard size={20} />
-          <Text fw={500} fz={16}>
-            Dashboard
-          </Text>
-        </SideBarLink>
+        {/* tag  */}
         <Text fw={700} color="lmsSecondary" fz={12} pl={4}>
           Education
         </Text>

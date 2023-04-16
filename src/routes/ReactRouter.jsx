@@ -31,6 +31,7 @@ import CreateCategory from '@/views/roles/admin/pages/category/CreateCategory';
 import UpdateCategory from '@/views/roles/admin/pages/category/UpdateCategory';
 
 import Course from '@/views/pages/Course';
+import AdminCourseList from '@/views/roles/admin/pages/course/AdminCourseList';
 import Dashboard from '@/views/pages/Dashboard';
 import Instructor from '@/views/pages/Instructor';
 import Student from '@/views/pages/Student';
@@ -86,7 +87,7 @@ export function ReactRouter() {
         {/* admin routes  */}
         <Route path="dashboard/admin/" element={<AdminLmsLayout />}>
           <Route path="index" element={<Dashboard />} />
-          <Route path="course" element={<Course />} />
+          <Route path="course" element={<AdminCourseList />} />
           <Route path="instructor" element={<Instructor />} />
           <Route path="student" element={<Student />} />
           <Route path="category">

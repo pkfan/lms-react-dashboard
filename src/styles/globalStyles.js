@@ -183,11 +183,15 @@ export const globalStyles = () => ({
   },
   '.image-resizer:hover .resize-trigger': { opacity: 1 },
 
+  //mantine buttons override
   '.mantine-Button-root:hover': {
     backgroundColor: 'var(--layout-1)',
   },
 
   '.mantine-Modal-close:hover': {
+    background: 'var(--layout-2)',
+  },
+  '.mantine-Drawer-closeButton:hover': {
     background: 'var(--layout-2)',
   },
   '#your-id > [data-active]': {

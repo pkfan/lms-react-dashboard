@@ -72,7 +72,7 @@ export default function ReactDataTable({ ...others }) {
         // expandableRowsComponent={ExpandedComponent}
         direction={pageDirection ? pageDirection : 'ltr'}
         fixedHeader
-        // fixedHeaderScrollHeight='88vh'
+        fixedHeaderScrollHeight="80vh"
         highlightOnHover
         responsive
         // selectableRows
@@ -82,7 +82,7 @@ export default function ReactDataTable({ ...others }) {
         // subHeaderAlign="right"
         // subHeaderWrap
         // progressPending={isFetching}
-        // progressComponent={<Loader size="md" my={150} />}
+        progressComponent={<div style={{ display: 'none' }}>hidden</div>}
         // persistTableHead
         ////////
         // pagination

@@ -147,7 +147,9 @@ export function Lesson() {
         {isGetCoursesSuccess && courses.length <= 0 && (
           <Flex align="center" justify="center" sx={(theme) => ({ color: theme.colors.red[5] })}>
             <IconX size={16} />
-            <Text>You do not have any course, please create course in order to upload lessons.</Text>
+            <Text>
+              You do not have any course, please create course in order to upload lessons.
+            </Text>
           </Flex>
         )}
 
