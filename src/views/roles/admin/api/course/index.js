@@ -5,6 +5,7 @@ import getInvitesCourses from './getInvitesCourses';
 import updateInviteCourse from './updateInviteCourse';
 import getTrashCourses from './getTrashCourses';
 import restoreTrashCourse from './restoreTrashCourse';
+import courseAction from './courseAction';
 
 export {
   getCourse,
@@ -14,4 +15,5 @@ export {
   updateInviteCourse,
   getTrashCourses,
   restoreTrashCourse,
+  courseAction,
 };

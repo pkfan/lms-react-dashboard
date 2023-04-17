@@ -34,22 +34,27 @@ import statusAndColor from '@/helpers/course/statusAndColor';
 import { formatDistance } from 'date-fns';
 import StarsRating from '@/components/StarsRating';
 import { useDisclosure } from '@mantine/hooks';
-
-import { SiAddthis } from 'react-icons/si';
-import { MdVideoSettings } from 'react-icons/md';
-import { RiDraftLine } from 'react-icons/ri';
-import { FiRefreshCw } from 'react-icons/fi';
-import { ImFilter, ImSearch } from 'react-icons/im';
-import { IconDotsVertical, IconCheck, IconX } from '@tabler/icons';
 import { Query } from '@/lib/cogent-js';
 import AdminCourseFilter from './AdminCourseFilter';
 import randomNumber from '@/helpers/randomNumber';
+import CourseInstructorLiveStatus from '@/enums/course/CourseInstructorLiveStatus';
+import CourseInstructorStatus from '@/enums/course/CourseInstructorStatus';
+import { useCourseActionMutation } from '../../api';
+
+// icons
+import { SiAddthis } from 'react-icons/si';
+import { ImFilter, ImSearch, ImEye, ImEyeBlocked } from 'react-icons/im';
+import { IconDotsVertical, IconCheck, IconX } from '@tabler/icons';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FiTrash2 } from 'react-icons/fi';
 
 export function AdminCourseList() {
   const [courseTitle, setCourseTitle] = useState('');
   const [instructorId, setInstructorId] = useState(null);
   const [coursePrice, setCoursePrice] = useState(null);
   const [courseDiscount, setCourseDiscount] = useState(null);
+  const [courseStatus, setCourseStatus] = useState(null);
+  const [courseLiveStatus, setCourseLiveStatus] = useState(null);
   const [courseStars, setCourseStars] = useState(null);
   const [courseComments, setCourseComments] = useState(null);
   const [courseAccessDays, setCourseAccessDays] = useState(null);
@@ -72,9 +77,16 @@ export function AdminCourseList() {
   const [openedRightFilter, { open: openRightFilter, close: closeRightFilter }] =
     useDisclosure(false);
 
-  const [search, setSearch] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [
+    courseAction,
+    {
+      isSuccess: isCourseActionSuccess,
+      isLoading: isCourseActionLoading,
+      // isError: isCourseActionError,
+      error: courseActionError,
+      data: courseActionData,
+    },
+  ] = useCourseActionMutation();
 
   const columns = useMemo(() => [
     // {
@@ -300,7 +312,7 @@ export function AdminCourseList() {
           <Menu shadow="md" position="left" offset={-5} withArrow arrowPosition="center">
             <Menu.Target>
               <ActionIcon
-                loading={row.id == requestCourseId && isUpdateInviteCourseLoading}
+                loading={row.id == requestCourseId && isCourseActionLoading}
                 sx={(theme) => ({ '&:hover': { backgroundColor: theme.colors.lmsLayout[1] } })}
               >
                 <IconDotsVertical size={20} />
@@ -309,25 +321,93 @@ export function AdminCourseList() {
 
             <Menu.Dropdown>
               <Menu.Item
-                color="teal"
-                icon={<IconCheck size={14} />}
+                icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
                 onClick={() => {
                   // setRequestCourseId(row.id);
                   // updateInviteCourse({ course_id: row.id, status: CourseInstructorStatus.APPROVE });
                 }}
               >
-                Accept
+                View
+              </Menu.Item>
+
+              <Menu.Item
+                icon={<FaEdit size={14} style={{ opacity: 0.6 }} />}
+                component={Link}
+                to={`/dashboard/instructor/course/${row.id}/update`}
+              >
+                Edit
               </Menu.Item>
               <Menu.Item
                 color="red"
-                icon={<IconX size={14} />}
+                icon={<FiTrash2 size={14} />}
                 onClick={() => {
-                  // setRequestCourseId(row.id);
-                  // updateInviteCourse({ course_id: row.id, status: CourseInstructorStatus.REJECT });
+                  setRequestCourseId(row.id);
+                  courseAction({ course_id: row.id, delete: true });
                 }}
               >
-                Reject
+                Delete
               </Menu.Item>
+              <Menu.Divider />
+              {row.live_status != CourseInstructorLiveStatus.PUBLISH && (
+                <Menu.Item
+                  icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
+                  onClick={() => {
+                    setRequestCourseId(row.id);
+                    courseAction({ course_id: row.id, live_status: 'publish' });
+                  }}
+                >
+                  Publish
+                </Menu.Item>
+              )}
+
+              {row.live_status != CourseInstructorLiveStatus.PRIVATE && (
+                <Menu.Item
+                  icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
+                  onClick={() => {
+                    setRequestCourseId(row.id);
+                    courseAction({ course_id: row.id, live_status: 'private' });
+                  }}
+                >
+                  Private
+                </Menu.Item>
+              )}
+              <Menu.Divider />
+              {row.status != CourseInstructorStatus.APPROVE && (
+                <Menu.Item
+                  color="teal"
+                  icon={<IconCheck size={14} />}
+                  onClick={() => {
+                    setRequestCourseId(row.id);
+                    courseAction({ course_id: row.id, status: 'approve' });
+                  }}
+                >
+                  Approve
+                </Menu.Item>
+              )}
+              {row.status != CourseInstructorStatus.REJECT && (
+                <Menu.Item
+                  color="red"
+                  icon={<IconX size={14} />}
+                  onClick={() => {
+                    setRequestCourseId(row.id);
+                    courseAction({ course_id: row.id, status: 'reject' });
+                  }}
+                >
+                  Reject
+                </Menu.Item>
+              )}
+              {row.status != CourseInstructorStatus.BLOCKED && (
+                <Menu.Item
+                  color="red"
+                  icon={<IconX size={14} />}
+                  onClick={() => {
+                    setRequestCourseId(row.id);
+                    courseAction({ course_id: row.id, status: 'blocked' });
+                  }}
+                >
+                  Block
+                </Menu.Item>
+              )}
             </Menu.Dropdown>
           </Menu>
         </Box>
@@ -352,6 +432,12 @@ export function AdminCourseList() {
     }
     if (coursePrice) {
       urlQuery = urlQuery.where('price', coursePrice);
+    }
+    if (courseStatus) {
+      urlQuery = urlQuery.where('status', courseStatus);
+    }
+    if (courseLiveStatus) {
+      urlQuery = urlQuery.where('live_status', courseLiveStatus);
     }
     if (courseDiscount) {
       urlQuery = urlQuery.where('discount', courseDiscount);
@@ -443,6 +529,8 @@ export function AdminCourseList() {
     setInstructorId(null);
     setCoursePrice(null);
     setCourseDiscount(null);
+    setCourseStatus(null);
+    setCourseLiveStatus(null);
     setCourseStars(null);
     setCourseComments(null);
     setCourseAccessDays(null);
@@ -493,7 +581,7 @@ export function AdminCourseList() {
                 <MantineButton
                   onClick={() => {
                     setSearchPopoverOpened(true);
-                    setCourseTitle('');
+                    clear();
                   }}
                   compact
                   sx={(theme) => ({
@@ -607,6 +695,10 @@ export function AdminCourseList() {
           setCourseTitle={setCourseTitle}
           coursePrice={coursePrice}
           setCoursePrice={setCoursePrice}
+          courseStatus={courseStatus}
+          setCourseStatus={setCourseStatus}
+          courseLiveStatus={courseLiveStatus}
+          setCourseLiveStatus={setCourseLiveStatus}
           courseDiscount={courseDiscount}
           setCourseDiscount={setCourseDiscount}
           courseStars={courseStars}

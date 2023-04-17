@@ -3,7 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQuery from '@/api/baseQuery';
 
 import getInstructors from './getInstructors';
-import { getCourses } from './course';
+import { getCourses, courseAction } from './course';
 
 // query
 import getTest from './getTest';
@@ -45,6 +45,7 @@ export const adminApi = createApi({
     createSubCategory: createSubCategory(builder),
     deleteSubCategory: deleteSubCategory(builder),
     insertCategoryThumbnail: insertCategoryThumbnail(builder),
+    courseAction: courseAction(builder),
   }),
 });
 
@@ -70,4 +71,5 @@ export const {
   useCreateSubCategoryMutation,
   useDeleteSubCategoryMutation,
   useInsertCategoryThumbnailMutation,
+  useCourseActionMutation,
 } = adminApi;

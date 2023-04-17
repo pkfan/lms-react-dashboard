@@ -40,6 +40,10 @@ export function AdminCourseFilter({
   setCourseTitle,
   coursePrice,
   setCoursePrice,
+  courseStatus,
+  setCourseStatus,
+  courseLiveStatus,
+  setCourseLiveStatus,
   courseDiscount,
   setCourseDiscount,
   courseStars,
@@ -176,6 +180,22 @@ export function AdminCourseFilter({
         onChange={setCourseDiscount}
         filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
       />
+      <Radio.Group value={courseStatus} onChange={setCourseStatus} name="Status" label="Status">
+        <Radio value="pending" label="Pending" />
+        <Radio value="approved" label="Approved" />
+        <Radio value="reject" label="Reject" />
+        <Radio value="blocked" label="Blocked" />
+      </Radio.Group>
+      <Radio.Group
+        value={courseLiveStatus}
+        onChange={setCourseLiveStatus}
+        name="LiveStatus"
+        label="Live Status"
+      >
+        <Radio value="draft" label="Draft" />
+        <Radio value="private" label="Private" />
+        <Radio value="publish" label="Publish" />
+      </Radio.Group>
       <Select
         maxDropdownHeight={250}
         className={classes.inputStyles}
