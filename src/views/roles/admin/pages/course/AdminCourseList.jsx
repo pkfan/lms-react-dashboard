@@ -52,12 +52,17 @@ export function AdminCourseList() {
   const [courseDiscount, setCourseDiscount] = useState(null);
   const [courseStars, setCourseStars] = useState(null);
   const [courseComments, setCourseComments] = useState(null);
+  const [courseAccessDays, setCourseAccessDays] = useState(null);
+  const [coursePublished, setCoursePublished] = useState(null);
+  const [courseContentUpdated, setCourseContentUpdated] = useState(null);
+  const [courseCreated, setCourseCreated] = useState(null);
+  const [courseUpdated, setCourseUpdated] = useState(null);
+  const [courseSortField, setCourseSortField] = useState(null);
+  const [courseSortSymbol, setCourseSortSymbol] = useState('-');
 
   const [submitFilter, setSubmitFilter] = useState(null);
 
-  console.log('instructorId ===', instructorId);
-  console.log('courseTitle ===', courseTitle);
-  console.log('submitFilter ===', submitFilter);
+  const [searchPopoverOpened, setSearchPopoverOpened] = useState(false);
 
   const [requestCourseId, setRequestCourseId] = useState(null);
 
@@ -334,29 +339,6 @@ export function AdminCourseList() {
     },
   ]);
 
-  const location = useLocation();
-
-  useEffect(() => {
-    const query = location.search;
-    const { page, searchString } = queryString.parse(query);
-    if (page) {
-      setCurrentPage(Number(page));
-    }
-    if (searchString) {
-      setSearch(searchString);
-    }
-  }, []);
-
-  const submitSearch = () => {
-    if (searchQuery) {
-      console.log('searchParams', searchParams);
-
-      setCurrentPage(1);
-      setSearch(searchQuery);
-      setSearchParams({ page: 1, search: searchQuery });
-    }
-  };
-
   const generateUrlQuery = useCallback(() => {
     const query = new Query();
     let urlQuery = query.for('admin/courses'); // the model you're selecting
@@ -380,6 +362,28 @@ export function AdminCourseList() {
     if (courseComments) {
       urlQuery = urlQuery.where('comments', courseComments);
     }
+    if (courseAccessDays) {
+      urlQuery = urlQuery.where('access_days', courseAccessDays);
+    }
+    if (coursePublished) {
+      urlQuery = urlQuery.where('published', coursePublished);
+    }
+    if (courseContentUpdated) {
+      urlQuery = urlQuery.where('content_updated', courseContentUpdated);
+    }
+    if (courseCreated) {
+      urlQuery = urlQuery.where('created', courseCreated);
+    }
+    if (courseUpdated) {
+      urlQuery = urlQuery.where('updated', courseUpdated);
+    }
+    if (courseSortField) {
+      let symbol = courseSortSymbol == '-' ? '-' : '';
+
+      urlQuery = urlQuery.sort(`${symbol}${courseSortField}`);
+    } else {
+      urlQuery = urlQuery.sort('-created_at');
+    }
 
     urlQuery
       .includes(
@@ -389,7 +393,6 @@ export function AdminCourseList() {
         'videos_sum_duration',
         'attachmentsCount',
       )
-      // .sort('-created_at')
       .page(currentPage)
       .params({
         rowsPerPage,
@@ -423,10 +426,16 @@ export function AdminCourseList() {
     setCurrentPage(1);
   };
 
-  const submitFilterWrapper = (randomNumber) => {
-    setSubmitFilter(randomNumber);
+  const submitFilterWrapper = (randNum) => {
+    setSubmitFilter(randNum);
     closeRightFilter();
     setCurrentPage(1);
+  };
+
+  const submitSearch = () => {
+    setSubmitFilter(randomNumber());
+    setCurrentPage(1);
+    setSearchPopoverOpened(false);
   };
 
   const clear = () => {
@@ -436,6 +445,12 @@ export function AdminCourseList() {
     setCourseDiscount(null);
     setCourseStars(null);
     setCourseComments(null);
+    setCourseAccessDays(null);
+    setCoursePublished(null);
+    setCourseContentUpdated(null);
+    setCourseCreated(null);
+    setCourseUpdated(null);
+    setCourseSortField(null);
   };
 
   return (
@@ -465,9 +480,21 @@ export function AdminCourseList() {
               justifyContent: 'end',
             }}
           >
-            <Popover width={300} trapFocus position="bottom-end" withArrow shadow="md">
+            <Popover
+              opened={searchPopoverOpened}
+              onChange={setSearchPopoverOpened}
+              width={300}
+              trapFocus
+              position="bottom-end"
+              withArrow
+              shadow="md"
+            >
               <Popover.Target>
                 <MantineButton
+                  onClick={() => {
+                    setSearchPopoverOpened(true);
+                    setCourseTitle('');
+                  }}
                   compact
                   sx={(theme) => ({
                     height: 40,
@@ -489,8 +516,8 @@ export function AdminCourseList() {
               >
                 <Stack>
                   <TextInput
-                    onChange={(event) => setSearchQuery(event.target.value)}
-                    placeholder="search from categories"
+                    onChange={(event) => setCourseTitle(event.target.value)}
+                    placeholder="search courses"
                   />
                   <Button onClick={submitSearch} variant="lmsSecondary" sx={{ width: '100%' }}>
                     Search
@@ -561,6 +588,8 @@ export function AdminCourseList() {
         sx={{
           '& .mantine-Drawer-body': {
             margin: '24px 12px',
+            overflowY: 'scroll',
+            height: '95%',
           },
           '& .mantine-Drawer-closeButton': {
             position: 'absolute',
@@ -584,6 +613,20 @@ export function AdminCourseList() {
           setCourseStars={setCourseStars}
           courseComments={courseComments}
           setCourseComments={setCourseComments}
+          courseAccessDays={courseAccessDays}
+          setCourseAccessDays={setCourseAccessDays}
+          coursePublished={coursePublished}
+          setCoursePublished={setCoursePublished}
+          courseContentUpdated={courseContentUpdated}
+          setCourseContentUpdated={setCourseContentUpdated}
+          courseCreated={courseCreated}
+          setCourseCreated={setCourseCreated}
+          courseUpdated={courseUpdated}
+          setCourseUpdated={setCourseUpdated}
+          courseSortField={courseSortField}
+          setCourseSortField={setCourseSortField}
+          courseSortSymbol={courseSortSymbol}
+          setCourseSortSymbol={setCourseSortSymbol}
           submitFilterWrapper={submitFilterWrapper}
           clear={clear}
         />

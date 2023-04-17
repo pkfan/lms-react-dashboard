@@ -46,6 +46,20 @@ export function AdminCourseFilter({
   setCourseStars,
   courseComments,
   setCourseComments,
+  courseAccessDays,
+  setCourseAccessDays,
+  coursePublished,
+  setCoursePublished,
+  courseContentUpdated,
+  setCourseContentUpdated,
+  courseCreated,
+  setCourseCreated,
+  courseUpdated,
+  setCourseUpdated,
+  courseSortField,
+  setCourseSortField,
+  courseSortSymbol,
+  setCourseSortSymbol,
   submitFilterWrapper,
   clear,
 }) {
@@ -79,11 +93,32 @@ export function AdminCourseFilter({
     return data;
   };
 
+  const datesDistanceData = [
+    { value: '1-hour', label: 'last 1 hour' },
+    { value: '3-hour', label: 'last 3 hour' },
+    { value: '6-hour', label: 'last 6 hour' },
+    { value: '12-hour', label: 'last 12 hour' },
+    { value: '1-day', label: 'last 1 day' },
+    { value: '3-day', label: 'last 3 days' },
+    { value: '7-day', label: 'last 7 days' },
+    { value: '15-day', label: 'last 15 days' },
+    { value: '1-month', label: 'last 1 month' },
+    { value: '2-month', label: 'last 2 months' },
+    { value: '3-month', label: 'last 3 months' },
+    { value: '6-month', label: 'last 6 months' },
+    { value: '1-year', label: 'last 1 years' },
+    { value: '2-year', label: 'last 2 years' },
+    { value: '3-year', label: 'last 3 years' },
+    { value: '4-year', label: 'last 4 years' },
+    { value: '5-year', label: 'last 5 years' },
+    { value: '6-year', label: 'last 6 years' },
+  ];
+
   return (
     <Stack spacing="xs">
       <TextInput
         className={classes.inputStyles}
-        label="Course"
+        label="Courses"
         name="title"
         placeholder="type words"
         value={courseTitle}
@@ -170,6 +205,105 @@ export function AdminCourseFilter({
         onChange={setCourseComments}
         filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
       />
+      <Select
+        maxDropdownHeight={250}
+        className={classes.inputStyles}
+        label="Access Days Limit"
+        data={[
+          { value: 'unlimited', label: 'Courses with unlimited access days' },
+          { value: 'limited', label: 'Courses with limited access days' },
+          { value: '7-<=', label: 'Courses <= 7 access days' },
+          { value: '15-<=', label: 'Courses <= 15 access days' },
+          { value: '30-<=', label: 'Courses <= 30 access days' },
+          { value: '45-<=', label: 'Courses <= 45 access days' },
+          { value: '60-<=', label: 'Courses <= 60 access days' },
+          { value: '60->=', label: 'Courses >= 60 access days' },
+          { value: '90-<=', label: 'Courses <= 90 access days' },
+          { value: '90->=', label: 'Courses >= 90 access days' },
+          { value: '180-<=', label: 'Courses <= 6 months' },
+          { value: '180->=', label: 'Courses >= 6 months' },
+          { value: '365-<=', label: 'Courses <= 1 year' },
+          { value: '365->=', label: 'Courses >= 1 year' },
+        ]}
+        value={courseAccessDays}
+        onChange={setCourseAccessDays}
+        filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
+      />
+
+      <Divider variant="dashed" my="xs" label="Filter by date" labelPosition="center" />
+
+      <Select
+        maxDropdownHeight={250}
+        className={classes.inputStyles}
+        label="Published Date"
+        data={[
+          { value: 'published', label: 'Published courses' },
+          { value: 'unpublished', label: 'Unpublished courses' },
+          ...datesDistanceData,
+        ]}
+        value={coursePublished}
+        onChange={setCoursePublished}
+        filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
+      />
+      <Select
+        maxDropdownHeight={250}
+        className={classes.inputStyles}
+        label="Content Updated Date"
+        data={datesDistanceData}
+        value={courseContentUpdated}
+        onChange={setCourseContentUpdated}
+        filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
+      />
+      <Select
+        maxDropdownHeight={250}
+        className={classes.inputStyles}
+        label="Created Date"
+        data={datesDistanceData}
+        value={courseCreated}
+        onChange={setCourseCreated}
+        filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
+      />
+      <Select
+        maxDropdownHeight={250}
+        className={classes.inputStyles}
+        label="Updated Date"
+        data={datesDistanceData}
+        value={courseUpdated}
+        onChange={setCourseUpdated}
+        filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
+      />
+      <Divider variant="dashed" my="xs" label="Sort By" labelPosition="center" />
+      <Flex gap={4}>
+        <Select
+          maxDropdownHeight={250}
+          className={classes.inputStyles}
+          data={[
+            { value: 'title', label: 'Title' },
+            { value: 'price', label: 'Price' },
+            { value: 'discount', label: 'Discount' },
+            { value: 'access_days', label: 'Access Days Limit' },
+            { value: 'published_at', label: 'Published' },
+            { value: 'content_updated_at', label: 'Content Updated' },
+            { value: 'updated_at', label: 'Updated' },
+            { value: 'created_at', label: 'Created' },
+          ]}
+          value={courseSortField}
+          onChange={setCourseSortField}
+          filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
+        />
+        <Select
+          maxDropdownHeight={250}
+          className={classes.inputStyles}
+          data={[
+            { value: '-', label: 'Descendant' },
+            { value: '+', label: 'Ascendant' },
+          ]}
+          value={courseSortSymbol}
+          onChange={setCourseSortSymbol}
+          filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
+        />
+      </Flex>
+
       <Group position="center">
         <Button
           onClick={() => submitFilterWrapper(randomNumber())}
