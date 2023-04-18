@@ -36,10 +36,10 @@ export default function ReactDataTable({ ...others }) {
         padding: '24px 0',
         width: '100%',
 
-        '& .rdt_TableBody [role="row"]': {
-          background: `${theme.colors.lmsSkin[0]}`,
-          color: `${theme.colors.lmsSkin[1]}`,
-        },
+        // '& .rdt_TableBody [role="row"]': {
+        //   background: `${theme.colors.lmsSkin[0]}`,
+        //   color: `${theme.colors.lmsSkin[1]}`,
+        // },
         '& .rdt_TableBody [role="row"]:hover': {
           background: `${theme.colors.lmsLayout[2]}`,
           color: `${theme.colors.lmsLayout[7]}`,

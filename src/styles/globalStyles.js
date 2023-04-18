@@ -43,12 +43,15 @@ export const globalStyles = () => ({
     backgroundColor: 'var(--layout-2)',
     color: 'var(--layout-7)',
   },
-  '.mantine-Title-root': {
+  'h1,h2,h3,h4,h5,h6': {
     color: 'var(--layout-6)',
   },
   'a, a: active, a: hover, a: visited': {
     textDecoration: 'none',
-    color: 'var(primary-6)',
+    // color: 'var(--primary-6)',
+  },
+  '.mantine-Paper-root': {
+    color: 'var(--layout-6)',
   },
 
   //html rtls inputStyle

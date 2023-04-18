@@ -1,9 +1,8 @@
+import _ from 'lodash';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   Title,
   Stack,
-  Tabs,
-  Badge,
   Box,
   Popover,
   TextInput,
@@ -17,7 +16,7 @@ import {
   ActionIcon,
   Drawer,
 } from '@mantine/core';
-import { Link, useSearchParams, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Pagination from '@/components/common/Pagination';
 import Button from '@/components/common/Button';
 
@@ -39,14 +38,27 @@ import AdminCourseFilter from './AdminCourseFilter';
 import randomNumber from '@/helpers/randomNumber';
 import CourseInstructorLiveStatus from '@/enums/course/CourseInstructorLiveStatus';
 import CourseInstructorStatus from '@/enums/course/CourseInstructorStatus';
-import { useCourseActionMutation } from '../../api';
 import AdminCourseDetailCards from './card/AdminCourseDetailCards';
-import AdminCourseDetailCard from './card/AdminCourseDetailCard';
+import DeleteModal from '@/components/common/modals/DeleteModal';
+import ConfirmPasswordModal from '@/components/ConfirmPasswordModal';
+import { showNotification } from '@mantine/notifications';
+import {
+  showLoadingNotification,
+  updateLoadingNotificationError,
+  updateLoadingNotificationSuccess,
+} from '@/helpers/notification';
+import {
+  useCourseActionMutation,
+  useDeleteCourseMutation,
+  useCoursesBulkActionMutation,
+  useDeleteBulkCoursesMutation,
+} from '../../api';
+
 // icons
 import { SiAddthis } from 'react-icons/si';
 import { ImFilter, ImSearch, ImEye, ImEyeBlocked } from 'react-icons/im';
 import { IconDotsVertical, IconCheck, IconX } from '@tabler/icons';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaChevronDown } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
 
 export function AdminCourseList() {
@@ -72,22 +84,223 @@ export function AdminCourseList() {
 
   const [requestCourseId, setRequestCourseId] = useState(null);
 
+  const [selectedCourses, setselectedCourses] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(50);
 
   const [openedRightFilter, { open: openRightFilter, close: closeRightFilter }] =
     useDisclosure(false);
 
+  ///////////
+  const [openedDeleteModal, { open: openDeleteModal, close: closeDeleteModal }] =
+    useDisclosure(false);
+  const [openedBulkDeleteModal, { open: openBulkDeleteModal, close: closeBulkDeleteModal }] =
+    useDisclosure(false);
+  // confirm password
+  const [isConfirmPassword, setIsConfirmPassword] = useState(false);
+  const [
+    openedConfirmPasswordModal,
+    { open: openConfirmPasswordModal, close: closeConfirmPasswordModal },
+  ] = useDisclosure(false);
+
+  // delete course
+  const [
+    deleteCourse,
+    {
+      isSuccess: isDeleteCourseSuccess,
+      isLoading: isDeleteCourseLoading,
+      isError: isDeleteCourseError,
+      error: deleteCourseError,
+      // data: deleteCourseData,
+    },
+  ] = useDeleteCourseMutation();
+
+  useEffect(() => {
+    if (isDeleteCourseSuccess) {
+      closeDeleteModal();
+      setselectedCourses(null);
+      showNotification({
+        id: 'deleteCourseSuccess',
+        autoClose: 6000,
+        title: 'Success',
+        message: 'Course has been deleted.',
+        color: 'teal',
+        icon: <IconCheck />,
+        loading: false,
+      });
+    }
+
+    if (isDeleteCourseError) {
+      const error = _.isObject(deleteCourseError.errors)
+        ? 'data is invalid.'
+        : deleteCourseError.errors;
+      showNotification({
+        id: 'deleteCourseError',
+        autoClose: 6000,
+        title: 'Error!!!',
+        message: error,
+        color: 'red',
+        icon: <IconX />,
+        loading: false,
+      });
+    }
+  }, [isDeleteCourseSuccess, isDeleteCourseError]);
+
+  const deleteActionWrapper = () => {
+    if (!isConfirmPassword) {
+      openConfirmPasswordModal();
+    } else {
+      openDeleteModal();
+    }
+  };
+
+  const confirmDelete = () => {
+    deleteCourse({ course_id: requestCourseId });
+  };
+
+  // course action
   const [
     courseAction,
     {
       isSuccess: isCourseActionSuccess,
       isLoading: isCourseActionLoading,
-      // isError: isCourseActionError,
+      isError: isCourseActionError,
       error: courseActionError,
-      data: courseActionData,
     },
   ] = useCourseActionMutation();
+
+  useEffect(() => {
+    if (isCourseActionSuccess) {
+      showNotification({
+        id: 'isCourseActionSuccess',
+        autoClose: 6000,
+        title: 'Success',
+        message: 'Course action completed.',
+        color: 'teal',
+        icon: <IconCheck />,
+        loading: false,
+      });
+    }
+
+    if (isCourseActionError) {
+      const error = _.isObject(courseActionError.errors)
+        ? 'data is invalid.'
+        : courseActionError.errors;
+      showNotification({
+        id: 'isCourseActionError',
+        autoClose: 6000,
+        title: 'Error!!!',
+        message: error,
+        color: 'red',
+        icon: <IconX />,
+        loading: false,
+      });
+    }
+  }, [isCourseActionSuccess, isCourseActionError]);
+
+  //bulk course delete
+  const [
+    deleteBulkCourses,
+    {
+      isSuccess: isDeleteBulkCoursesSuccess,
+      isLoading: isDeleteBulkCoursesLoading,
+      isError: isDeleteBulkCoursesError,
+      error: deleteBulkCoursesError,
+      // data: DeleteBulkCoursesData,
+    },
+  ] = useDeleteBulkCoursesMutation();
+
+  useEffect(() => {
+    if (isDeleteBulkCoursesSuccess) {
+      closeBulkDeleteModal();
+      setselectedCourses(null);
+      showNotification({
+        id: 'deleteBulkCoursesSuccess',
+        autoClose: 6000,
+        title: 'Success',
+        message: 'Bulk Courses have been deleted.',
+        color: 'teal',
+        icon: <IconCheck />,
+        loading: false,
+      });
+    }
+
+    if (isDeleteBulkCoursesError) {
+      const error = _.isObject(deleteBulkCoursesError.errors)
+        ? 'data is invalid.'
+        : deleteBulkCoursesError.errors;
+      showNotification({
+        id: 'deleteBulkCoursesError',
+        autoClose: 6000,
+        title: 'Error!!!',
+        message: error,
+        color: 'red',
+        icon: <IconX />,
+        loading: false,
+      });
+    }
+  }, [isDeleteBulkCoursesSuccess, isDeleteBulkCoursesError]);
+
+  const deleteBulkCoursesWrapper = () => {
+    if (!isConfirmPassword) {
+      openConfirmPasswordModal();
+    } else {
+      openBulkDeleteModal();
+    }
+  };
+
+  const confirmBulkDelete = () => {
+    deleteBulkCourses({ course_ids: selectedCourses.map((selectedCourse) => selectedCourse.id) });
+  };
+
+  // bulk courses action
+  const [
+    coursesBulkAction,
+    {
+      isSuccess: isCoursesBulkActionSuccess,
+      isLoading: isCoursesBulkActionLoading,
+      isError: isCoursesBulkActionError,
+      error: coursesBulkActionError,
+    },
+  ] = useCoursesBulkActionMutation();
+
+  useEffect(() => {
+    if (isCoursesBulkActionSuccess) {
+      setselectedCourses(null);
+      updateLoadingNotificationSuccess({
+        id: 'bulkCoursesAction',
+        message: 'Bulk action for courses completed',
+        time: 6000,
+      });
+    }
+
+    if (isCoursesBulkActionError) {
+      const error = _.isObject(coursesBulkActionError.errors)
+        ? 'data is invalid.'
+        : coursesBulkActionError.errors;
+
+      updateLoadingNotificationError({
+        id: 'bulkCoursesAction',
+        title: 'Error!!!',
+        message: error,
+        time: 6000,
+      });
+    }
+  }, [isCoursesBulkActionSuccess, isCoursesBulkActionError]);
+
+  const submitBulkCoursesAction = (type) => {
+    coursesBulkAction({
+      type,
+      course_ids: selectedCourses.map((selectedCourse) => selectedCourse.id),
+    });
+    showLoadingNotification({
+      id: 'bulkCoursesAction',
+      title: 'Processing...',
+      message: 'processing bulk action for courses',
+    });
+  };
+
+  //////////////
 
   const columns = useMemo(() => [
     // {
@@ -343,7 +556,7 @@ export function AdminCourseList() {
                 icon={<FiTrash2 size={14} />}
                 onClick={() => {
                   setRequestCourseId(row.id);
-                  courseAction({ course_id: row.id, delete: true });
+                  deleteActionWrapper();
                 }}
               >
                 Delete
@@ -572,9 +785,94 @@ export function AdminCourseList() {
         <AdminCourseDetailCards submitViaCourseCard={submitViaCourseCard} />
 
         <Paper
-          sx={{ position: 'relative', zIndex: 0, paddingTop: '40px!important', minHeight: 400 }}
+          sx={{ position: 'relative', zIndex: 0, paddingTop: '48px!important', minHeight: 400 }}
         >
-          {/* search   */}
+          {/* action dropdown  */}
+          {selectedCourses?.length > 0 && (
+            <Flex
+              align="center"
+              gap={8}
+              sx={{
+                position: 'absolute',
+                left: 16,
+                top: 8,
+              }}
+            >
+              <Box>
+                <Menu shadow="md">
+                  <Menu.Target>
+                    <MantineButton
+                      compact
+                      sx={(theme) => ({
+                        backgroundImage: `linear-gradient(${theme.colors.lmsLayout[0]}, ${theme.colors.lmsLayout[3]})`,
+
+                        textTransform: 'uppercase',
+
+                        '&:hover': {
+                          backgroundImage: `linear-gradient(${theme.colors.lmsLayout[3]}, ${theme.colors.lmsLayout[0]})`,
+                        },
+                      })}
+                      variant="outline"
+                      component="div"
+                      color="lmsLayout"
+                      rightIcon={<FaChevronDown size={14} />}
+                    >
+                      Bulk Actions
+                    </MantineButton>
+                  </Menu.Target>
+
+                  <Menu.Dropdown>
+                    <Menu.Item
+                      icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
+                      onClick={() => submitBulkCoursesAction('publish')}
+                    >
+                      Publish All
+                    </Menu.Item>
+
+                    <Menu.Item
+                      icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
+                      onClick={() => submitBulkCoursesAction('private')}
+                    >
+                      Private All
+                    </Menu.Item>
+
+                    <Menu.Divider />
+                    <Menu.Item
+                      color="teal"
+                      icon={<IconCheck size={14} />}
+                      onClick={() => submitBulkCoursesAction('approve')}
+                    >
+                      Approve All
+                    </Menu.Item>
+                    <Menu.Item
+                      color="red"
+                      icon={<IconX size={14} />}
+                      onClick={() => submitBulkCoursesAction('reject')}
+                    >
+                      Reject All
+                    </Menu.Item>
+                    <Menu.Item
+                      color="red"
+                      icon={<IconX size={14} />}
+                      onClick={() => submitBulkCoursesAction('blocked')}
+                    >
+                      Block All
+                    </Menu.Item>
+                    <Menu.Divider />
+                    <Menu.Item
+                      color="red"
+                      icon={<FiTrash2 size={14} />}
+                      onClick={deleteBulkCoursesWrapper}
+                    >
+                      Delete All
+                    </Menu.Item>
+                  </Menu.Dropdown>
+                </Menu>
+              </Box>
+
+              <Title order={5}>Total {selectedCourses.length} courses selected.</Title>
+            </Flex>
+          )}
           <Box
             sx={{
               position: 'absolute',
@@ -585,6 +883,7 @@ export function AdminCourseList() {
               justifyContent: 'end',
             }}
           >
+            {/* search  */}
             <Popover
               opened={searchPopoverOpened}
               onChange={setSearchPopoverOpened}
@@ -630,7 +929,7 @@ export function AdminCourseList() {
                 </Stack>
               </Popover.Dropdown>
             </Popover>
-
+            {/* filter  */}
             <MantineButton
               compact
               leftIcon={<ImFilter size={20} />}
@@ -671,6 +970,8 @@ export function AdminCourseList() {
             fixedHeader
             highlightOnHover
             responsive
+            selectableRows
+            selectableRowsHighlight
             progressPending={isGetCoursesFetching}
             ////////
             pagination
@@ -681,6 +982,7 @@ export function AdminCourseList() {
             paginationRowsPerPageOptions={[50, 75, 100, 150, 200]}
             onChangeRowsPerPage={handlePerRowsChange}
             onChangePage={handlePageChange}
+            onSelectedRowsChange={({ selectedRows }) => setselectedCourses(selectedRows)}
           />
           {/* )} */}
         </Paper>
@@ -740,6 +1042,40 @@ export function AdminCourseList() {
           clear={clear}
         />
       </Drawer>
+      <ConfirmPasswordModal
+        setIsConfirmPassword={setIsConfirmPassword}
+        opened={openedConfirmPasswordModal}
+        close={closeConfirmPasswordModal}
+      />
+      <DeleteModal
+        title="Delete Course"
+        opened={openedDeleteModal}
+        confirm={confirmDelete}
+        close={closeDeleteModal}
+        isDeleting={isDeleteCourseLoading}
+      >
+        <Text>Are you sure to delete course?</Text>
+        <br />
+        <Text>
+          If you delete this course, then all lessons and files of this course will be deleted.
+        </Text>
+        <br />
+      </DeleteModal>
+      <DeleteModal
+        title="Delete All Courses"
+        opened={openedBulkDeleteModal}
+        confirm={confirmBulkDelete}
+        close={closeBulkDeleteModal}
+        isDeleting={isDeleteBulkCoursesLoading}
+      >
+        <Text>Are you sure to delete All courses?</Text>
+        <br />
+        <Text>
+          If you delete all these course, then all lessons and files of these course will be
+          deleted.
+        </Text>
+        <br />
+      </DeleteModal>
     </>
   );
 }

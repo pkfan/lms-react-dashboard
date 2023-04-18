@@ -51,7 +51,7 @@ export function ConfirmPasswordModal({ setIsConfirmPassword, opened, close }) {
         setIsConfirmPassword(confirmPasswordData);
         close();
         showNotification({
-          id: 'deleteCourseError',
+          id: 'deleteCourseSuccess',
           autoClose: 6000,
           title: 'Success',
           message: 'password confirmed Successfully',
