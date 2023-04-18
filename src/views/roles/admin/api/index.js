@@ -3,7 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import baseQuery from '@/api/baseQuery';
 
 import getInstructors from './getInstructors';
-import { getCourses, courseAction } from './course';
+import { getCourses, courseAction, getCoursesCount } from './course';
 
 // query
 import getTest from './getTest';
@@ -35,6 +35,7 @@ export const adminApi = createApi({
     getCategories: getCategories(builder),
 
     getCourses: getCourses(builder),
+    getCoursesCount: getCoursesCount(builder),
     getInstructors: getInstructors(builder),
 
     // mutation
@@ -60,6 +61,7 @@ export const {
   useGetCategoriesQuery,
 
   useGetCoursesQuery,
+  useGetCoursesCountQuery,
   useGetInstructorsQuery,
 
   // mutattion

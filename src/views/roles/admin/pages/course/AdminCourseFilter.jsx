@@ -326,7 +326,7 @@ export function AdminCourseFilter({
 
       <Group position="center">
         <Button
-          onClick={() => submitFilterWrapper(randomNumber())}
+          onClick={() => submitFilterWrapper()}
           color="lmsSecondary"
           leftIcon={<ImFilter size={18} />}
           loading={false}

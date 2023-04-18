@@ -1,14 +1,14 @@
 import createResponseErrors from '@/helpers/createResponseErrors';
 
-export default function getTrashCourses(builder) {
-  const getTrashCoursesQuery = builder.query({
+export default function getCoursesCount(builder) {
+  const getCoursesCountQuery = builder.query({
     query: () => ({
-      url: `/instructor/courses/trash`,
+      url: `/admin/courses/count`,
       method: 'GET',
     }),
     transformResponse: (response) => {
-      console.log('getTrashCoursesQuery response', response);
-      return response;
+      console.log('getCoursesCountQuery response', response);
+      return response.data;
     },
     transformErrorResponse: (response) => {
       return createResponseErrors(response);
@@ -16,5 +16,5 @@ export default function getTrashCourses(builder) {
     providesTags: ['Course'],
   });
 
-  return getTrashCoursesQuery;
+  return getCoursesCountQuery;
 }

@@ -40,7 +40,8 @@ import randomNumber from '@/helpers/randomNumber';
 import CourseInstructorLiveStatus from '@/enums/course/CourseInstructorLiveStatus';
 import CourseInstructorStatus from '@/enums/course/CourseInstructorStatus';
 import { useCourseActionMutation } from '../../api';
-
+import AdminCourseDetailCards from './card/AdminCourseDetailCards';
+import AdminCourseDetailCard from './card/AdminCourseDetailCard';
 // icons
 import { SiAddthis } from 'react-icons/si';
 import { ImFilter, ImSearch, ImEye, ImEyeBlocked } from 'react-icons/im';
@@ -512,8 +513,8 @@ export function AdminCourseList() {
     setCurrentPage(1);
   };
 
-  const submitFilterWrapper = (randNum) => {
-    setSubmitFilter(randNum);
+  const submitFilterWrapper = () => {
+    setSubmitFilter(randomNumber());
     closeRightFilter();
     setCurrentPage(1);
   };
@@ -541,6 +542,20 @@ export function AdminCourseList() {
     setCourseSortField(null);
   };
 
+  const submitViaCourseCard = (type = 'total') => {
+    clear();
+    if (type == 'total') {
+      // pass
+    } else if (type == 'publish' || type == 'private' || type == 'draft') {
+      setCourseLiveStatus(type);
+    } else if (type == 'pending' || type == 'approved' || type == 'reject' || type == 'blocked') {
+      setCourseStatus(type);
+    } else {
+      throw new Error('[pkfan error] course card (type) not correct.');
+    }
+    submitFilterWrapper();
+  };
+
   return (
     <>
       <Stack sx={{ width: '100%' }}>
@@ -553,6 +568,8 @@ export function AdminCourseList() {
             </Button>
           </Group>
         </PageTitle>
+
+        <AdminCourseDetailCards submitViaCourseCard={submitViaCourseCard} />
 
         <Paper
           sx={{ position: 'relative', zIndex: 0, paddingTop: '40px!important', minHeight: 400 }}
