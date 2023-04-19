@@ -1,4 +1,4 @@
-import { BsDashSquare, BsCheck2Square, BsXSquare } from 'react-icons/bs';
+import { BsDashSquare, BsCheck2Square, BsXSquare } from '@/components/icons';
 
 export function CourseStatusIcons({ status }) {
   return (

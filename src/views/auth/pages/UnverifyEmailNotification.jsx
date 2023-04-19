@@ -1,20 +1,14 @@
 import { useEffect } from 'react';
-
 import { createStyles, Flex, Paper, Text, Alert } from '@mantine/core';
-import Button from '@/components/common/Button';
-import { IconAlertCircle } from '@tabler/icons';
+import { Button, Logo, FullPageLoader } from '@/components';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-
 import {
   showLoadingNotification,
   updateLoadingNotificationError,
   updateLoadingNotificationSuccess,
 } from '@/helpers/notification';
-
-import Logo from '@/components/Logo';
-
 import { useUnverifyEmailNotificationMutation, useGetAuthUserQuery } from '@/views/auth/api';
-import FullPageLoader from '@/components/common/FullPageLoader';
+import { IconAlertCircle } from '@/components/icons';
 
 const useStyles = createStyles((theme) => ({
   container: {

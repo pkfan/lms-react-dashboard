@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
-import config from '@/config';
 import { RingProgress, Text, Box } from '@mantine/core';
-import resumableUpload from '@/helpers/resumableUpload';
+import { resumableUpload } from '@/helpers';
+import config from '@/config';
 
 export function ResumableComponent() {
   const elementRef = useRef();

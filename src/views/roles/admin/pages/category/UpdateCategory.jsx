@@ -1,20 +1,12 @@
 import _ from 'lodash';
 import { useState, useEffect } from 'react';
 import { Stack, Tabs, Group, Flex, Loader } from '@mantine/core';
-import Button from '@/components/common/Button';
 import { Link, useParams } from 'react-router-dom';
-// import MainLoadingOverlay from '@/components/common/MainLoadingOverlay';
-import TabStatusIcons from '@/components/common/TabStatusIcons';
-
-import PageTitle from '@/components/common/PageTitle';
-import Category from '../../category-steps/Category';
-import SubCategory from '../../category-steps/SubCategory';
-import { SiAddthis } from 'react-icons/si';
-import { FaEdit } from 'react-icons/fa';
-import Thumbnail from '../../category-steps/Thumbnail';
-import { useGetCategoryQuery } from '../../api';
+import { Button, TabStatusIcons, PageTitle } from '@/components';
+import { useGetCategoryQuery } from '@/views/roles/admin/api';
 import { showNotification } from '@mantine/notifications';
-import { IconX } from '@tabler/icons';
+import { Category, SubCategory, Thumbnail } from '@/views/roles/admin/components';
+import { IconX, SiAddthis } from '@/components/icons';
 
 export function UpdateCategory() {
   const [categoryData, setCategoryData] = useState(null);

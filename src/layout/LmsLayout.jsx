@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Box, createStyles } from '@mantine/core';
 import { Outlet, useNavigate } from 'react-router-dom';
-import FullPageLoader from '@/components/common/FullPageLoader';
+import { FullPageLoader } from '@/components';
 import { useGetAuthUserQuery } from '@/views/auth/api';
 import { useDispatch } from 'react-redux';
 import { setAuthUser as setAuthUserAction } from '@/views/auth/slice/authSlice';

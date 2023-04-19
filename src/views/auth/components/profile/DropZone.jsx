@@ -1,7 +1,7 @@
 import { Group, Text, useMantineTheme } from '@mantine/core';
-import { IconUpload, IconPhoto, IconX } from '@tabler/icons';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { usePostTestMutation } from '../../api';
+import { IconUpload, IconPhoto, IconX } from '@/components/icons';
 
 export function DropZone(props) {
   const [

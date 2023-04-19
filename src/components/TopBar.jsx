@@ -8,8 +8,9 @@ import { TbGridDots } from 'react-icons/tb';
 import { Burger } from './Burger';
 import DropdownMenu from '@/views/auth/components/profile/DropdownMenu';
 import FullScreenToggle from './FullScreenToggle';
+import LightDarkSwitcher from './LightDarkSwitcher';
 
-function TopBar({ sx, sidebarOpened, setSidebarOpened }) {
+export function TopBar({ sx, sidebarOpened, setSidebarOpened }) {
   const topBarStyle = (theme) => ({
     background: theme.colors.lmsSkin[0],
     boxShadow: theme.shadows.sm,
@@ -69,6 +70,7 @@ function TopBar({ sx, sidebarOpened, setSidebarOpened }) {
           </Indicator>
         </Tooltip>
         <FullScreenToggle />
+        <LightDarkSwitcher />
         <DropdownMenu />
       </Group>
     </Box>

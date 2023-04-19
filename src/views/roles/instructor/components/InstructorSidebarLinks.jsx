@@ -1,14 +1,14 @@
 import { Text, Accordion } from '@mantine/core';
-import { AiOutlineDashboard, AiFillSetting } from 'react-icons/ai';
-import { MdOutlineVideoLibrary, MdPayment } from 'react-icons/md';
-import { ImManWoman } from 'react-icons/im';
-import { MdOutlineVideoCameraFront } from 'react-icons/md';
-import { FaChevronRight } from 'react-icons/fa';
-
-import SideBarLinks from '@/components/SideBar/SideBarLinks';
-import SideBarLink from '@/components/SideBar/SideBarLink';
-import SubSideBarLink from '@/components/SideBar/SubSideBarLink';
-import useIsActiveSidebarLink from '@/hooks/useIsActiveSidebarLink';
+import { SideBarLinks, SideBarLink, SubSideBarLink } from '@/components';
+import { useIsActiveSidebarLink } from '@/hooks';
+import {
+  AiOutlineDashboard,
+  AiFillSetting,
+  MdOutlineVideoLibrary,
+  MdPayment,
+  ImManWoman,
+  MdOutlineVideoCameraFront,
+} from '@/components/icons';
 
 export function InstructorSidebarLinks({ setSidebarOpened }) {
   const isActiveLink = useIsActiveSidebarLink();

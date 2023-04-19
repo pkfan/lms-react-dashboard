@@ -1,20 +1,15 @@
 import { useEffect } from 'react';
 import { createStyles, Flex, PasswordInput, Box, Title } from '@mantine/core';
-import Alert from '@/components/common/Alert';
-import Paper from '@/components/common/Paper';
-import Button from '@/components/common/Button';
+import { useForm } from '@mantine/form';
+import { Alert, Paper, Button } from '@/components';
 import {
   showLoadingNotification,
   updateLoadingNotificationError,
   updateLoadingNotificationSuccess,
 } from '@/helpers/notification';
-
-import { useForm } from '@mantine/form';
-
-import { FaKey } from 'react-icons/fa';
-
-import inputStyles from '@/styles/inputStyles';
+import { inputStyles } from '@/styles';
 import { useUpdatePasswordMutation } from '@/views/auth/api';
+import { FaKey } from '@/components/icons';
 
 const useStyles = createStyles(() => ({
   container: {

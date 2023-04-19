@@ -1,8 +1,6 @@
 import { useState } from 'react';
-
 import LmsLayout from './LmsLayout';
-import { SideBar } from '@/components/SideBar/SideBar';
-import TopBar from '@/components/TopBar';
+import { TopBar, SideBar } from '@/components';
 
 export function InstructorLmsLayout() {
   const [sidebarOpened, setSidebarOpened] = useState(false);

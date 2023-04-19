@@ -14,22 +14,12 @@ import {
   Text,
 } from '@mantine/core';
 import { Link, useSearchParams, useLocation } from 'react-router-dom';
-import Pagination from '@/components/common/Pagination';
-import Button from '@/components/common/Button';
-import { SiAddthis } from 'react-icons/si';
-import { MdVideoSettings } from 'react-icons/md';
-import { RiDraftLine } from 'react-icons/ri';
-import { FiRefreshCw } from 'react-icons/fi';
-import { ImEye, ImFilter, ImSearch } from 'react-icons/im';
-import Paper from '@/components/common/Paper';
-import PageTitle from '@/components/common/PageTitle';
-import CategoryList from '../../components/category/CategoryList';
-import CategoryCard from '../../components/category/CategoryCard';
-import { useGetCategoriesQuery } from '../../api';
-import { IconX } from '@tabler/icons';
-import Overlay from '@/components/common/Overlay';
+import { Pagination, Button, Paper, PageTitle, Overlay, NotFoundImage } from '@/components';
 import queryString from 'query-string';
-import NotFoundImage from '@/components/images/NotFoundImage';
+import { useGetCategoriesQuery } from '@/views/roles/admin/api';
+import {CategoryList, CategoryCard} from '@/views/roles/admin/components'
+import { IconX, SiAddthis, FiRefreshCw, ImSearch } from '@/components/icons';
+
 
 export function Category() {
   const [activePage, setPage] = useState(1);

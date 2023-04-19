@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
-
 import { createStyles, Flex, Paper, Text, TextInput, PasswordInput, Anchor } from '@mantine/core';
-import Alert from '@/components/common/Alert';
 import { useForm, isEmail } from '@mantine/form';
+import { Alert, Button, Logo, FullPageLoader } from '@/components';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import Button from '@/components/common/Button';
 
 import {
   showLoadingNotification,
@@ -12,14 +10,9 @@ import {
   updateLoadingNotificationSuccess,
 } from '@/helpers/notification';
 
-import { FaKey } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
-
-import inputStyles from '@/styles/inputStyles';
-import Logo from '@/components/Logo';
-
+import { FaKey, MdEmail } from '@/components/icons';
+import { inputStyles } from '@/styles';
 import { useGetAuthUserQuery, useResetPasswordMutation } from '@/views/auth/api';
-import FullPageLoader from '@/components/common/FullPageLoader';
 
 const useStyles = createStyles((theme) => ({
   container: {

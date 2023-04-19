@@ -1,42 +1,23 @@
 import { useState, useEffect } from 'react';
-import {
-  Title,
-  Stack,
-  Tabs,
-  Badge,
-  Box,
-  Popover,
-  Select,
-  Group,
-  Button as MantineButton,
-  Loader,
-  Flex,
-  Text,
-  Anchor,
-} from '@mantine/core';
-import { Link, useLocation } from 'react-router-dom';
-import Pagination from '@/components/common/Pagination';
-import Button from '@/components/common/Button';
-import { IoMdArrowRoundBack } from 'react-icons/io';
-import { ImFolderUpload } from 'react-icons/im';
-import { RiSortAsc } from 'react-icons/ri';
-import { MdOutlineVideoLibrary, MdMenuBook } from 'react-icons/md';
-import { RiFileEditFill } from 'react-icons/ri';
-import { ImEye, ImFilter, ImSearch } from 'react-icons/im';
-import Paper from '@/components/common/Paper';
-import CourseList from '@/views/course/components/CourseList';
-import CourseCard from '@/views/course/components/CourseCard';
-import PageTitle from '@/components/common/PageTitle';
-import NotFoundImage from '@/components/images/NotFoundImage';
-import queryString from 'query-string';
-import { useGetCoursesQuery } from '../../api';
-import { IconX } from '@tabler/icons';
-import UploadAttachments from './components/attachment/UploadAttachments';
 import { useDispatch } from 'react-redux';
+import { Stack, Tabs, Select, Group, Loader, Flex, Text } from '@mantine/core';
+import { Link } from 'react-router-dom';
+import { Button, Paper, PageTitle, NotFoundImage } from '@/components';
+import { useGetCoursesQuery } from '@/views/roles/instructor/api';
 import { clearUploadData as clearUploadDataAction } from '@/views/roles/instructor/slice/filesUploadSlice';
-
-import Attachments from './components/attachment/Attachments';
-import SortAttachments from './components/attachment/SortAttachments';
+import {
+  UploadAttachments,
+  Attachments,
+  SortAttachments,
+} from '@/views/roles/instructor/components';
+import {
+  IoMdArrowRoundBack,
+  ImFolderUpload,
+  RiSortAsc,
+  MdOutlineVideoLibrary,
+  RiFileEditFill,
+  IconX,
+} from '@/components/icons';
 
 export function CourseAttachment() {
   const filesUploadDispatch = useDispatch();

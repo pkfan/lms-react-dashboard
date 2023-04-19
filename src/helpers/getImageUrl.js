@@ -1,5 +1,4 @@
-import imageExtensions from '@/enums/image/imageExtensions';
-import imageDirectory from '@/enums/image/imageDirectory';
+import { imageDirectory, imageExtensions } from '@/enums';
 import createImageUrl from './createImageUrl';
 
 export function getImageUrl(image) {

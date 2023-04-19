@@ -1,34 +1,33 @@
 import { useState, useEffect } from 'react';
 import {
-  Title,
   Stack,
   Tabs,
-  Badge,
   Box,
   Popover,
   TextInput,
   Group,
   Button as MantineButton,
 } from '@mantine/core';
-import { Link, useSearchParams, useLocation } from 'react-router-dom';
-import Pagination from '@/components/common/Pagination';
-import Button from '@/components/common/Button';
-
-import Paper from '@/components/common/Paper';
-import CourseList from '@/views/course/components/CourseList';
-import CourseCard from '@/views/course/components/CourseCard';
-import PageTitle from '@/components/common/PageTitle';
 import queryString from 'query-string';
-import CourseInviteInstructors from './components/course/CourseInviteInstructors';
-import InstructorTrashCourses from './components/course/InstructorTrashCourses';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
+import { Button, Paper, PageTitle } from '@/components';
+import CourseList from '@/views/course/components/CourseList';
+import {
+  CourseInviteInstructors,
+  InstructorTrashCourses,
+} from '@/views/roles/instructor/components';
 
-// icons
-import { SiAddthis } from 'react-icons/si';
-import { RiDraftLine } from 'react-icons/ri';
-import { BsWatch } from 'react-icons/bs';
-import { FiTrash2 } from 'react-icons/fi';
-import { ImEye, ImSearch, ImEyeBlocked, ImCancelCircle } from 'react-icons/im';
-import { AiOutlineUsergroupAdd } from 'react-icons/ai';
+import {
+  ImEye,
+  ImSearch,
+  ImEyeBlocked,
+  ImCancelCircle,
+  AiOutlineUsergroupAdd,
+  FiTrash2,
+  SiAddthis,
+  RiDraftLine,
+  BsWatch,
+} from '@/components/icons';
 
 export function Course() {
   ////////////////

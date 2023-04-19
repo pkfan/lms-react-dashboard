@@ -1,16 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Stack, Tabs, Text, Paper, Group, Box, Menu, Button as MantineButton } from '@mantine/core';
-import Button from '@/components/common/Button';
+import { Stack, Tabs, Group } from '@mantine/core';
 import { Link } from 'react-router-dom';
-// import MainLoadingOverlay from '@/components/common/MainLoadingOverlay';
-import TabStatusIcons from '@/components/common/TabStatusIcons';
-
-import PageTitle from '@/components/common/PageTitle';
-import Category from '../../category-steps/Category';
-import SubCategory from '../../category-steps/SubCategory';
-import { SiAddthis } from 'react-icons/si';
-import { FaEdit } from 'react-icons/fa';
-import Thumbnail from '../../category-steps/Thumbnail';
+import { Button, TabStatusIcons, PageTitle } from '@/components';
+import { FaEdit, SiAddthis } from '@/components/icons';
+import { Category, SubCategory, Thumbnail } from '@/views/roles/admin/components';
 
 export function CreateCategory() {
   const [categoryData, setCategoryData] = useState(null);

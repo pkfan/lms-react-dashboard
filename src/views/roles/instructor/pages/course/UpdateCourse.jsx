@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import CreateUpdateCourse from './CreateUpdateCourse';
-import { Stack, Title, Loader, Flex } from '@mantine/core';
 import { useParams } from 'react-router-dom';
-import { useGetCourseQuery } from '../../api';
-import { BiError } from 'react-icons/bi';
+import { Stack, Title, Loader, Flex } from '@mantine/core';
+import { useGetCourseQuery } from '@/views/roles/instructor/api';
+import { BiError } from '@/components/icons';
+import CreateUpdateCourse from './CreateUpdateCourse';
 
 export function UpdateCourse() {
   // const [course, setCourse] = useState(null);

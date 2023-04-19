@@ -1,42 +1,45 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
+import {
+  AuthLayout,
+  ProfileLmsLayout,
+  StudentLmsLayout,
+  InstructorLmsLayout,
+  AdminLmsLayout,
+} from '@/layout';
+
 // Auth pages
-import AuthLayout from '@/layout/AuthLayout';
-import Login from '@/views/auth/pages/Login';
-import Register from '@/views/auth/pages/Register';
-import ForgetPassword from '@/views/auth/pages/ForgetPassword';
-import ResetPassword from '@/views/auth/pages/ResetPassword';
-import SuccessfullyVerifiedEmail from '@/views/auth/pages/SuccessfullyVerifiedEmail';
-import UnverifyEmailNotification from '@/views/auth/pages/UnverifyEmailNotification';
+import {
+  Login,
+  Register,
+  ForgetPassword,
+  ResetPassword,
+  SuccessfullyVerifiedEmail,
+  UnverifyEmailNotification,
+  Profile,
+} from '@/views/auth/pages';
 
-// lms pages
-//Profile
-import ProfileLmsLayout from '@/layout/ProfileLmsLayout';
+// instructor pages
+import {
+  Course as InstructorCourse,
+  CreateNewCourse as InstructorCreateNewCourse,
+  UpdateCourse as InstructorUpdateCourse,
+  Lesson as InstructorLesson,
+  CourseAttachment as InstructorCourseAttachment,
+} from '@/views/roles/instructor/pages';
 
-// student
-import StudentLmsLayout from '@/layout/StudentLmsLayout';
-
-// instructor
-import InstructorLmsLayout from '@/layout/InstructorLmsLayout';
-import { Course as InstructorCourse } from '@/views/roles/instructor/pages/course/Course';
-import { CreateNewCourse as InstructorCreateNewCourse } from '@/views/roles/instructor/pages/course/CreateNewCourse';
-import { UpdateCourse as InstructorUpdateCourse } from '@/views/roles/instructor/pages/course/UpdateCourse';
-import { Lesson as InstructorLesson } from '@/views/roles/instructor/pages/course/Lesson';
-import { CourseAttachment as InstructorCourseAttachment } from '@/views/roles/instructor/pages/course/CourseAttachment';
-
-// admin
-import AdminLmsLayout from '@/layout/AdminLmsLayout';
-import Category from '@/views/roles/admin/pages/category/Category';
-import CreateCategory from '@/views/roles/admin/pages/category/CreateCategory';
-import UpdateCategory from '@/views/roles/admin/pages/category/UpdateCategory';
+// admin pages
+import {
+  Category,
+  CreateCategory,
+  UpdateCategory,
+  AdminCourseList,
+} from '@/views/roles/admin/pages';
 
 import Course from '@/views/pages/Course';
-import AdminCourseList from '@/views/roles/admin/pages/course/AdminCourseList';
 import Dashboard from '@/views/pages/Dashboard';
 import Instructor from '@/views/pages/Instructor';
 import Student from '@/views/pages/Student';
-import Profile from '@/views/auth/pages/profile/Profile';
-import { Lesson } from './../views/roles/instructor/pages/course/Lesson';
 
 export function ReactRouter() {
   return (

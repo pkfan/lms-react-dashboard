@@ -11,34 +11,28 @@ import {
   TextInput,
   PasswordInput,
 } from '@mantine/core';
-import Alert from '@/components/common/Alert';
 import { useForm, isEmail, hasLength } from '@mantine/form';
 import { useNavigate, Link } from 'react-router-dom';
-import Button from '@/components/common/Button';
-
+import { Alert, Button, Logo, FullPageLoader } from '@/components';
 import {
   showLoadingNotification,
   updateLoadingNotificationError,
   updateLoadingNotificationSuccess,
 } from '@/helpers/notification';
-import { MdEmail } from 'react-icons/md';
-import { FaKey } from 'react-icons/fa';
-
-// import { FaFacebookSquare, FaTwitterSquare, FaUser } from 'react-icons/fa';
-// import { FcGoogle } from 'react-icons/fc';
-// import SocialAuthButton from '../components/SocialAuthButton';
-
-import inputStyles from '@/styles/inputStyles';
-import Logo from '@/components/Logo';
+import { inputStyles } from '@/styles';
 import { useDispatch } from 'react-redux';
 import { setAuthUser as setAuthUserAction } from '@/views/auth/slice/authSlice';
-
 import {
   useGetAuthUserQuery,
   useDeleteOtherSessionRecordsMutation,
   useLoginMutation,
 } from '@/views/auth/api';
-import FullPageLoader from '@/components/common/FullPageLoader';
+
+import { MdEmail, FaKey } from '@/components/icons';
+
+// import { FaFacebookSquare, FaTwitterSquare, FaUser } from 'react-icons/fa';
+// import { FcGoogle } from 'react-icons/fc';
+// import SocialAuthButton from '../components/SocialAuthButton';
 
 const useStyles = createStyles((theme) => ({
   container: {

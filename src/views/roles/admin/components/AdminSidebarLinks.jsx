@@ -1,15 +1,15 @@
 import { Text, Accordion } from '@mantine/core';
-import { AiOutlineDashboard, AiFillSetting } from 'react-icons/ai';
-import { MdOutlineVideoLibrary, MdPayment } from 'react-icons/md';
-import { ImManWoman } from 'react-icons/im';
-import { GiRomanToga } from 'react-icons/gi';
-import { BiCategory } from 'react-icons/bi';
-
-import SideBarLinks from '@/components/SideBar/SideBarLinks';
-import SideBarLink from '@/components/SideBar/SideBarLink';
-
-import SubSideBarLink from '@/components/SideBar/SubSideBarLink';
-import useIsActiveSidebarLink from '@/hooks/useIsActiveSidebarLink';
+import { SideBarLinks, SideBarLink, SubSideBarLink } from '@/components';
+import { useIsActiveSidebarLink } from '@/hooks';
+import {
+  AiOutlineDashboard,
+  AiFillSetting,
+  MdOutlineVideoLibrary,
+  MdPayment,
+  ImManWoman,
+  GiRomanToga,
+  BiCategory,
+} from '@/components/icons';
 
 export function AdminSidebarLinks({ setSidebarOpened }) {
   const isActiveLink = useIsActiveSidebarLink();

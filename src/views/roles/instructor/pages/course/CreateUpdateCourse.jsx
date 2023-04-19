@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
-import { Stack, Tabs, Text, Paper, Group, Box, Menu, Button as MantineButton } from '@mantine/core';
-
-import { TabStatusIcons as CourseStatusIcons } from '@/components/common/TabStatusIcons';
-
+import { useEffect } from 'react';
+import { Stack, Tabs, Text, Paper } from '@mantine/core';
+import { useGetCourseStepsQuery } from '@/views/roles/instructor/api';
+import { TabStatusIcons as CourseStatusIcons } from '@/components';
 // course steps
-import Basic from './steps/Basic';
-import Description from './steps/Description';
-import Requirements from './steps/Requirements';
-import Outcomes from './steps/Outcomes';
-import FAQ from './steps/FAQ';
-import Features from './steps/Features';
-import SEO from './steps/SEO';
-import ThumbnailAndCover from './steps/ThumbnailAndCover';
-import Chapters from './steps/Chapters';
-import Lessons from './steps/Lessons';
-import { useGetCourseStepsQuery } from '../../api';
+import {
+  Basic,
+  Description,
+  Requirements,
+  Outcomes,
+  FAQ,
+  Features,
+  SEO,
+  ThumbnailAndCover,
+  Chapters,
+  Lessons,
+} from '@/views/roles/instructor/components/course/steps';
 
 export function CreateUpdateCourse({ course, pageTitle, setCourse = () => {} }) {
   const {

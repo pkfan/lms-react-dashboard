@@ -1,18 +1,15 @@
 import _ from 'lodash';
 import { useEffect } from 'react';
-import { Grid, Image, Box, Title, Text, Flex, Group, Divider } from '@mantine/core';
-import CategoryCardAction from './CategoryCardAction';
+import { Image, Box, Title, Text, Flex, Group, Divider } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { FaEdit } from 'react-icons/fa';
-import { ImEye } from 'react-icons/im';
-import { MdOutlineQuiz, MdOutlineAssignment, MdDeleteForever } from 'react-icons/md';
 import getImageUrl from '@/helpers/getImageUrl';
 import { Link } from 'react-router-dom';
 import config from '@/config';
-import DeleteModal from '@/components/common/modals/DeleteModal';
-import { useDeleteCategoryMutation } from '../../api';
+import { DeleteModal } from '@/components';
+import { useDeleteCategoryMutation } from '@/views/roles/admin/api';
 import { showNotification } from '@mantine/notifications';
-import { IconCheck, IconX } from '@tabler/icons';
+import { IconCheck, IconX, FaEdit, MdDeleteForever } from '@/components/icons';
+import CategoryCardAction from './CategoryCardAction';
 
 export function CategoryCard({ category, getCategoriesRefetch }) {
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(false);

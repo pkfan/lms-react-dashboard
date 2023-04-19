@@ -9,9 +9,18 @@ import {
   TextInput,
   PasswordInput,
 } from '@mantine/core';
-import Alert from '@/components/common/Alert';
-import Button from '@/components/common/Button';
-import FullPageLoader from '@/components/common/FullPageLoader';
+
+import {
+  Alert,
+  Button,
+  FullPageLoader,
+  PhoneNumberInput,
+  CountrySelect,
+  StatesSelect,
+  CitySelect,
+  Logo,
+} from '@/components';
+
 import {
   showLoadingNotification,
   updateLoadingNotificationError,
@@ -19,27 +28,21 @@ import {
 } from '@/helpers/notification';
 
 import { getUserCountryDetails, getAllCountries } from 'user-detail-from-browser';
-import PhoneNumberInput from '@/components/PhoneNumberInput';
-import CountrySelect from '@/components/CountrySelect';
-import StatesSelect from '@/components/StatesSelect';
-import CitySelect from '@/components/CitySelect';
 import { Link, useNavigate } from 'react-router-dom';
-import { useForm, isEmail, hasLength } from '@mantine/form';
-import { FaUser, FaKey, FaPhone } from 'react-icons/fa';
-
-// import { FaFacebookSquare, FaTwitterSquare} from 'react-icons/fa';
-// import { FcGoogle } from 'react-icons/fc';
-// import SocialAuthButton from '../components/SocialAuthButton';
-import { MdEmail } from 'react-icons/md';
-
-import inputStyles from '@/styles/inputStyles';
-import Logo from '@/components/Logo';
+import { inputStyles } from '@/styles';
 import {
   useGetStatesQuery,
   useGetCitiesQuery,
   useGetAuthUserQuery,
   useRegisterMutation,
 } from '@/views/auth/api';
+
+import { useForm, isEmail, hasLength } from '@mantine/form';
+import { FaUser, FaKey, FaPhone, MdEmail } from '@/components/icons';
+
+// import { FaFacebookSquare, FaTwitterSquare} from 'react-icons/fa';
+// import { FcGoogle } from 'react-icons/fc';
+// import SocialAuthButton from '../components/SocialAuthButton';
 
 const useStyles = createStyles((theme) => ({
   container: {

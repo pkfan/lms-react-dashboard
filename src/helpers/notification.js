@@ -1,6 +1,5 @@
 import { showNotification, updateNotification } from '@mantine/notifications';
-import { IconCheck } from '@tabler/icons';
-import { MdClose } from 'react-icons/md';
+import { IconCheck, MdClose } from '@/components/icons';
 
 export const showLoadingNotification = ({ id = 'pkfan', title = 'Loading...', message = '' }) => {
   showNotification({

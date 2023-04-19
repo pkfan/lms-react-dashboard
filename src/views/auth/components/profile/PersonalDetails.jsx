@@ -1,34 +1,33 @@
 import { useState, useEffect } from 'react';
 import { createStyles, Flex, TextInput, Title, Box, Textarea } from '@mantine/core';
-import Alert from '@/components/common/Alert';
+import { useForm, isEmail, hasLength } from '@mantine/form';
+import {
+  Alert,
+  Paper,
+  Button,
+  PhoneNumberInput,
+  CountrySelect,
+  StatesSelect,
+  CitySelect,
+} from '@/components';
 
-import Paper from '@/components/common/Paper';
-import Button from '@/components/common/Button';
 import {
   showLoadingNotification,
   updateLoadingNotificationError,
   updateLoadingNotificationSuccess,
 } from '@/helpers/notification';
 
-import { getAllCountries } from 'user-detail-from-browser';
-import PhoneNumberInput from '@/components/PhoneNumberInput';
-import CountrySelect from '@/components/CountrySelect';
-import StatesSelect from '@/components/StatesSelect';
-import CitySelect from '@/components/CitySelect';
+import { FaUser, FaPhone, MdEmail, ImLocation2 } from '@/components/icons';
 
-import { useForm, isEmail, hasLength } from '@mantine/form';
-
-import { FaUser, FaPhone } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
-import { ImLocation2 } from 'react-icons/im';
-
-import inputStyles from '@/styles/inputStyles';
 import {
   useGetStatesQuery,
   useGetCitiesQuery,
   useGetAuthUserQuery,
   useUpdateUserMutation,
 } from '@/views/auth/api';
+
+import { inputStyles } from '@/styles';
+import { getAllCountries } from 'user-detail-from-browser';
 
 const useStyles = createStyles(() => ({
   container: {

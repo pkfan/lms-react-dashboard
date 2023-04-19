@@ -1,41 +1,20 @@
 import { useState, useEffect } from 'react';
-import {
-  Title,
-  Stack,
-  Tabs,
-  Badge,
-  Box,
-  Popover,
-  Select,
-  Group,
-  Button as MantineButton,
-  Loader,
-  Flex,
-  Text,
-  Anchor,
-} from '@mantine/core';
-import { Link, useLocation } from 'react-router-dom';
-import Pagination from '@/components/common/Pagination';
-import Button from '@/components/common/Button';
-import { IoMdArrowRoundBack } from 'react-icons/io';
-import { RiVideoUploadFill } from 'react-icons/ri';
-import { RiSortAsc } from 'react-icons/ri';
-import { MdOutlineVideoLibrary, MdMenuBook } from 'react-icons/md';
-import { FaPhotoVideo } from 'react-icons/fa';
-import { ImEye, ImFilter, ImSearch } from 'react-icons/im';
-import Paper from '@/components/common/Paper';
-import CourseList from '@/views/course/components/CourseList';
-import CourseCard from '@/views/course/components/CourseCard';
-import PageTitle from '@/components/common/PageTitle';
-import NotFoundImage from '@/components/images/NotFoundImage';
-import queryString from 'query-string';
-import { useGetCoursesQuery, useGetChaptersQuery } from '../../api';
-import { IconX } from '@tabler/icons';
-import UploadLessons from './components/lesson/UploadLessons';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Stack, Tabs, Select, Group, Loader, Flex, Text, Anchor } from '@mantine/core';
+import { Button, Paper, PageTitle, NotFoundImage } from '@/components';
+import { useGetCoursesQuery, useGetChaptersQuery } from '@/views/roles/instructor/api';
 import { clearUploadLessonsData as clearUploadLessonsDataAction } from '@/views/roles/instructor/slice/lessonsUploadSlice';
-import AllLessons from './components/lesson/AllLessons';
-import SortLessons from './components/lesson/SortLessons';
+import { UploadLessons, AllLessons, SortLessons } from '@/views/roles/instructor/components';
+import {
+  IconX,
+  IoMdArrowRoundBack,
+  RiVideoUploadFill,
+  RiSortAsc,
+  MdOutlineVideoLibrary,
+  MdMenuBook,
+  FaPhotoVideo,
+} from '@/components/icons';
 
 export function Lesson() {
   const lessonsUploadDispatch = useDispatch();

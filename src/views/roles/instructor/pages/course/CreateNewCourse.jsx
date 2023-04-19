@@ -1,16 +1,9 @@
 import { useState } from 'react';
-import CreateUpdateCourse from './CreateUpdateCourse';
-import { Group, Box, Menu, Button as MantineButton, ActionIcon } from '@mantine/core';
-
+import { Group, Box, Menu, ActionIcon } from '@mantine/core';
 import { Link } from 'react-router-dom';
-import Button from '@/components/common/Button';
-import ButtonWhite from '@/components/common/ButtonWhite';
-import Switch from '@/components/common/Switch';
-import { SiAddthis } from 'react-icons/si';
-import { ImEyeBlocked, ImEye } from 'react-icons/im';
-import { BsThreeDots } from 'react-icons/bs';
-
-import PageTitle from '@/components/common/PageTitle';
+import { Button, PageTitle } from '@/components';
+import { SiAddthis, ImEyeBlocked, ImEye, BsThreeDots } from '@/components/icons';
+import CreateUpdateCourse from './CreateUpdateCourse';
 
 const pageTitle = () => (
   <PageTitle title="Add New Course">

@@ -1,14 +1,9 @@
 import { createStyles, Flex, Paper, Text, Alert, Anchor } from '@mantine/core';
-import FullPageLoader from '@/components/common/FullPageLoader';
-import Button from '@/components/common/Button';
-
+import { FullPageLoader, Button, Logo } from '@/components';
 import { useLocation, Link, useParams } from 'react-router-dom';
 import queryString from 'query-string';
-
-import Logo from '@/components/Logo';
-import { IconCheck, IconAlertCircle } from '@tabler/icons';
-
 import { useSuccessfullyVerifiedEmailQuery } from '@/views/auth/api';
+import { IconCheck, IconAlertCircle } from '@/components/icons';
 
 const useStyles = createStyles((theme) => ({
   container: {

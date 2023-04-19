@@ -1,7 +1,5 @@
 import { Text } from '@mantine/core';
-
-import SideBarLinks from '@/components/SideBar/SideBarLinks';
-import SideBarLink from '@/components/SideBar/SideBarLink';
+import { SideBarLinks, SideBarLink } from '@/components';
 
 export function ProfileSidebarLinks({ setSidebarOpened }) {
   return (

@@ -1,15 +1,13 @@
 import _ from 'lodash';
 import { useRef, useEffect, useState } from 'react';
 import { Text, Avatar, Flex, Title, Anchor, Box, Loader, Group, Skeleton } from '@mantine/core';
-import Paper from '@/components/common/Paper';
-import resumableUpload from '@/helpers/resumableUpload';
+import { Paper } from '@/components';
+import { resumableUpload, createImageUrl } from '@/helpers';
 import config from '@/config';
 import { showNotification, hideNotification } from '@mantine/notifications';
 import { useGetUserAvatarQuery, useGetAuthUserQuery } from '@/views/auth/api';
-import createImageUrl from '@/helpers/createImageUrl';
+import { IconX, IconCheck, ImCross, ImCheckmark } from '@/components/icons';
 
-import { IconX, IconCheck } from '@tabler/icons';
-import { ImCross, ImCheckmark } from 'react-icons/im';
 import UserSystemDetailTabel from './UserSystemDetailTabel';
 
 export function ProfileDetails() {

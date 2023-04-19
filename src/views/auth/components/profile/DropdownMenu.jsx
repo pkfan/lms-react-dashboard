@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Menu, Avatar, Text } from '@mantine/core';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getImageUrl } from '@/helpers';
+//icon
 import {
   IconSettings,
   IconSearch,
@@ -8,13 +11,9 @@ import {
   IconMessageCircle,
   IconTrash,
   IconArrowsLeftRight,
-} from '@tabler/icons';
-import { BiUser } from 'react-icons/bi';
-import { AiOutlineDashboard } from 'react-icons/ai';
-import { useGetUserAvatarQuery } from '@/views/auth/api';
-import createImageUrl from '@/helpers/createImageUrl';
-import { useSelector } from 'react-redux';
-import { getImageUrl } from '@/helpers/getImageUrl';
+  BiUser,
+  AiOutlineDashboard,
+} from '@/components/icons';
 
 export function DropdownMenu() {
   const [avatarSrc, setAvatarSrc] = useState('');
