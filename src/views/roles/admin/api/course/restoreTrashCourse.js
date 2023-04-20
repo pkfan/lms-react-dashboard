@@ -3,7 +3,7 @@ import createResponseErrors from '@/helpers/createResponseErrors';
 export function restoreTrashCourse(builder) {
   const restoreTrashCourseQuery = builder.mutation({
     query: (data) => ({
-      url: `/instructor/courses/trash/restore`,
+      url: `/admin/course/restore-trash`,
       method: 'POST',
       data,
     }),

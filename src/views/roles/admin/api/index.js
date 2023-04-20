@@ -10,6 +10,11 @@ import {
   deleteCourse,
   coursesBulkAction,
   deleteBulkCourses,
+  deleteCoursePermanent,
+  deleteBulkCoursesPermanent,
+  getTrashCoursesCount,
+  restoreTrashCourse,
+  restoreBulkTrashCourses,
 } from './course';
 
 // query
@@ -43,6 +48,7 @@ export const adminApi = createApi({
 
     getCourses: getCourses(builder),
     getCoursesCount: getCoursesCount(builder),
+    getTrashCoursesCount: getTrashCoursesCount(builder),
     getInstructors: getInstructors(builder),
 
     // mutation
@@ -57,6 +63,10 @@ export const adminApi = createApi({
     deleteCourse: deleteCourse(builder),
     coursesBulkAction: coursesBulkAction(builder),
     deleteBulkCourses: deleteBulkCourses(builder),
+    deleteBulkCoursesPermanent: deleteBulkCoursesPermanent(builder),
+    deleteCoursePermanent: deleteCoursePermanent(builder),
+    restoreTrashCourse: restoreTrashCourse(builder),
+    restoreBulkTrashCourses: restoreBulkTrashCourses(builder),
   }),
 });
 
@@ -73,6 +83,7 @@ export const {
   useGetCoursesQuery,
   useGetCoursesCountQuery,
   useGetInstructorsQuery,
+  useGetTrashCoursesCountQuery,
 
   // mutattion
 
@@ -87,4 +98,8 @@ export const {
   useDeleteCourseMutation,
   useCoursesBulkActionMutation,
   useDeleteBulkCoursesMutation,
+  useDeleteBulkCoursesPermanentMutation,
+  useDeleteCoursePermanentMutation,
+  useRestoreTrashCourseMutation,
+  useRestoreBulkTrashCoursesMutation,
 } = adminApi;

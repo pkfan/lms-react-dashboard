@@ -56,9 +56,17 @@ export function AdminSidebarLinks({ setSidebarOpened }) {
             </Text>
           </Accordion.Control>
           <Accordion.Panel>
-            <SubSideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/admin/course">
+            <SubSideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/admin/courses">
               <Text fw={500} fz={14}>
-                Course Management
+                Courses Management
+              </Text>
+            </SubSideBarLink>
+            <SubSideBarLink
+              setSidebarOpened={setSidebarOpened}
+              href="/dashboard/admin/courses/trash"
+            >
+              <Text fw={500} fz={14}>
+                Trash Courses
               </Text>
             </SubSideBarLink>
           </Accordion.Panel>

@@ -34,6 +34,7 @@ import {
   CreateCategory,
   UpdateCategory,
   AdminCourseList,
+  TrashCourseList,
 } from '@/views/roles/admin/pages';
 
 import Course from '@/views/pages/Course';
@@ -90,7 +91,8 @@ export function ReactRouter() {
         {/* admin routes  */}
         <Route path="dashboard/admin/" element={<AdminLmsLayout />}>
           <Route path="index" element={<Dashboard />} />
-          <Route path="course" element={<AdminCourseList />} />
+          <Route path="courses" element={<AdminCourseList />} />
+          <Route path="courses/trash" element={<TrashCourseList />} />
           <Route path="instructor" element={<Instructor />} />
           <Route path="student" element={<Student />} />
           <Route path="category">
