@@ -48,14 +48,13 @@ import {
 } from '@/helpers/notification';
 
 import { Query } from '@/lib/cogent-js';
-import { CourseInstructorLiveStatus, CourseInstructorStatus } from '@/enums';
 
 import {
   useGetCoursesQuery,
-  useCourseActionMutation,
-  useDeleteCourseMutation,
-  useCoursesBulkActionMutation,
-  useDeleteBulkCoursesMutation,
+  useDeleteCoursePermanentMutation,
+  useDeleteBulkCoursesPermanentMutation,
+  useRestoreTrashCourseMutation,
+  useRestoreBulkTrashCoursesMutation,
 } from '@/views/roles/admin/api';
 
 import {
@@ -63,20 +62,18 @@ import {
   ImFilter,
   ImSearch,
   ImEye,
-  ImEyeBlocked,
   IconDotsVertical,
   IconCheck,
   IconX,
   FaEdit,
   FaChevronDown,
   FiTrash2,
-  RiDraftLine,
 } from '@/components/icons';
 
-import AdminCourseFilter from './AdminCourseFilter';
-import AdminCourseDetailCards from './AdminCourseDetailCards';
+import TrashCourseFilter from './TrashCourseFilter';
+import TrashCourseDetailCards from './TrashCourseDetailCards';
 
-export function AdminCourseList() {
+export function TrashCourseList() {
   const [courseTitle, setCourseTitle] = useState('');
   const [instructorId, setInstructorId] = useState(null);
   const [coursePrice, setCoursePrice] = useState(null);
@@ -120,37 +117,37 @@ export function AdminCourseList() {
 
   // delete course
   const [
-    deleteCourse,
+    deleteCoursePermanent,
     {
-      isSuccess: isDeleteCourseSuccess,
-      isLoading: isDeleteCourseLoading,
-      isError: isDeleteCourseError,
-      error: deleteCourseError,
-      // data: deleteCourseData,
+      isSuccess: isDeleteCoursePermanentSuccess,
+      isLoading: isDeleteCoursePermanentLoading,
+      isError: isDeleteCoursePermanentError,
+      error: deleteCoursePermanentError,
+      // data: deleteCoursePermanentData,
     },
-  ] = useDeleteCourseMutation();
+  ] = useDeleteCoursePermanentMutation();
 
   useEffect(() => {
-    if (isDeleteCourseSuccess) {
+    if (isDeleteCoursePermanentSuccess) {
       closeDeleteModal();
       setselectedCourses(null);
       showNotification({
-        id: 'deleteCourseSuccess',
+        id: 'deleteCoursePermanentSuccess',
         autoClose: 6000,
         title: 'Success',
-        message: 'Course has been deleted.',
+        message: 'Course has been permanent deleted.',
         color: 'teal',
         icon: <IconCheck />,
         loading: false,
       });
     }
 
-    if (isDeleteCourseError) {
-      const error = _.isObject(deleteCourseError.errors)
+    if (isDeleteCoursePermanentError) {
+      const error = _.isObject(deleteCoursePermanentError.errors)
         ? 'data is invalid.'
-        : deleteCourseError.errors;
+        : deleteCoursePermanentError.errors;
       showNotification({
-        id: 'deleteCourseError',
+        id: 'deleteCoursePermanentError',
         autoClose: 6000,
         title: 'Error!!!',
         message: error,
@@ -159,7 +156,7 @@ export function AdminCourseList() {
         loading: false,
       });
     }
-  }, [isDeleteCourseSuccess, isDeleteCourseError]);
+  }, [isDeleteCoursePermanentSuccess, isDeleteCoursePermanentError]);
 
   const deleteActionWrapper = () => {
     if (!isConfirmPassword) {
@@ -170,39 +167,39 @@ export function AdminCourseList() {
   };
 
   const confirmDelete = () => {
-    deleteCourse({ course_id: requestCourseId });
+    deleteCoursePermanent({ course_id: requestCourseId });
   };
 
   // course action
   const [
-    courseAction,
+    restoreTrashCourse,
     {
-      isSuccess: isCourseActionSuccess,
-      isLoading: isCourseActionLoading,
-      isError: isCourseActionError,
-      error: courseActionError,
+      isSuccess: isRestoreTrashCourseSuccess,
+      isLoading: isRestoreTrashCourseLoading,
+      isError: isRestoreTrashCourseError,
+      error: restoreTrashCourseError,
     },
-  ] = useCourseActionMutation();
+  ] = useRestoreTrashCourseMutation();
 
   useEffect(() => {
-    if (isCourseActionSuccess) {
+    if (isRestoreTrashCourseSuccess) {
       showNotification({
-        id: 'isCourseActionSuccess',
+        id: 'isRestoreTrashCourseSuccess',
         autoClose: 6000,
         title: 'Success',
-        message: 'Course action completed.',
+        message: 'Course restored.',
         color: 'teal',
         icon: <IconCheck />,
         loading: false,
       });
     }
 
-    if (isCourseActionError) {
-      const error = _.isObject(courseActionError.errors)
+    if (isRestoreTrashCourseError) {
+      const error = _.isObject(restoreTrashCourseError.errors)
         ? 'data is invalid.'
-        : courseActionError.errors;
+        : restoreTrashCourseError.errors;
       showNotification({
-        id: 'isCourseActionError',
+        id: 'isRestoreTrashCourseError',
         autoClose: 6000,
         title: 'Error!!!',
         message: error,
@@ -211,41 +208,41 @@ export function AdminCourseList() {
         loading: false,
       });
     }
-  }, [isCourseActionSuccess, isCourseActionError]);
+  }, [isRestoreTrashCourseSuccess, isRestoreTrashCourseError]);
 
   //bulk course delete
   const [
-    deleteBulkCourses,
+    deleteBulkCoursesPermanent,
     {
-      isSuccess: isDeleteBulkCoursesSuccess,
-      isLoading: isDeleteBulkCoursesLoading,
-      isError: isDeleteBulkCoursesError,
-      error: deleteBulkCoursesError,
-      // data: DeleteBulkCoursesData,
+      isSuccess: isDeleteBulkCoursesPermanentSuccess,
+      isLoading: isDeleteBulkCoursesPermanentLoading,
+      isError: isDeleteBulkCoursesPermanentError,
+      error: deleteBulkCoursesPermanentError,
+      // data: DeleteBulkCoursesPermanentData,
     },
-  ] = useDeleteBulkCoursesMutation();
+  ] = useDeleteBulkCoursesPermanentMutation();
 
   useEffect(() => {
-    if (isDeleteBulkCoursesSuccess) {
+    if (isDeleteBulkCoursesPermanentSuccess) {
       closeBulkDeleteModal();
       setselectedCourses(null);
       showNotification({
-        id: 'deleteBulkCoursesSuccess',
+        id: 'deleteBulkCoursesPermanentSuccess',
         autoClose: 6000,
         title: 'Success',
-        message: 'Bulk Courses have been deleted.',
+        message: 'Bulk Courses have been permanent deleted.',
         color: 'teal',
         icon: <IconCheck />,
         loading: false,
       });
     }
 
-    if (isDeleteBulkCoursesError) {
-      const error = _.isObject(deleteBulkCoursesError.errors)
+    if (isDeleteBulkCoursesPermanentError) {
+      const error = _.isObject(deleteBulkCoursesPermanentError.errors)
         ? 'data is invalid.'
-        : deleteBulkCoursesError.errors;
+        : deleteBulkCoursesPermanentError.errors;
       showNotification({
-        id: 'deleteBulkCoursesError',
+        id: 'deleteBulkCoursesPermanentError',
         autoClose: 6000,
         title: 'Error!!!',
         message: error,
@@ -254,9 +251,9 @@ export function AdminCourseList() {
         loading: false,
       });
     }
-  }, [isDeleteBulkCoursesSuccess, isDeleteBulkCoursesError]);
+  }, [isDeleteBulkCoursesPermanentSuccess, isDeleteBulkCoursesPermanentError]);
 
-  const deleteBulkCoursesWrapper = () => {
+  const deleteBulkWrapper = () => {
     if (!isConfirmPassword) {
       openConfirmPasswordModal();
     } else {
@@ -265,53 +262,54 @@ export function AdminCourseList() {
   };
 
   const confirmBulkDelete = () => {
-    deleteBulkCourses({ course_ids: selectedCourses.map((selectedCourse) => selectedCourse.id) });
+    deleteBulkCoursesPermanent({
+      course_ids: selectedCourses.map((selectedCourse) => selectedCourse.id),
+    });
   };
 
   // bulk courses action
   const [
-    coursesBulkAction,
+    restoreBulkTrashCourses,
     {
-      isSuccess: isCoursesBulkActionSuccess,
-      isLoading: isCoursesBulkActionLoading,
-      isError: isCoursesBulkActionError,
-      error: coursesBulkActionError,
+      isSuccess: isRestoreBulkTrashCoursesSuccess,
+      isLoading: isRestoreBulkTrashCoursesLoading,
+      isError: isRestoreBulkTrashCoursesError,
+      error: restoreBulkTrashCoursesError,
     },
-  ] = useCoursesBulkActionMutation();
+  ] = useRestoreBulkTrashCoursesMutation();
 
   useEffect(() => {
-    if (isCoursesBulkActionSuccess) {
-      // setselectedCourses(null);
+    if (isRestoreBulkTrashCoursesSuccess) {
+      setselectedCourses(null);
       updateLoadingNotificationSuccess({
-        id: 'bulkCoursesAction',
-        message: 'Bulk action for courses completed',
+        id: 'bulkAction',
+        message: 'Bulk courses restored',
         time: 6000,
       });
     }
 
-    if (isCoursesBulkActionError) {
-      const error = _.isObject(coursesBulkActionError.errors)
+    if (isRestoreBulkTrashCoursesError) {
+      const error = _.isObject(restoreBulkTrashCoursesError.errors)
         ? 'data is invalid.'
-        : coursesBulkActionError.errors;
+        : restoreBulkTrashCoursesError.errors;
 
       updateLoadingNotificationError({
-        id: 'bulkCoursesAction',
+        id: 'bulkAction',
         title: 'Error!!!',
         message: error,
         time: 6000,
       });
     }
-  }, [isCoursesBulkActionSuccess, isCoursesBulkActionError]);
+  }, [isRestoreBulkTrashCoursesSuccess, isRestoreBulkTrashCoursesError]);
 
-  const submitBulkCoursesAction = (type) => {
-    coursesBulkAction({
-      type,
+  const submitBulkAction = () => {
+    restoreBulkTrashCourses({
       course_ids: selectedCourses.map((selectedCourse) => selectedCourse.id),
     });
     showLoadingNotification({
-      id: 'bulkCoursesAction',
+      id: 'bulkAction',
       title: 'Processing...',
-      message: 'processing bulk action for courses',
+      message: 'restoring bulk courses',
     });
   };
 
@@ -477,13 +475,13 @@ export function AdminCourseList() {
       compact: true,
     },
     {
-      name: 'Published',
+      name: 'Deleted',
       selector: (row) =>
-        row.published_at
-          ? formatDistance(new Date(row.published_at), new Date(), {
+        row.deleted_at
+          ? formatDistance(new Date(row.deleted_at), new Date(), {
               addSuffix: true,
             })
-          : 'unpublish',
+          : 'N/A',
       // sortable: true,
       maxWidth: '140px',
       minWidth: '140px',
@@ -541,7 +539,7 @@ export function AdminCourseList() {
           <Menu shadow="md" position="left" offset={-5} withArrow arrowPosition="center">
             <Menu.Target>
               <ActionIcon
-                loading={row.id == requestCourseId && isCourseActionLoading}
+                loading={row.id == requestCourseId && isRestoreTrashCourseLoading}
                 sx={(theme) => ({ '&:hover': { backgroundColor: theme.colors.lmsLayout[1] } })}
               >
                 <IconDotsVertical size={20} />
@@ -550,22 +548,16 @@ export function AdminCourseList() {
 
             <Menu.Dropdown>
               <Menu.Item
-                icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
+                color="teal"
+                icon={<IconCheck size={14} />}
                 onClick={() => {
-                  // setRequestCourseId(row.id);
-                  // updateInviteCourse({ course_id: row.id, status: CourseInstructorStatus.APPROVE });
+                  setRequestCourseId(row.id);
+                  restoreTrashCourse({ course_id: row.id });
                 }}
               >
-                View
+                Restore
               </Menu.Item>
-
-              <Menu.Item
-                icon={<FaEdit size={14} style={{ opacity: 0.6 }} />}
-                component={Link}
-                to={`/dashboard/instructor/course/${row.id}/update`}
-              >
-                Edit
-              </Menu.Item>
+              <Menu.Divider />
               <Menu.Item
                 color="red"
                 icon={<FiTrash2 size={14} />}
@@ -574,80 +566,8 @@ export function AdminCourseList() {
                   deleteActionWrapper();
                 }}
               >
-                Delete
+                Delete Permanent
               </Menu.Item>
-              <Menu.Divider />
-              {row.live_status != CourseInstructorLiveStatus.PUBLISH && (
-                <Menu.Item
-                  icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'publish' });
-                  }}
-                >
-                  Publish
-                </Menu.Item>
-              )}
-
-              {row.live_status != CourseInstructorLiveStatus.PRIVATE && (
-                <Menu.Item
-                  icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'private' });
-                  }}
-                >
-                  Private
-                </Menu.Item>
-              )}
-              {row.live_status != CourseInstructorLiveStatus.DRAFT && (
-                <Menu.Item
-                  icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'draft' });
-                  }}
-                >
-                  Draft
-                </Menu.Item>
-              )}
-              <Menu.Divider />
-              {row.status != CourseInstructorStatus.APPROVE && (
-                <Menu.Item
-                  color="teal"
-                  icon={<IconCheck size={14} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'approve' });
-                  }}
-                >
-                  Approve
-                </Menu.Item>
-              )}
-              {row.status != CourseInstructorStatus.REJECT && (
-                <Menu.Item
-                  color="red"
-                  icon={<IconX size={14} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'reject' });
-                  }}
-                >
-                  Reject
-                </Menu.Item>
-              )}
-              {row.status != CourseInstructorStatus.BLOCKED && (
-                <Menu.Item
-                  color="red"
-                  icon={<IconX size={14} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'blocked' });
-                  }}
-                >
-                  Block
-                </Menu.Item>
-              )}
             </Menu.Dropdown>
           </Menu>
         </Box>
@@ -661,8 +581,9 @@ export function AdminCourseList() {
 
   const generateUrlQuery = useCallback(() => {
     const query = new Query();
-    let urlQuery = query.for('admin/courses'); // the model you're selecting
-    // .where('title', 'me')
+    let urlQuery = query
+      .for('admin/courses') // the model you're selecting
+      .where('trash', 'only');
 
     if (courseTitle) {
       urlQuery = urlQuery.where('title', courseTitle); // where the models `name` is 'Bob'
@@ -708,7 +629,7 @@ export function AdminCourseList() {
 
       urlQuery = urlQuery.sort(`${symbol}${courseSortField}`);
     } else {
-      urlQuery = urlQuery.sort('-created_at');
+      urlQuery = urlQuery.sort('-deleted_at');
     }
 
     urlQuery
@@ -723,7 +644,7 @@ export function AdminCourseList() {
       .params({
         rowsPerPage,
         paginate: 'true',
-        'fields[courses]': `id,title,price,discount,access_days,status,live_status,stars,comments,published_at,content_updated_at,created_at,updated_at,thumbnail_id`,
+        'fields[courses]': `id,title,price,discount,access_days,status,live_status,stars,comments,deleted_at,content_updated_at,created_at,updated_at,thumbnail_id`,
       });
 
     urlQuery = urlQuery.get();
@@ -756,14 +677,12 @@ export function AdminCourseList() {
     setSubmitFilter(randomNumber());
     closeRightFilter();
     setCurrentPage(1);
-    setselectedCourses(null);
   };
 
   const submitSearch = () => {
     setSubmitFilter(randomNumber());
     setCurrentPage(1);
     setSearchPopoverOpened(false);
-    setselectedCourses(null);
   };
 
   const clear = () => {
@@ -781,20 +700,10 @@ export function AdminCourseList() {
     setCourseCreated(null);
     setCourseUpdated(null);
     setCourseSortField(null);
-    setselectedCourses(null);
   };
 
   const submitViaCourseCard = (type = 'total') => {
     clear();
-    if (type == 'total') {
-      // pass
-    } else if (type == 'publish' || type == 'private' || type == 'draft') {
-      setCourseLiveStatus(type);
-    } else if (type == 'pending' || type == 'approved' || type == 'reject' || type == 'blocked') {
-      setCourseStatus(type);
-    } else {
-      throw new Error('[pkfan error] course card (type) not correct.');
-    }
     submitFilterWrapper();
   };
 
@@ -803,7 +712,7 @@ export function AdminCourseList() {
       <Stack sx={{ width: '100%' }}>
         {/* <MainLoadingOverlay visibleOvarlay={visibleOvarlay} /> */}
 
-        <PageTitle title="Course Management">
+        <PageTitle title="Trash Courses">
           <Group>
             <Button compact component={Link} to="#" leftIcon={<SiAddthis size={16} />}>
               Add New
@@ -811,7 +720,7 @@ export function AdminCourseList() {
           </Group>
         </PageTitle>
 
-        <AdminCourseDetailCards submitViaCourseCard={submitViaCourseCard} />
+        <TrashCourseDetailCards submitViaCourseCard={submitViaCourseCard} />
 
         <Paper
           sx={{ position: 'relative', zIndex: 0, paddingTop: '48px!important', minHeight: 400 }}
@@ -852,55 +761,23 @@ export function AdminCourseList() {
 
                   <Menu.Dropdown>
                     <Menu.Item
-                      icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
-                      onClick={() => submitBulkCoursesAction('publish')}
-                    >
-                      Publish All
-                    </Menu.Item>
-
-                    <Menu.Item
-                      icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
-                      onClick={() => submitBulkCoursesAction('private')}
-                    >
-                      Private All
-                    </Menu.Item>
-
-                    <Menu.Item
-                      icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
-                      onClick={() => submitBulkCoursesAction('draft')}
-                    >
-                      Draft All
-                    </Menu.Item>
-
-                    <Menu.Divider />
-                    <Menu.Item
                       color="teal"
                       icon={<IconCheck size={14} />}
-                      onClick={() => submitBulkCoursesAction('approve')}
+                      onClick={() => {
+                        submitBulkAction();
+                      }}
                     >
-                      Approve All
-                    </Menu.Item>
-                    <Menu.Item
-                      color="red"
-                      icon={<IconX size={14} />}
-                      onClick={() => submitBulkCoursesAction('reject')}
-                    >
-                      Reject All
-                    </Menu.Item>
-                    <Menu.Item
-                      color="red"
-                      icon={<IconX size={14} />}
-                      onClick={() => submitBulkCoursesAction('blocked')}
-                    >
-                      Block All
+                      Restore All
                     </Menu.Item>
                     <Menu.Divider />
                     <Menu.Item
                       color="red"
                       icon={<FiTrash2 size={14} />}
-                      onClick={deleteBulkCoursesWrapper}
+                      onClick={() => {
+                        deleteBulkWrapper();
+                      }}
                     >
-                      Delete All
+                      Delete All Permanent
                     </Menu.Item>
                   </Menu.Dropdown>
                 </Menu>
@@ -1025,7 +902,7 @@ export function AdminCourseList() {
       </Stack>
       {/* filter right sidebar  */}
       <RightDrawer title="" size="lg" opened={openedRightFilter} onClose={closeRightFilter}>
-        <AdminCourseFilter
+        <TrashCourseFilter
           instructorId={instructorId}
           setInstructorId={setInstructorId}
           courseTitle={courseTitle}
@@ -1066,31 +943,32 @@ export function AdminCourseList() {
         close={closeConfirmPasswordModal}
       />
       <DeleteModal
-        title="Delete Course"
+        title="Delete Course permanently"
         opened={openedDeleteModal}
         confirm={confirmDelete}
         close={closeDeleteModal}
-        isDeleting={isDeleteCourseLoading}
+        isDeleting={isDeleteCoursePermanentLoading}
       >
-        <Text>Are you sure to delete course?</Text>
+        <Text>Are you sure to delete this course permanent?</Text>
         <br />
         <Text>
-          If you delete this course, then all lessons and files of this course will be deleted.
+          If you delete this course permanent, then all lessons and files of this course will be
+          deleted permanantly from server.
         </Text>
         <br />
       </DeleteModal>
       <DeleteModal
-        title="Delete All Courses"
+        title="Delete All Courses permanently"
         opened={openedBulkDeleteModal}
         confirm={confirmBulkDelete}
         close={closeBulkDeleteModal}
-        isDeleting={isDeleteBulkCoursesLoading}
+        isDeleting={isDeleteBulkCoursesPermanentLoading}
       >
-        <Text>Are you sure to delete All courses?</Text>
+        <Text>Are you sure to delete All courses permanently?</Text>
         <br />
         <Text>
-          If you delete all these course, then all lessons and files of these course will be
-          deleted.
+          If you delete all these course permanently, then all lessons and files of these course
+          will be deleted permanantly from server.
         </Text>
         <br />
       </DeleteModal>
@@ -1098,4 +976,4 @@ export function AdminCourseList() {
   );
 }
 
-export default AdminCourseList;
+export default TrashCourseList;

@@ -120,7 +120,7 @@ export function UnverifyEmailNotification() {
           direction="column"
           gap={12}
         >
-          <Logo width="80px" />
+          <Logo width="160px" />
           <Text fz={24}>Email Verification </Text>
           <Paper withBorder shadow="xl" className={classes.paper}>
             <Alert title="Verify Your Email." icon={<IconAlertCircle size={16} />} color="yellow">

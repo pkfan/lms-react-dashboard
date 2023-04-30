@@ -130,7 +130,7 @@ export function ResetPassword() {
             direction="column"
             gap={12}
           >
-            <Logo width="80px" />
+            <Logo width="160px" />
             <Text fz={24}>Reset Your Password</Text>
             <Paper withBorder shadow="xl" className={classes.paper}>
               {isResetPasswordError && (

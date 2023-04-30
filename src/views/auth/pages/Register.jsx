@@ -264,7 +264,7 @@ export function Register() {
             direction="column"
             gap={12}
           >
-            <Logo width="80px" />
+            <Logo width="160px" />
             <Text fz={24}>Sign up to Pkfan</Text>
             <Paper withBorder shadow="xl" className={classes.paper}>
               {/* <SocialAuthButton

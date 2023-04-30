@@ -3,6 +3,15 @@ import { Menu, Avatar, Text } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getImageUrl } from '@/helpers';
+import { useLogoutMutation } from '@/views/auth/api';
+import { useNavigate } from 'react-router-dom';
+
+import {
+  showLoadingNotification,
+  updateLoadingNotificationError,
+  updateLoadingNotificationSuccess,
+} from '@/helpers/notification';
+
 //icon
 import {
   IconSettings,
@@ -13,6 +22,7 @@ import {
   IconArrowsLeftRight,
   BiUser,
   AiOutlineDashboard,
+  RiLogoutCircleRLine,
 } from '@/components/icons';
 
 export function DropdownMenu() {
@@ -20,12 +30,44 @@ export function DropdownMenu() {
 
   const authUser = useSelector((state) => state.authSlice.auth.user);
 
+  const [logout, { isSuccess: isLogoutSuccess, isError: isLogoutError }] = useLogoutMutation();
+
   useEffect(() => {
     if (authUser?.avatar) {
       const url = getImageUrl(authUser?.avatar);
       setAvatarSrc(url);
     }
   }, [authUser]);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isLogoutSuccess) {
+      updateLoadingNotificationSuccess({
+        id: 'logout',
+        message: 'Your are logout successfully',
+        time: 4000,
+      });
+
+      navigate('/lms/login');
+    }
+
+    if (isLogoutError) {
+      updateLoadingNotificationError({
+        id: 'logout',
+        message: 'Error to logout from your account',
+        time: 3000,
+      });
+    }
+  }, [isLogoutSuccess, isLogoutError]);
+
+  const onLogoutSubmit = () => {
+    logout();
+    showLoadingNotification({
+      id: 'logout',
+      title: 'Processing...',
+      message: 'Logout from dashboard...',
+    });
+  };
 
   return (
     <Menu shadow="md" width={200}>
@@ -47,6 +89,9 @@ export function DropdownMenu() {
       <Menu.Dropdown>
         <Menu.Item component={Link} to="/dashboard/profile" icon={<BiUser size={18} />}>
           Profile
+        </Menu.Item>
+        <Menu.Item icon={<RiLogoutCircleRLine size={18} />} onClick={onLogoutSubmit}>
+          Logout
         </Menu.Item>
         <Menu.Label>Dashboard</Menu.Label>
         <Menu.Item

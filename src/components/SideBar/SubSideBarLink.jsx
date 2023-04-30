@@ -1,7 +1,7 @@
 import { createStyles, Flex, Group } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import useIsActiveSubSidebarLink from '@/hooks/useIsActiveSubSidebarLink';
-import { FaChevronRight } from 'react-icons/fa';
+import { FaChevronRight, FaMinus } from 'react-icons/fa';
 
 const useStyles = createStyles((theme) => ({
   reactRouterLink: {
@@ -48,7 +48,7 @@ export function SubSideBarLink({ children, href = 'notFound', setSidebarOpened }
         onClick={() => setSidebarOpened((o) => !o)}
       >
         <Group sx={{ gap: 4 }}>
-          <FaChevronRight size={10} style={{ opacity: 0.6 }} />
+          <FaMinus size={8} style={{ opacity: 0.6 }} />
           {children}
         </Group>
         {/* <BiChevronRight size={16} className="htmlRtlIcon" /> */}

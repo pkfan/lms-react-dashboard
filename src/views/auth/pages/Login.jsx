@@ -132,7 +132,7 @@ export function Login() {
       } else {
         const redirectUrl = sessionStorage.getItem('login-redirect-url');
 
-        if (redirectUrl) {
+        if (redirectUrl && redirectUrl != 'null' && redirectUrl != 'undefined') {
           // reset session storage
           sessionStorage.setItem('login-redirect-url', null);
           navigate(redirectUrl);
@@ -182,7 +182,7 @@ export function Login() {
             direction="column"
             gap={12}
           >
-            <Logo width="80px" />
+            <Logo width="160px" />
             <Text fz={24}>Sign in to Pkfan</Text>
             <Paper withBorder shadow="xl" className={classes.paper}>
               {/* <SocialAuthButton

@@ -1,4 +1,4 @@
-import { DropdownMenu } from './DropdownMenu';
+import { DropdownMenu } from '../../../../components/DropdownMenu';
 import { DropZone } from './DropZone';
 import { PersonalDetails } from './PersonalDetails';
 import { ProfileDetails } from './ProfileDetails';

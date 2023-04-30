@@ -109,7 +109,7 @@ export function ForgetPassword() {
             direction="column"
             gap={12}
           >
-            <Logo width="80px" />
+            <Logo width="160px" />
             <Text fz={24}>Forget Password</Text>
             <Paper withBorder shadow="xl" className={classes.paper}>
               {isForgetPasswordError && (

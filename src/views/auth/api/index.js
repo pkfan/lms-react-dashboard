@@ -13,6 +13,7 @@ import confirmPasswordStatus from './confirmPasswordStatus';
 
 // mutate
 import login from './login';
+import logout from './logout';
 import register from './register';
 import updateUser from './updateUser';
 import updatePassword from './updatePassword';
@@ -41,6 +42,7 @@ export const authApi = createApi({
     // mutation
     register: register(builder),
     login: login(builder),
+    logout: logout(builder),
     updateUser: updateUser(builder),
     updatePassword: updatePassword(builder),
     forgetPassword: forgetPassword(builder),
@@ -65,6 +67,7 @@ export const {
   useConfirmPasswordStatusQuery,
   // mutattion
   useLoginMutation,
+  useLogoutMutation,
   useRegisterMutation,
   useUpdateUserMutation,
   useUpdatePasswordMutation,

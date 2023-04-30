@@ -70,13 +70,12 @@ import {
   FaEdit,
   FaChevronDown,
   FiTrash2,
-  RiDraftLine,
 } from '@/components/icons';
 
 import AdminCourseFilter from './AdminCourseFilter';
 import AdminCourseDetailCards from './AdminCourseDetailCards';
 
-export function AdminCourseList() {
+export function InstructorCourseList() {
   const [courseTitle, setCourseTitle] = useState('');
   const [instructorId, setInstructorId] = useState(null);
   const [coursePrice, setCoursePrice] = useState(null);
@@ -281,7 +280,7 @@ export function AdminCourseList() {
 
   useEffect(() => {
     if (isCoursesBulkActionSuccess) {
-      // setselectedCourses(null);
+      setselectedCourses(null);
       updateLoadingNotificationSuccess({
         id: 'bulkCoursesAction',
         message: 'Bulk action for courses completed',
@@ -600,17 +599,6 @@ export function AdminCourseList() {
                   Private
                 </Menu.Item>
               )}
-              {row.live_status != CourseInstructorLiveStatus.DRAFT && (
-                <Menu.Item
-                  icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'draft' });
-                  }}
-                >
-                  Draft
-                </Menu.Item>
-              )}
               <Menu.Divider />
               {row.status != CourseInstructorStatus.APPROVE && (
                 <Menu.Item
@@ -756,14 +744,12 @@ export function AdminCourseList() {
     setSubmitFilter(randomNumber());
     closeRightFilter();
     setCurrentPage(1);
-    setselectedCourses(null);
   };
 
   const submitSearch = () => {
     setSubmitFilter(randomNumber());
     setCurrentPage(1);
     setSearchPopoverOpened(false);
-    setselectedCourses(null);
   };
 
   const clear = () => {
@@ -781,7 +767,6 @@ export function AdminCourseList() {
     setCourseCreated(null);
     setCourseUpdated(null);
     setCourseSortField(null);
-    setselectedCourses(null);
   };
 
   const submitViaCourseCard = (type = 'total') => {
@@ -863,13 +848,6 @@ export function AdminCourseList() {
                       onClick={() => submitBulkCoursesAction('private')}
                     >
                       Private All
-                    </Menu.Item>
-
-                    <Menu.Item
-                      icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
-                      onClick={() => submitBulkCoursesAction('draft')}
-                    >
-                      Draft All
                     </Menu.Item>
 
                     <Menu.Divider />
@@ -1098,4 +1076,4 @@ export function AdminCourseList() {
   );
 }
 
-export default AdminCourseList;
+export default InstructorCourseList;

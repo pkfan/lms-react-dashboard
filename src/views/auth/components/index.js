@@ -1,6 +1,7 @@
 import { SocialAuthButton } from './SocialAuthButton';
+import Logout from './Logout';
 
-export { SocialAuthButton };
+export { SocialAuthButton, Logout };
 export {
   DropdownMenu,
   DropZone,

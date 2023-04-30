@@ -1,14 +1,12 @@
 import { Box, Text, Group, Indicator, ActionIcon, Tooltip } from '@mantine/core';
 
 import Logo from '@/components/Logo';
-import { FaBell } from 'react-icons/fa';
-import { MdMessage } from 'react-icons/md';
-import { TbGridDots } from 'react-icons/tb';
-
 import { Burger } from './Burger';
-import DropdownMenu from '@/views/auth/components/profile/DropdownMenu';
+import DropdownMenu from '@/components/DropdownMenu';
 import FullScreenToggle from './FullScreenToggle';
 import LightDarkSwitcher from './LightDarkSwitcher';
+//icons
+import { TbGridDots, MdMessage, FaBell } from '@/components/icons';
 
 export function TopBar({ sx, sidebarOpened, setSidebarOpened }) {
   const topBarStyle = (theme) => ({

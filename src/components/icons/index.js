@@ -23,6 +23,7 @@ import {
   FaFacebookSquare,
   FaTwitterSquare,
   FaPhotoVideo,
+  FaBell,
 } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { FiRefreshCw, FiTrash2 } from 'react-icons/fi';
@@ -69,6 +70,7 @@ import {
   MdMenuBook,
   MdShopTwo,
   MdOutlineVideoCameraFront,
+  MdMessage,
 } from 'react-icons/md';
 import {
   RiDeleteBin2Fill,
@@ -76,8 +78,10 @@ import {
   RiFileEditFill,
   RiSortAsc,
   RiVideoUploadFill,
+  RiLogoutCircleRLine,
 } from 'react-icons/ri';
 import { SiAddthis } from 'react-icons/si';
+import { TbGridDots } from 'react-icons/tb';
 
 export {
   AiOutlineDashboard,
@@ -107,6 +111,7 @@ export {
   FaFacebookSquare,
   FaTwitterSquare,
   FaPhotoVideo,
+  FaBell,
   FcGoogle,
   FiRefreshCw,
   FiTrash2,
@@ -148,10 +153,13 @@ export {
   MdMenuBook,
   MdShopTwo,
   MdOutlineVideoCameraFront,
+  MdMessage,
   RiDeleteBin2Fill,
   RiDraftLine,
   RiFileEditFill,
   RiSortAsc,
   RiVideoUploadFill,
+  RiLogoutCircleRLine,
   SiAddthis,
+  TbGridDots,
 };
