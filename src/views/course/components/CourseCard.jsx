@@ -24,7 +24,7 @@ import { Link } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import ConfirmPasswordModal from '../../../components/ConfirmPasswordModal';
 import DeleteModal from '@/components/common/modals/DeleteModal';
-import { useDeleteCourseMutation } from '@/views/roles/instructor/api';
+import { useDeleteCourseMutation } from '@/views/education/instructor/api';
 import { showNotification } from '@mantine/notifications';
 import { IconX } from '@tabler/icons';
 import calculateCourseDiscount from '@/helpers/course/calculateCourseDiscount';

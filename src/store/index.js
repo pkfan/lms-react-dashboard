@@ -4,12 +4,12 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { jobsApi } from '@/views/jobs/api';
 import { authApi } from '@/views/auth/api';
 import { textEditorApi } from '@/views/tip-tap-editor/api';
-import { adminApi } from '@/views/roles/admin/api';
-import { instructorApi } from '@/views/roles/instructor/api';
+import { adminApi } from '@/views/education/admin/api';
+import { instructorApi } from '@/views/education/instructor/api';
 import { baseApi } from '@/api/base';
 import jobsReducer from '@/views/jobs/jobsSlice';
-import lessonsUploadReducer from '@/views/roles/instructor/slice/lessonsUploadSlice';
-import filesUploadReducer from '@/views/roles/instructor/slice/filesUploadSlice';
+import lessonsUploadReducer from '@/views/education/instructor/slice/lessonsUploadSlice';
+import filesUploadReducer from '@/views/education/instructor/slice/filesUploadSlice';
 import authReducer from '@/views/auth/slice/authSlice';
 
 export const store = configureStore({

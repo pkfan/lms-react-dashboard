@@ -26,7 +26,9 @@ import {
   UpdateCourse as InstructorUpdateCourse,
   Lesson as InstructorLesson,
   CourseAttachment as InstructorCourseAttachment,
-} from '@/views/roles/instructor/pages';
+  InstructorCourseList,
+  InstructorTrashCourseList,
+} from '@/views/education/instructor/pages';
 
 // admin pages
 import {
@@ -34,8 +36,8 @@ import {
   CreateCategory,
   UpdateCategory,
   AdminCourseList,
-  TrashCourseList,
-} from '@/views/roles/admin/pages';
+  AdminTrashCourseList,
+} from '@/views/education/admin/pages';
 
 import Course from '@/views/pages/Course';
 import Dashboard from '@/views/pages/Dashboard';
@@ -75,8 +77,10 @@ export function ReactRouter() {
         {/* instructor routes  */}
         <Route path="dashboard/instructor/" element={<InstructorLmsLayout />}>
           <Route path="index" element={<Dashboard />} />
-          <Route path="course">
-            <Route index element={<InstructorCourse />} />
+          <Route path="courses">
+            <Route index element={<InstructorCourseList />} />
+            <Route path="trash" element={<InstructorTrashCourseList />} />
+
             <Route path="create" element={<InstructorCreateNewCourse />} />
             <Route path=":id/update" element={<InstructorUpdateCourse />} />
             <Route path="attachments" element={<InstructorCourseAttachment />} />
@@ -91,8 +95,14 @@ export function ReactRouter() {
         {/* admin routes  */}
         <Route path="dashboard/admin/" element={<AdminLmsLayout />}>
           <Route path="index" element={<Dashboard />} />
-          <Route path="courses" element={<AdminCourseList />} />
-          <Route path="courses/trash" element={<TrashCourseList />} />
+          <Route path="courses">
+            <Route index element={<AdminCourseList />} />
+            <Route path="trash" element={<AdminTrashCourseList />} />
+            {/* only for test  */}
+            <Route path="create" element={<InstructorCreateNewCourse />} />
+            <Route path="attachments" element={<InstructorCourseAttachment />} />
+          </Route>
+
           <Route path="instructor" element={<Instructor />} />
           <Route path="student" element={<Student />} />
           <Route path="category">

@@ -1,8 +1,8 @@
 import { Box } from '@mantine/core';
 
-import StudentSidebarLinks from '@/views/roles/student/components/StudentSidebarLinks';
-import InstructorSidebarLinks from '@/views/roles/instructor/components/InstructorSidebarLinks';
-import AdminSidebarLinks from '@/views/roles/admin/components/AdminSidebarLinks';
+import StudentSidebarLinks from '@/views/education/student/components/StudentSidebarLinks';
+import InstructorSidebarLinks from '@/views/education/instructor/components/InstructorSidebarLinks';
+import AdminSidebarLinks from '@/views/education/admin/components/AdminSidebarLinks';
 import ProfileSidebarLinks from '@/views/auth/components/profile/ProfileSidebarLinks';
 
 export function SideBarBody({ setSidebarOpened, lmsRole }) {

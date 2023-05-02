@@ -7,7 +7,7 @@ import Button from '@/components/common/Button';
 import Overlay from '@/components/common/Overlay';
 import Pagination from '@/components/common/Pagination';
 import ButtonWhite from '@/components/common/ButtonWhite';
-import { useGetCoursesWithDetailQuery } from '@/views/roles/instructor/api';
+// import { useGetCoursesWithDetailQuery } from '@/views/education/instructor/api';
 import NotFoundImage from '@/components/images/NotFoundImage';
 import { FiRefreshCw } from 'react-icons/fi';
 import { IconX } from '@tabler/icons';

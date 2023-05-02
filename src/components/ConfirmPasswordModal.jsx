@@ -6,8 +6,11 @@ import Button from '@/components/common/Button';
 import { FaKey } from 'react-icons/fa';
 import { IconCheck } from '@tabler/icons';
 import { showNotification } from '@mantine/notifications';
+import { setIsPasswordConfirm as setIsPasswordConfirmAction } from '@/views/auth/slice/authSlice';
+import { useDispatch } from 'react-redux';
 
-export function ConfirmPasswordModal({ setIsConfirmPassword, opened, close }) {
+export function ConfirmPasswordModal({ opened, close }) {
+  const confirmPasswordDispatch = useDispatch();
   const form = useForm({
     initialValues: {
       password: '',
@@ -43,12 +46,14 @@ export function ConfirmPasswordModal({ setIsConfirmPassword, opened, close }) {
   useEffect(() => {
     if (isConfirmPasswordStatusSuccess) {
       if (confirmPasswordStatus) {
-        setIsConfirmPassword(confirmPasswordStatus);
+        // setIsConfirmPassword(confirmPasswordStatus);
+        confirmPasswordDispatch(setIsPasswordConfirmAction(confirmPasswordStatus));
       }
     }
     if (isConfirmPasswordSuccess) {
       if (confirmPasswordData) {
-        setIsConfirmPassword(confirmPasswordData);
+        // setIsConfirmPassword(confirmPasswordData);
+        confirmPasswordDispatch(setIsPasswordConfirmAction(confirmPasswordData));
         close();
         showNotification({
           id: 'deleteCourseSuccess',

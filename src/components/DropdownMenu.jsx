@@ -6,6 +6,9 @@ import { getImageUrl } from '@/helpers';
 import { useLogoutMutation } from '@/views/auth/api';
 import { useNavigate } from 'react-router-dom';
 
+import { setIsPasswordConfirm as setIsPasswordConfirmAction } from '@/views/auth/slice/authSlice';
+import { useDispatch } from 'react-redux';
+
 import {
   showLoadingNotification,
   updateLoadingNotificationError,
@@ -26,6 +29,7 @@ import {
 } from '@/components/icons';
 
 export function DropdownMenu() {
+  const confirmPasswordDispatch = useDispatch();
   const [avatarSrc, setAvatarSrc] = useState('');
 
   const authUser = useSelector((state) => state.authSlice.auth.user);
@@ -42,6 +46,7 @@ export function DropdownMenu() {
   const navigate = useNavigate();
   useEffect(() => {
     if (isLogoutSuccess) {
+      confirmPasswordDispatch(setIsPasswordConfirmAction(false));
       updateLoadingNotificationSuccess({
         id: 'logout',
         message: 'Your are logout successfully',
@@ -52,6 +57,7 @@ export function DropdownMenu() {
     }
 
     if (isLogoutError) {
+      confirmPasswordDispatch(setIsPasswordConfirmAction(false));
       updateLoadingNotificationError({
         id: 'logout',
         message: 'Error to logout from your account',
