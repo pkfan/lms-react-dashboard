@@ -74,11 +74,14 @@ import {
   FiTrash2,
   RiDraftLine,
 } from '@/components/icons';
+import { usePermissions } from '@/hooks';
 
 import AdminCourseFilter from './AdminCourseFilter';
 import AdminCourseDetailCards from './AdminCourseDetailCards';
 
 export function AdminCourseList() {
+  const { hasPermission } = usePermissions();
+
   const [courseTitle, setCourseTitle] = useState('');
   const [instructorId, setInstructorId] = useState(null);
   const [coursePrice, setCoursePrice] = useState(null);
@@ -350,95 +353,105 @@ export function AdminCourseList() {
                 View
               </Menu.Item>
 
-              <Menu.Item
-                icon={<FaEdit size={14} style={{ opacity: 0.6 }} />}
-                component={Link}
-                to={`/dashboard/instructor/course/${row.id}/update`}
-              >
-                Edit
-              </Menu.Item>
-              <Menu.Item
-                color="red"
-                icon={<FiTrash2 size={14} />}
-                onClick={() => {
-                  setRequestCourseId(row.id);
-                  deleteActionWrapper();
-                }}
-              >
-                Delete
-              </Menu.Item>
-              <Menu.Divider />
-              {row.live_status != CourseInstructorLiveStatus.PUBLISH && (
+              {hasPermission('edit course', 'admin') && (
                 <Menu.Item
-                  icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'publish' });
-                  }}
+                  icon={<FaEdit size={14} style={{ opacity: 0.6 }} />}
+                  component={Link}
+                  to={`/dashboard/instructor/courses/${row.id}/update`}
                 >
-                  Publish
+                  Edit
                 </Menu.Item>
               )}
+              {hasPermission('delete course', 'admin') && (
+                <Menu.Item
+                  color="red"
+                  icon={<FiTrash2 size={14} />}
+                  onClick={() => {
+                    setRequestCourseId(row.id);
+                    deleteActionWrapper();
+                  }}
+                >
+                  Delete
+                </Menu.Item>
+              )}
+              <Menu.Divider />
+              {hasPermission('publish course', 'admin') &&
+                row.live_status != CourseInstructorLiveStatus.PUBLISH && (
+                  <Menu.Item
+                    icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
+                    onClick={() => {
+                      setRequestCourseId(row.id);
+                      courseAction({ course_id: row.id, type: 'publish' });
+                    }}
+                  >
+                    Publish
+                  </Menu.Item>
+                )}
 
-              {row.live_status != CourseInstructorLiveStatus.PRIVATE && (
-                <Menu.Item
-                  icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'private' });
-                  }}
-                >
-                  Private
-                </Menu.Item>
-              )}
-              {row.live_status != CourseInstructorLiveStatus.DRAFT && (
-                <Menu.Item
-                  icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'draft' });
-                  }}
-                >
-                  Draft
-                </Menu.Item>
-              )}
+              {hasPermission('private course', 'admin') &&
+                row.live_status != CourseInstructorLiveStatus.PRIVATE && (
+                  <Menu.Item
+                    icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
+                    onClick={() => {
+                      setRequestCourseId(row.id);
+                      courseAction({ course_id: row.id, type: 'private' });
+                    }}
+                  >
+                    Private
+                  </Menu.Item>
+                )}
+              {hasPermission('draft course', 'admin') &&
+                row.live_status != CourseInstructorLiveStatus.DRAFT && (
+                  <Menu.Item
+                    icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
+                    onClick={() => {
+                      setRequestCourseId(row.id);
+                      courseAction({ course_id: row.id, type: 'draft' });
+                    }}
+                  >
+                    Draft
+                  </Menu.Item>
+                )}
               <Menu.Divider />
-              {row.status != CourseInstructorStatus.APPROVE && (
-                <Menu.Item
-                  color="teal"
-                  icon={<IconCheck size={14} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'approve' });
-                  }}
-                >
-                  Approve
-                </Menu.Item>
-              )}
-              {row.status != CourseInstructorStatus.REJECT && (
-                <Menu.Item
-                  color="red"
-                  icon={<IconX size={14} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'reject' });
-                  }}
-                >
-                  Reject
-                </Menu.Item>
-              )}
-              {row.status != CourseInstructorStatus.BLOCKED && (
-                <Menu.Item
-                  color="red"
-                  icon={<IconX size={14} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'blocked' });
-                  }}
-                >
-                  Block
-                </Menu.Item>
-              )}
+              {hasPermission('approve course', 'admin') &&
+                row.status != CourseInstructorStatus.APPROVE && (
+                  <Menu.Item
+                    color="teal"
+                    icon={<IconCheck size={14} />}
+                    onClick={() => {
+                      setRequestCourseId(row.id);
+                      courseAction({ course_id: row.id, type: 'approve' });
+                    }}
+                  >
+                    Approve
+                  </Menu.Item>
+                )}
+              {hasPermission('reject course', 'admin') &&
+                row.status != CourseInstructorStatus.REJECT && (
+                  <Menu.Item
+                    color="red"
+                    icon={<IconX size={14} />}
+                    onClick={() => {
+                      setRequestCourseId(row.id);
+                      courseAction({ course_id: row.id, type: 'reject' });
+                    }}
+                  >
+                    Reject
+                  </Menu.Item>
+                )}
+              {hasPermission('block course', 'admin') &&
+                row.status != CourseInstructorStatus.BLOCKED && (
+                  <Menu.Item
+                    color="red"
+                    icon={<IconX size={14} />}
+                    onClick={() => {
+                      setRequestCourseId(row.id);
+                      courseAction({ course_id: row.id, type: 'blocked' });
+                    }}
+                  >
+                    Block
+                  </Menu.Item>
+                )}
             </Menu.Dropdown>
           </Menu>
         </Box>
@@ -717,6 +730,7 @@ export function AdminCourseList() {
         'lessonsCount',
         'videos_sum_duration',
         'attachmentsCount',
+        'thumbnail',
       )
       .page(currentPage)
       .params({
@@ -850,57 +864,71 @@ export function AdminCourseList() {
                   </Menu.Target>
 
                   <Menu.Dropdown>
-                    <Menu.Item
-                      icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
-                      onClick={() => submitBulkCoursesAction('publish')}
-                    >
-                      Publish All
-                    </Menu.Item>
+                    {hasPermission('publish course', 'admin') && (
+                      <Menu.Item
+                        icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
+                        onClick={() => submitBulkCoursesAction('publish')}
+                      >
+                        Publish All
+                      </Menu.Item>
+                    )}
 
-                    <Menu.Item
-                      icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
-                      onClick={() => submitBulkCoursesAction('private')}
-                    >
-                      Private All
-                    </Menu.Item>
+                    {hasPermission('private course', 'admin') && (
+                      <Menu.Item
+                        icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
+                        onClick={() => submitBulkCoursesAction('private')}
+                      >
+                        Private All
+                      </Menu.Item>
+                    )}
 
-                    <Menu.Item
-                      icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
-                      onClick={() => submitBulkCoursesAction('draft')}
-                    >
-                      Draft All
-                    </Menu.Item>
+                    {hasPermission('draft course', 'admin') && (
+                      <Menu.Item
+                        icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
+                        onClick={() => submitBulkCoursesAction('draft')}
+                      >
+                        Draft All
+                      </Menu.Item>
+                    )}
 
                     <Menu.Divider />
-                    <Menu.Item
-                      color="teal"
-                      icon={<IconCheck size={14} />}
-                      onClick={() => submitBulkCoursesAction('approve')}
-                    >
-                      Approve All
-                    </Menu.Item>
-                    <Menu.Item
-                      color="red"
-                      icon={<IconX size={14} />}
-                      onClick={() => submitBulkCoursesAction('reject')}
-                    >
-                      Reject All
-                    </Menu.Item>
-                    <Menu.Item
-                      color="red"
-                      icon={<IconX size={14} />}
-                      onClick={() => submitBulkCoursesAction('blocked')}
-                    >
-                      Block All
-                    </Menu.Item>
+                    {hasPermission('approve course', 'admin') && (
+                      <Menu.Item
+                        color="teal"
+                        icon={<IconCheck size={14} />}
+                        onClick={() => submitBulkCoursesAction('approve')}
+                      >
+                        Approve All
+                      </Menu.Item>
+                    )}
+                    {hasPermission('reject course', 'admin') && (
+                      <Menu.Item
+                        color="red"
+                        icon={<IconX size={14} />}
+                        onClick={() => submitBulkCoursesAction('reject')}
+                      >
+                        Reject All
+                      </Menu.Item>
+                    )}
+                    {hasPermission('block course', 'admin') && (
+                      <Menu.Item
+                        color="red"
+                        icon={<IconX size={14} />}
+                        onClick={() => submitBulkCoursesAction('blocked')}
+                      >
+                        Block All
+                      </Menu.Item>
+                    )}
                     <Menu.Divider />
-                    <Menu.Item
-                      color="red"
-                      icon={<FiTrash2 size={14} />}
-                      onClick={deleteBulkCoursesWrapper}
-                    >
-                      Delete All
-                    </Menu.Item>
+                    {hasPermission('delete course', 'admin') && (
+                      <Menu.Item
+                        color="red"
+                        icon={<FiTrash2 size={14} />}
+                        onClick={deleteBulkCoursesWrapper}
+                      >
+                        Delete All
+                      </Menu.Item>
+                    )}
                   </Menu.Dropdown>
                 </Menu>
               </Box>

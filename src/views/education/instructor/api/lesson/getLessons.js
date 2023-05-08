@@ -2,10 +2,15 @@ import createResponseErrors from '@/helpers/createResponseErrors';
 
 export function getLessons(builder) {
   const getLessonsQuery = builder.query({
-    query: (chapterId) => ({
-      url: `/instructor/course/lessons/${chapterId}`,
-      method: 'GET',
-    }),
+    query: (chapterId) => {
+      if (!chapterId) {
+        throw new Error('skip request on null. [pkfan error]');
+      }
+      return {
+        url: `/instructor/course/lessons/${chapterId}`,
+        method: 'GET',
+      };
+    },
     transformResponse: (response) => {
       console.log('getLessonsQuery response', response);
       return response.data;

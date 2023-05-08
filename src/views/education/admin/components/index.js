@@ -1,4 +1,4 @@
-import { AdminSidebarLinks } from './AdminSidebarLinks';
+import { AdminSidebarLinks } from '../../../users/admin/components/AdminSidebarLinks';
 
 export { AdminSidebarLinks };
 export {

@@ -2,10 +2,10 @@ import createResponseErrors from '@/helpers/createResponseErrors';
 
 export default function insertDescription(builder) {
   const insertDescriptionQuery = builder.mutation({
-    query: ({ course_id, description }) => ({
-      url: `/instructor/course/description/${course_id}`,
+    query: (data) => ({
+      url: `/instructor/course/description`,
       method: 'POST',
-      data: { description },
+      data,
     }),
     transformResponse: (response) => {
       console.log('insertDescriptionQuery response', response);

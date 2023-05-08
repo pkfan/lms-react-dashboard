@@ -74,8 +74,11 @@ import {
   FaChevronDown,
   FiTrash2,
 } from '@/components/icons';
+import { usePermissions } from '@/hooks';
 
 export function TrashCourseList() {
+  const { hasPermission } = usePermissions();
+
   const [courseTitle, setCourseTitle] = useState('');
   const [instructorId, setInstructorId] = useState(null);
   const [coursePrice, setCoursePrice] = useState(null);
@@ -336,27 +339,31 @@ export function TrashCourseList() {
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Menu.Item
-                color="teal"
-                icon={<IconCheck size={14} />}
-                onClick={() => {
-                  setRequestCourseId(row.id);
-                  restoreTrashCourse({ course_id: row.id });
-                }}
-              >
-                Restore
-              </Menu.Item>
+              {hasPermission('restore deleted course', 'admin') && (
+                <Menu.Item
+                  color="teal"
+                  icon={<IconCheck size={14} />}
+                  onClick={() => {
+                    setRequestCourseId(row.id);
+                    restoreTrashCourse({ course_id: row.id });
+                  }}
+                >
+                  Restore
+                </Menu.Item>
+              )}
               <Menu.Divider />
-              <Menu.Item
-                color="red"
-                icon={<FiTrash2 size={14} />}
-                onClick={() => {
-                  setRequestCourseId(row.id);
-                  deleteActionWrapper();
-                }}
-              >
-                Delete Permanent
-              </Menu.Item>
+              {hasPermission('permanent delete course', 'admin') && (
+                <Menu.Item
+                  color="red"
+                  icon={<FiTrash2 size={14} />}
+                  onClick={() => {
+                    setRequestCourseId(row.id);
+                    deleteActionWrapper();
+                  }}
+                >
+                  Delete Permanent
+                </Menu.Item>
+              )}
             </Menu.Dropdown>
           </Menu>
         </Box>
@@ -635,6 +642,7 @@ export function TrashCourseList() {
         'lessonsCount',
         'videos_sum_duration',
         'attachmentsCount',
+        'thumbnail',
       )
       .page(currentPage)
       .params({
@@ -756,25 +764,29 @@ export function TrashCourseList() {
                   </Menu.Target>
 
                   <Menu.Dropdown>
-                    <Menu.Item
-                      color="teal"
-                      icon={<IconCheck size={14} />}
-                      onClick={() => {
-                        submitBulkAction();
-                      }}
-                    >
-                      Restore All
-                    </Menu.Item>
+                    {hasPermission('restore deleted course', 'admin') && (
+                      <Menu.Item
+                        color="teal"
+                        icon={<IconCheck size={14} />}
+                        onClick={() => {
+                          submitBulkAction();
+                        }}
+                      >
+                        Restore All
+                      </Menu.Item>
+                    )}
                     <Menu.Divider />
-                    <Menu.Item
-                      color="red"
-                      icon={<FiTrash2 size={14} />}
-                      onClick={() => {
-                        deleteBulkWrapper();
-                      }}
-                    >
-                      Delete All Permanent
-                    </Menu.Item>
+                    {hasPermission('permanent delete course', 'admin') && (
+                      <Menu.Item
+                        color="red"
+                        icon={<FiTrash2 size={14} />}
+                        onClick={() => {
+                          deleteBulkWrapper();
+                        }}
+                      >
+                        Delete All Permanent
+                      </Menu.Item>
+                    )}
                   </Menu.Dropdown>
                 </Menu>
               </Box>

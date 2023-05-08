@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Stack, Tabs, Text, Paper } from '@mantine/core';
 import { useGetCourseStepsQuery } from '@/views/education/instructor/api';
 import { TabStatusIcons as CourseStatusIcons } from '@/components';
@@ -16,7 +16,21 @@ import {
   Lessons,
 } from '@/views/education/instructor/components/course/steps';
 
+import { useSearchParams, useLocation } from 'react-router-dom';
+import queryString from 'query-string';
+
 export function CreateUpdateCourse({ course, pageTitle, setCourse = () => {} }) {
+  const location = useLocation();
+  const query = location.search;
+  const { tab, page, searchString } = queryString.parse(query);
+  const [activeTab, setActiveTab] = useState(tab || 'basic');
+  let [searchParams, setSearchParams] = useSearchParams();
+
+  const setActiveTabWrapper = (tab) => {
+    setActiveTab(tab);
+    setSearchParams({ tab });
+  };
+
   const {
     isSuccess: isGetCourseStepsSuccess,
     isFetching: isGetCourseStepsFetching,
@@ -48,6 +62,8 @@ export function CreateUpdateCourse({ course, pageTitle, setCourse = () => {} }) 
       {pageTitle}
 
       <Tabs
+        value={activeTab}
+        onTabChange={setActiveTabWrapper}
         color="dark"
         variant="outline"
         radius="xs"

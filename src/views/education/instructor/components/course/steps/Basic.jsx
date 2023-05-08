@@ -127,7 +127,7 @@ export function Basic({ setNewCourse, course }) {
         icon: <IconCheck />,
         loading: false,
       });
-      setNewCourse(createBasicData.course);
+      setNewCourse(createBasicData);
     }
     if (isCreateBasicError) {
       const error = _.isObject(createBasicError.errors)

@@ -28,7 +28,11 @@ import {
   RiLogoutCircleRLine,
 } from '@/components/icons';
 
+import { useRoles, useLmsPaths } from '@/hooks';
+
 export function DropdownMenu() {
+  const { hasRole } = useRoles();
+  const { wherePathNot } = useLmsPaths();
   const confirmPasswordDispatch = useDispatch();
   const [avatarSrc, setAvatarSrc] = useState('');
 
@@ -100,27 +104,69 @@ export function DropdownMenu() {
           Logout
         </Menu.Item>
         <Menu.Label>Dashboard</Menu.Label>
-        <Menu.Item
-          component={Link}
-          to="/dashboard/student/index"
-          icon={<AiOutlineDashboard size={18} />}
-        >
-          Switch to Student
-        </Menu.Item>
-        <Menu.Item
-          component={Link}
-          to="/dashboard/instructor/index"
-          icon={<AiOutlineDashboard size={18} />}
-        >
-          Switch to Instructor
-        </Menu.Item>
-        <Menu.Item
-          component={Link}
-          to="/dashboard/admin/index"
-          icon={<AiOutlineDashboard size={18} />}
-        >
-          Switch to Admin
-        </Menu.Item>
+        {hasRole('student') && wherePathNot('student') && (
+          <Menu.Item
+            component={Link}
+            to="/dashboard/student/index"
+            icon={<AiOutlineDashboard size={18} />}
+          >
+            Switch to Student
+          </Menu.Item>
+        )}
+        {hasRole('instructor') && wherePathNot('instructor') && (
+          <Menu.Item
+            component={Link}
+            to="/dashboard/instructor/index"
+            icon={<AiOutlineDashboard size={18} />}
+          >
+            Switch to Instructor
+          </Menu.Item>
+        )}
+        {hasRole('super admin') && wherePathNot('super-admin') && (
+          <Menu.Item
+            component={Link}
+            to="/dashboard/super-admin/index"
+            icon={<AiOutlineDashboard size={18} />}
+          >
+            Switch to Super Admin
+          </Menu.Item>
+        )}
+        {hasRole('admin') && wherePathNot('admin') && (
+          <Menu.Item
+            component={Link}
+            to="/dashboard/admin/index"
+            icon={<AiOutlineDashboard size={18} />}
+          >
+            Switch to Admin
+          </Menu.Item>
+        )}
+        {hasRole('accountant') && wherePathNot('accountant') && (
+          <Menu.Item
+            component={Link}
+            to="/dashboard/admin/index"
+            icon={<AiOutlineDashboard size={18} />}
+          >
+            Switch to Accountant
+          </Menu.Item>
+        )}
+        {hasRole('manager') && wherePathNot('manager') && (
+          <Menu.Item
+            component={Link}
+            to="/dashboard/admin/index"
+            icon={<AiOutlineDashboard size={18} />}
+          >
+            Switch to Manager
+          </Menu.Item>
+        )}
+        {hasRole('receptionist') && wherePathNot('receptionist') && (
+          <Menu.Item
+            component={Link}
+            to="/dashboard/admin/index"
+            icon={<AiOutlineDashboard size={18} />}
+          >
+            Switch to Receptionist
+          </Menu.Item>
+        )}
         <Menu.Label>Application</Menu.Label>
         <Menu.Item icon={<IconSettings size={18} />}>Settings</Menu.Item>
         <Menu.Item icon={<IconMessageCircle size={18} />}>Messages</Menu.Item>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Stack, Tabs, Select, Group, Loader, Flex, Text, Anchor } from '@mantine/core';
@@ -15,6 +15,7 @@ import {
   MdMenuBook,
   FaPhotoVideo,
 } from '@/components/icons';
+import { Query } from '@/lib/cogent-js';
 
 export function Lesson() {
   const lessonsUploadDispatch = useDispatch();
@@ -26,7 +27,7 @@ export function Lesson() {
     isFetching: isGetCoursesFetching,
     isError: isGetCoursesError,
     data: courses,
-  } = useGetCoursesQuery();
+  } = useGetCoursesQuery({ url: `/courses?fields[courses]=id,title` });
 
   console.log('course data', courses);
 
@@ -37,6 +38,7 @@ export function Lesson() {
     isFetching: isGetChaptersFetching,
     isError: isGetChaptersError,
     data: chapters,
+    error: chaptersError,
   } = useGetChaptersQuery(courseId);
 
   const [chapterId, setChapterId] = useState(null);
@@ -53,7 +55,7 @@ export function Lesson() {
   }, [chapterId, courseId]);
 
   const transformCourseData = () => {
-    const data = courses.map((course) => ({ value: course.id, label: course.title }));
+    const data = courses.data.map((course) => ({ value: course.id, label: course.title }));
 
     // return [{ value: '1', label: 'there are no course' }];
     return data;
@@ -99,7 +101,7 @@ export function Lesson() {
         )}
         {isGetCoursesSuccess && (
           <Select
-            disabled={courses.length <= 0}
+            disabled={courses.data.length <= 0}
             searchable
             nothingFound="No Found"
             dropdownPosition="bottom"
@@ -123,7 +125,7 @@ export function Lesson() {
             filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
           />
         )}
-        {isGetCoursesSuccess && courses.length <= 0 && (
+        {isGetCoursesSuccess && courses.data.length <= 0 && (
           <Flex align="center" justify="center" sx={(theme) => ({ color: theme.colors.red[5] })}>
             <IconX size={16} />
             <Text>
@@ -132,7 +134,7 @@ export function Lesson() {
           </Flex>
         )}
 
-        {isGetChaptersError && (
+        {isGetChaptersError && !chaptersError?.message.includes('skip request on null') && (
           <Flex align="center" justify="center" sx={(theme) => ({ color: theme.colors.red[5] })}>
             <IconX size={16} />
             <Text>Error to load Chapters, Please refresh browser.</Text>

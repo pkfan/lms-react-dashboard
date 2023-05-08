@@ -29,7 +29,7 @@ export function CourseAttachment() {
     isFetching: isGetCoursesFetching,
     isError: isGetCoursesError,
     data: courses,
-  } = useGetCoursesQuery();
+  } = useGetCoursesQuery({ url: `/courses?fields[courses]=id,title` });
 
   console.log('course data', courses);
 
@@ -47,7 +47,7 @@ export function CourseAttachment() {
   }, [courseId]);
 
   const transformCourseData = () => {
-    const data = courses.map((course) => ({ value: course.id, label: course.title }));
+    const data = courses.data.map((course) => ({ value: course.id, label: course.title }));
 
     // return [{ value: '1', label: 'there are no course' }];
     return data;
@@ -84,7 +84,7 @@ export function CourseAttachment() {
         )}
         {isGetCoursesSuccess && (
           <Select
-            disabled={courses.length <= 0}
+            disabled={courses.data.length <= 0}
             searchable
             nothingFound="No Found"
             dropdownPosition="bottom"
@@ -108,7 +108,7 @@ export function CourseAttachment() {
             filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
           />
         )}
-        {isGetCoursesSuccess && courses.length <= 0 && (
+        {isGetCoursesSuccess && courses.data.length <= 0 && (
           <Flex align="center" justify="center" sx={(theme) => ({ color: theme.colors.red[5] })}>
             <IconX size={16} />
             <Text>

@@ -80,10 +80,10 @@ export function InstructorSidebarLinks({ setSidebarOpened }) {
             </SubSideBarLink>
             <SubSideBarLink
               setSidebarOpened={setSidebarOpened}
-              href="/dashboard/instructor/course?tab=invites"
+              href="/dashboard/instructor/courses/invite"
             >
               <Text fw={500} fz={14}>
-                Courses Invitation
+                Course Invitation
               </Text>
             </SubSideBarLink>
             <SubSideBarLink

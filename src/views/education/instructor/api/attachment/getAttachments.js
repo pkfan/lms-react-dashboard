@@ -2,10 +2,16 @@ import createResponseErrors from '@/helpers/createResponseErrors';
 
 export function getAttachments(builder) {
   const getAttachmentsQuery = builder.query({
-    query: (courseId) => ({
-      url: `/instructor/course/attachments/${courseId}`,
-      method: 'GET',
-    }),
+    query: (courseId) => {
+      if (!courseId) {
+        throw new Error('skip request on null. [pkfan error]');
+      }
+
+      return {
+        url: `/instructor/course/attachments/${courseId}`,
+        method: 'GET',
+      };
+    },
     transformResponse: (response) => {
       console.log('getAttachmentsQuery response', response);
       return response.data;

@@ -74,11 +74,14 @@ import {
   FiTrash2,
   RiDraftLine,
 } from '@/components/icons';
+import { usePermissions } from '@/hooks';
 
 import InstructorCourseFilter from './InstructorCourseFilter';
 import InstructorCourseDetailCards from './InstructorCourseDetailCards';
 
 export function InstructorCourseList() {
+  const { hasPermission } = usePermissions();
+
   const [courseTitle, setCourseTitle] = useState('');
   const [instructorId, setInstructorId] = useState(null);
   const [coursePrice, setCoursePrice] = useState(null);
@@ -349,58 +352,65 @@ export function InstructorCourseList() {
                 View
               </Menu.Item>
 
-              <Menu.Item
-                icon={<FaEdit size={14} style={{ opacity: 0.6 }} />}
-                component={Link}
-                to={`/dashboard/instructor/course/${row.id}/update`}
-              >
-                Edit
-              </Menu.Item>
-              <Menu.Item
-                color="red"
-                icon={<FiTrash2 size={14} />}
-                onClick={() => {
-                  setRequestCourseId(row.id);
-                  deleteActionWrapper();
-                }}
-              >
-                Delete
-              </Menu.Item>
+              {hasPermission('edit course', 'instructor') && (
+                <Menu.Item
+                  icon={<FaEdit size={14} style={{ opacity: 0.6 }} />}
+                  component={Link}
+                  to={`/dashboard/instructor/courses/${row.id}/update`}
+                >
+                  Edit
+                </Menu.Item>
+              )}
+              {hasPermission('delete course', 'instructor') && (
+                <Menu.Item
+                  color="red"
+                  icon={<FiTrash2 size={14} />}
+                  onClick={() => {
+                    setRequestCourseId(row.id);
+                    deleteActionWrapper();
+                  }}
+                >
+                  Delete
+                </Menu.Item>
+              )}
               <Menu.Divider />
-              {row.live_status != CourseInstructorLiveStatus.PUBLISH && (
-                <Menu.Item
-                  icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'publish' });
-                  }}
-                >
-                  Publish
-                </Menu.Item>
-              )}
+              {hasPermission('publish course', 'instructor') &&
+                row.live_status != CourseInstructorLiveStatus.PUBLISH && (
+                  <Menu.Item
+                    icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
+                    onClick={() => {
+                      setRequestCourseId(row.id);
+                      courseAction({ course_id: row.id, type: 'publish' });
+                    }}
+                  >
+                    Publish
+                  </Menu.Item>
+                )}
 
-              {row.live_status != CourseInstructorLiveStatus.PRIVATE && (
-                <Menu.Item
-                  icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'private' });
-                  }}
-                >
-                  Private
-                </Menu.Item>
-              )}
-              {row.live_status != CourseInstructorLiveStatus.DRAFT && (
-                <Menu.Item
-                  icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
-                  onClick={() => {
-                    setRequestCourseId(row.id);
-                    courseAction({ course_id: row.id, type: 'draft' });
-                  }}
-                >
-                  Draft
-                </Menu.Item>
-              )}
+              {hasPermission('private course', 'instructor') &&
+                row.live_status != CourseInstructorLiveStatus.PRIVATE && (
+                  <Menu.Item
+                    icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
+                    onClick={() => {
+                      setRequestCourseId(row.id);
+                      courseAction({ course_id: row.id, type: 'private' });
+                    }}
+                  >
+                    Private
+                  </Menu.Item>
+                )}
+              {hasPermission('draft course', 'instructor') &&
+                row.live_status != CourseInstructorLiveStatus.DRAFT && (
+                  <Menu.Item
+                    icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
+                    onClick={() => {
+                      setRequestCourseId(row.id);
+                      courseAction({ course_id: row.id, type: 'draft' });
+                    }}
+                  >
+                    Draft
+                  </Menu.Item>
+                )}
             </Menu.Dropdown>
           </Menu>
         </Box>
@@ -520,7 +530,7 @@ export function InstructorCourseList() {
     },
     {
       name: 'Comments',
-      selector: (row) => row.comments,
+      selector: (row) => row.comments || 0,
       // sortable: true,
       maxWidth: '90px',
       minWidth: '90px',
@@ -677,6 +687,7 @@ export function InstructorCourseList() {
         'lessonsCount',
         'videos_sum_duration',
         'attachmentsCount',
+        'thumbnail',
       )
       .page(currentPage)
       .params({
@@ -810,34 +821,42 @@ export function InstructorCourseList() {
                   </Menu.Target>
 
                   <Menu.Dropdown>
-                    <Menu.Item
-                      icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
-                      onClick={() => submitBulkCoursesAction('publish')}
-                    >
-                      Publish All
-                    </Menu.Item>
+                    {hasPermission('publish course', 'instructor') && (
+                      <Menu.Item
+                        icon={<ImEye size={14} style={{ opacity: 0.6 }} />}
+                        onClick={() => submitBulkCoursesAction('publish')}
+                      >
+                        Publish All
+                      </Menu.Item>
+                    )}
 
-                    <Menu.Item
-                      icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
-                      onClick={() => submitBulkCoursesAction('private')}
-                    >
-                      Private All
-                    </Menu.Item>
+                    {hasPermission('private course', 'instructor') && (
+                      <Menu.Item
+                        icon={<ImEyeBlocked size={14} style={{ opacity: 0.6 }} />}
+                        onClick={() => submitBulkCoursesAction('private')}
+                      >
+                        Private All
+                      </Menu.Item>
+                    )}
 
-                    <Menu.Item
-                      icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
-                      onClick={() => submitBulkCoursesAction('draft')}
-                    >
-                      Draft All
-                    </Menu.Item>
+                    {hasPermission('draft course', 'instructor') && (
+                      <Menu.Item
+                        icon={<RiDraftLine size={14} style={{ opacity: 0.6 }} />}
+                        onClick={() => submitBulkCoursesAction('draft')}
+                      >
+                        Draft All
+                      </Menu.Item>
+                    )}
                     <Menu.Divider />
-                    <Menu.Item
-                      color="red"
-                      icon={<FiTrash2 size={14} />}
-                      onClick={deleteBulkCoursesWrapper}
-                    >
-                      Delete All
-                    </Menu.Item>
+                    {hasPermission('delete course', 'instructor') && (
+                      <Menu.Item
+                        color="red"
+                        icon={<FiTrash2 size={14} />}
+                        onClick={deleteBulkCoursesWrapper}
+                      >
+                        Delete All
+                      </Menu.Item>
+                    )}
                   </Menu.Dropdown>
                 </Menu>
               </Box>

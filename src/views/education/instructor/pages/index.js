@@ -8,4 +8,5 @@ export {
   UpdateCourse,
   InstructorTrashCourseList,
   InstructorCourseList,
+  InviteCourseList,
 } from './course';

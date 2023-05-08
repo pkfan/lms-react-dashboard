@@ -5,7 +5,7 @@ export default function getImage(builder) {
     // note: an optional `queryFn` may be used in place of `query`
     query: (imageId) => {
       if (!imageId) {
-        throw new Error('skip image request on null. [pkfan error]');
+        throw new Error('skip request on null. [pkfan error]');
       }
       return {
         url: `/image/${imageId}`,

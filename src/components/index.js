@@ -5,7 +5,7 @@ import CountrySelect from './CountrySelect';
 import { DetailCardCount } from './DetailCardCount';
 import { ExtensionFileSvg } from './ExtensionFileSvg';
 import { FullScreenToggle } from './FullScreenToggle';
-import { ImageGallary } from './../views/tip-tap-editor/ImageGallary';
+import { ImageGallary } from './ImageGallary';
 import { ImageGallaryBody } from './ImageGallaryBody';
 import { LightDarkSwitcher } from './LightDarkSwitcher';
 import { Logo } from './Logo';

@@ -2,8 +2,8 @@ import createResponseErrors from '@/helpers/createResponseErrors';
 
 export default function getInvitesCourses(builder) {
   const getInvitesCoursesQuery = builder.query({
-    query: () => ({
-      url: `/instructor/courses/invites`,
+    query: ({ url }) => ({
+      url,
       method: 'GET',
     }),
     // Pick out data and prevent nested properties in a hook or selector

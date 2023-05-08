@@ -10,7 +10,7 @@ import {
   getCourse,
   getInvitesCourses,
   updateInviteCourse,
-  ////
+  getInviteCoursesCount,
   getCourses,
   courseAction,
   getCoursesCount,
@@ -73,6 +73,7 @@ export const instructorApi = createApi({
     getCourseSteps: getCourseSteps(builder),
     getCourse: getCourse(builder),
     getInvitesCourses: getInvitesCourses(builder),
+    getInviteCoursesCount: getInviteCoursesCount(builder),
 
     getCourses: getCourses(builder),
     getCoursesCount: getCoursesCount(builder),
@@ -131,6 +132,7 @@ export const {
   useGetCourseStepsQuery,
   useGetCourseQuery,
   useGetInvitesCoursesQuery,
+  useGetInviteCoursesCountQuery,
 
   useGetCoursesQuery,
   useGetCoursesCountQuery,

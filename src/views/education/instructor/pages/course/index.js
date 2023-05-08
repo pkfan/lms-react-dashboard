@@ -7,6 +7,7 @@ import Lesson from './Lesson';
 import UpdateCourse from './UpdateCourse';
 import InstructorCourseList from './courses-list/InstructorCourseList';
 import TrashCourseList from './trash-courses-list/TrashCourseList';
+import InviteCourseList from './invite-courses-list/InviteCourseList';
 
 export {
   Course,
@@ -18,4 +19,5 @@ export {
   UpdateCourse,
   InstructorCourseList,
   TrashCourseList as InstructorTrashCourseList,
+  InviteCourseList,
 };

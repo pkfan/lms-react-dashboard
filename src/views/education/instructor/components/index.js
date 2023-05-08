@@ -1,4 +1,4 @@
-import { InstructorSidebarLinks } from './InstructorSidebarLinks';
+import { InstructorSidebarLinks } from '../../../users/instructor/components/InstructorSidebarLinks';
 import DragDrop2Inputs from './DragDrop2Inputs';
 import DragDropInput from './DragDropInput';
 

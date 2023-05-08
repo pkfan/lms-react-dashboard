@@ -21,11 +21,15 @@ import {
   useInsertCoverMutation,
   useInsertThumbnailMutation,
 } from '@/views/education/instructor/api';
+import { getDimensionImageUrl } from '@/helpers';
 
 export function ThumbnailAndCover({ course, refetchSteps }) {
   const [openThumbnailGallary, setOpenThumbnailGallary] = useState(false);
   const [openCoverGallary, setOpenCoverGallary] = useState(false);
   const [thumbnailData, setThumbnailData] = useState({ imageId: null, imageUrl: null });
+
+  console.log('======= thumbnailData ======', thumbnailData);
+
   const [coverData, setCoverData] = useState({ imageId: null, imageUrl: null });
 
   const {
@@ -77,28 +81,34 @@ export function ThumbnailAndCover({ course, refetchSteps }) {
       const imageDetail = { imageUrl, imageId: image.id };
       setThumbnailData(imageDetail);
     }
-    if (isGetThumbnailError) {
-      setThumbnailData({ imageUrl: `${config.domainUrl}/storage/images/640X360.png` });
+    if (isGetThumbnailError && !thumbnailData.imageUrl) {
+      setThumbnailData({
+        imageUrl: getDimensionImageUrl({ dimension: '640X360' }),
+      });
     }
+  }, [isGetThumbnailSuccess, isGetThumbnailError]);
 
+  useEffect(() => {
     if (isGetCoverSuccess) {
       const image = getCoverData;
       const imageUrl = getImageUrl(image);
       const imageDetail = { imageUrl, imageId: image.id };
       setCoverData(imageDetail);
     }
-    if (isGetCoverError) {
-      setCoverData({ imageUrl: `${config.domainUrl}/storage/images/1340X400.png` });
+    if (isGetCoverError && !thumbnailData.imageUrl) {
+      setCoverData({
+        imageUrl: getDimensionImageUrl({ dimension: '1340X400' }),
+      });
     }
-  }, [isGetThumbnailSuccess, isGetCoverSuccess, isGetThumbnailError, isGetCoverError]);
+  }, [isGetCoverSuccess, isGetCoverError]);
 
   const insertThumbnailDetail = (imageDetail) => {
-    console.log('image detail : ', imageDetail);
+    console.log('insertThumbnailDetail detail : ', imageDetail);
     insertThumbnail({ image_id: imageDetail.imageId, course_id: course.id });
     setThumbnailData(imageDetail);
   };
   const insertCoverDetail = (imageDetail) => {
-    console.log('image detail : ', imageDetail);
+    console.log('insertCoverDetail detail : ', imageDetail);
     insertCover({ image_id: imageDetail.imageId, course_id: course.id });
     setCoverData(imageDetail);
   };
@@ -134,7 +144,7 @@ export function ThumbnailAndCover({ course, refetchSteps }) {
           {/* <Image src={`${config.domainUrl}/storage/images/640X360.png`} alt="640X360 thumbnail" /> */}
           <Image
             sx={(theme) => ({ border: `1px solid ${theme.colors.lmsLayout[3]}` })}
-            src={thumbnailData.imageUrl}
+            src={thumbnailData.imageUrl || getDimensionImageUrl({ dimension: '640X360' })}
             alt="640X360 thumbnail"
           />
           <Flex align="center" justify="center">
@@ -177,7 +187,7 @@ export function ThumbnailAndCover({ course, refetchSteps }) {
           {/* <Image src={`${config.domainUrl}/storage/images/1340X400.png`} alt="1340X400 thumbnail" /> */}
           <Image
             sx={(theme) => ({ border: `1px solid ${theme.colors.lmsLayout[3]}` })}
-            src={coverData.imageUrl}
+            src={coverData.imageUrl || getDimensionImageUrl({ dimension: '1340X400' })}
             alt="1340X400 thumbnail"
           />
           <Flex align="center" justify="center">

@@ -1,6 +1,7 @@
 import getCourse from './getCourse';
 import getInvitesCourses from './getInvitesCourses';
 import updateInviteCourse from './updateInviteCourse';
+import getInviteCoursesCount from './getInviteCoursesCount';
 
 import getCoursesCount from './getCoursesCount';
 import getCourses from './getCourses';
@@ -29,4 +30,5 @@ export {
   getCourse,
   getInvitesCourses,
   updateInviteCourse,
+  getInviteCoursesCount,
 };

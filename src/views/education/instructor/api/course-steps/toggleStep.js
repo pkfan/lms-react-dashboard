@@ -2,10 +2,10 @@ import createResponseErrors from '@/helpers/createResponseErrors';
 
 export default function toggleStep(builder) {
   const toggleStepQuery = builder.mutation({
-    query: ({ course_id, step, key, value }) => ({
-      url: `/instructor/course/steps/toggle/${course_id}`,
+    query: (data) => ({
+      url: `/instructor/course/steps/toggle`,
       method: 'POST',
-      data: { step, key, value },
+      data,
     }),
     transformResponse: (response) => {
       return response.data;

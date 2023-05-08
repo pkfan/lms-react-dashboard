@@ -28,6 +28,7 @@ import {
   CourseAttachment as InstructorCourseAttachment,
   InstructorCourseList,
   InstructorTrashCourseList,
+  InviteCourseList,
 } from '@/views/education/instructor/pages';
 
 // admin pages
@@ -84,6 +85,7 @@ export function ReactRouter() {
             <Route path="create" element={<InstructorCreateNewCourse />} />
             <Route path=":id/update" element={<InstructorUpdateCourse />} />
             <Route path="attachments" element={<InstructorCourseAttachment />} />
+            <Route path="invite" element={<InviteCourseList />} />
           </Route>
           <Route path="lessons">
             <Route index element={<InstructorLesson />} />
