@@ -17,7 +17,7 @@ export default function unverifyEmailNotification(builder) {
     transformErrorResponse: (response) => {
       return createResponseErrors(response);
     },
-    invalidatesTags: ['Auth'],
+    // invalidatesTags: ['Auth'],
   });
 
   return unverifyEmailNotificationQuery;

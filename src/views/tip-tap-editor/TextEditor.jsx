@@ -1,5 +1,5 @@
 import './helper/windowDomVariablesAndMethodsInit';
-import imageUploadOnPaste from './helper/imageUploadOnPaste';
+import imageUploadOnPaste from '../../helpers/imageUploadOnPaste';
 
 import { useState, useEffect, useRef } from 'react';
 import { RichTextEditor, Link } from '@mantine/tiptap';
@@ -67,7 +67,8 @@ import css from 'highlight.js/lib/languages/css';
 import js from 'highlight.js/lib/languages/javascript';
 import ts from 'highlight.js/lib/languages/typescript';
 import html from 'highlight.js/lib/languages/xml';
-import ImageGallary from './ImageGallary';
+// import ImageGallary from './ImageGallary';
+import { ImageGallary } from '@/components';
 
 // codeblock
 lowlight.registerLanguage('html', html);
@@ -126,57 +127,51 @@ export function TextEditor({
   const [bodyPictureSuccess, setBodyPictureSuccess] = useState({ response: null });
   const [bodyPictureError, setBodyPictureError] = useState({ response: null });
 
-  useEffect(() => {
-    imageUploadOnPaste({
-      onAdded: setBodyPictureAdded,
-      onSuccess: setBodyPictureSuccess,
-      onError: setBodyPictureError,
-    });
-  }, []);
+  // useEffect(() => {
+  //   imageUploadOnPaste({
+  //     onAdded: setBodyPictureAdded,
+  //     onSuccess: setBodyPictureSuccess,
+  //     onError: setBodyPictureError,
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    //   bodyPictureAdded, setBodyPictureAdded] = useState({ file: null });
-    // const [bodyPictureSuccess, setBodyPictureSuccess] = useState({ response: null });
+  // useEffect(() => {
+  //   //   bodyPictureAdded, setBodyPictureAdded] = useState({ file: null });
+  //   // const [bodyPictureSuccess, setBodyPictureSuccess] = useState({ response: null });
 
-    // const url = `${config.domainUrl}/${profilePictureSuccess.response.directory}/${profilePictureSuccess.response.file_name}.webp`;
-    // console.log('url :', url);
-    if (bodyPictureAdded.file && !(bodyPictureSuccess.response || bodyPictureError.response)) {
-      console.log(' if (bodyPictureAdded.file && !(bodyPictureSuccess.response || bodyP');
-      showLoadingNotification({
-        id: 'bodyPicture',
-        title: 'Uploading Image...',
-        message: 'Uloading image to server and then will add.',
-      });
-    } else if (bodyPictureSuccess.response) {
-      const { directory, file_name, extension } = bodyPictureSuccess.response;
+  //   // const url = `${config.domainUrl}/${profilePictureSuccess.response.directory}/${profilePictureSuccess.response.file_name}.webp`;
+  //   // console.log('url :', url);
+  //   if (bodyPictureAdded.file && !(bodyPictureSuccess.response || bodyPictureError.response)) {
+  //     console.log(' if (bodyPictureAdded.file && !(bodyPictureSuccess.response || bodyP');
+  //     showLoadingNotification({
+  //       id: 'bodyPicture',
+  //       title: 'Uploading Image...',
+  //       message: 'Uloading image to server and then will add.',
+  //     });
+  //   } else if (bodyPictureSuccess.response) {
+  //     const imageUrl = createImageUrl(bodyPictureSuccess.response.data);
+  //     console.log('createImageUrl error trace :', imageUrl);
 
-      const imageUrl = createImageUrl({
-        directory,
-        imageName: file_name,
-        imageExtension: extension,
-      });
-      console.log('createImageUrl error trace :', imageUrl);
+  //     addImageToTipTapDomEditorViaBody(imageUrl);
 
-      addImageToTipTapDomEditorViaBody(imageUrl);
-
-      updateLoadingNotificationSuccess({
-        id: 'bodyPicture',
-        title: 'Image Uploaded and added.',
-        message: 'Your image uploaded successfully',
-        time: 2000,
-      });
-      setBodyPictureSuccess({ response: null });
-      setOpenGallary(false);
-    } else if (bodyPictureError.response) {
-      updateLoadingNotificationError({
-        id: 'bodyPicture',
-        title: 'Failed',
-        message: bodyPictureError.response.message,
-        time: 4000,
-      });
-      setBodyPictureError({ response: null });
-    }
-  }, [bodyPictureSuccess, bodyPictureError, bodyPictureAdded]);
+  //     updateLoadingNotificationSuccess({
+  //       id: 'bodyPicture',
+  //       title: 'Image Uploaded and added.',
+  //       message: 'Your image uploaded successfully',
+  //       time: 2000,
+  //     });
+  //     setBodyPictureSuccess({ response: null });
+  //     setOpenGallary(false);
+  //   } else if (bodyPictureError.response) {
+  //     updateLoadingNotificationError({
+  //       id: 'bodyPicture',
+  //       title: 'Failed',
+  //       message: bodyPictureError.response.message,
+  //       time: 4000,
+  //     });
+  //     setBodyPictureError({ response: null });
+  //   }
+  // }, [bodyPictureSuccess, bodyPictureError, bodyPictureAdded]);
 
   const editor = useEditor({
     extensions: [
@@ -240,21 +235,21 @@ export function TextEditor({
   //     console.log('insertContentHtml focus', test);
   //   };
 
-  function addImageToTipTapDomEditorViaBody(imageUrl) {
-    // setURL(imageUrl);
-    editor
-      .chain()
-      .focus()
-      .setImage({
-        src: imageUrl,
-        alt: 'lms',
-        //   style: 'display:flex;width:500px;margin:auto;',
-        style: inlineStyleConversion({ display: 'flex', margin: '16px auto 16px auto' }),
-      })
-      .run();
-  }
+  // function addImageToTipTapDomEditorViaBody(imageUrl) {
+  //   // setURL(imageUrl);
+  //   editor
+  //     .chain()
+  //     .focus()
+  //     .setImage({
+  //       src: imageUrl,
+  //       alt: 'lms',
+  //       //   style: 'display:flex;width:500px;margin:auto;',
+  //       style: inlineStyleConversion({ display: 'flex', margin: '16px auto 16px auto' }),
+  //     })
+  //     .run();
+  // }
 
-  const addImageToTipTapDomFromGallary = (imageUrl) => {
+  const setImageDeta = ({ imageUrl }) => {
     // setURL(imageUrl);
     if (imageUrl) {
       setOpenGallary(false);
@@ -671,23 +666,14 @@ export function TextEditor({
         </RichTextEditor.Toolbar>
         <RichTextEditor.Content />
       </RichTextEditor>
-
-      {openGallary && (
-        <Modal
-          size="calc(100vw - 87px)"
-          opened={openGallary}
-          onClose={() => setOpenGallary(false)}
-          title="Add Images"
-        >
-          <ImageGallary
-            addImageToTipTapDomFromGallary={addImageToTipTapDomFromGallary}
-            setOpenGallary={setOpenGallary}
-            onAdded={setBodyPictureAdded}
-            onSuccess={setBodyPictureSuccess}
-            onError={setBodyPictureError}
-          />
-        </Modal>
-      )}
+      <ImageGallary
+        openGallary={openGallary}
+        setOpenGallary={setOpenGallary}
+        setImageDeta={setImageDeta}
+        imageUploadRelativeUrl="/body-image"
+        forTextEditor={true}
+        enableExternalLink={true}
+      />
     </Box>
   );
 }

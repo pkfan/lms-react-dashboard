@@ -17,21 +17,30 @@ import {
   restoreBulkTrashCourses,
 } from './course';
 
+import {
+  createCategory,
+  createSubCategory,
+  updateSubCategory,
+  deleteCategory,
+  deleteBulkCategory,
+  deleteSubCategory,
+  deleteBulkSubCategory,
+  getCategories,
+  getCategory,
+  getCategoryCount,
+  getCategoryThumbnail,
+  getSubCategory,
+  getSubCategories,
+  getSubCategoryCount,
+  insertCategoryThumbnail,
+  updateCategory,
+} from './category';
+
 // query
 import getTest from './getTest';
-import getCategory from './category/getCategory';
-import getCategories from './category/getCategories';
-import getSubCategories from './category/getSubCategories';
-import getCategoryThumbnail from './category/getCategoryThumbnail';
 
 // mutate
 import postTest from './postTest';
-import createCategory from './category/createCategory';
-import updateCategory from './category/updateCategory';
-import deleteCategory from './category/deleteCategory';
-import createSubCategory from './category/createSubCategory';
-import deleteSubCategory from './category/deleteSubCategory';
-import insertCategoryThumbnail from './category/insertCategoryThumbnail';
 
 // Define a service using a base URL and expected endpoints
 export const adminApi = createApi({
@@ -43,8 +52,11 @@ export const adminApi = createApi({
     getTest: getTest(builder),
     getCategory: getCategory(builder),
     getSubCategories: getSubCategories(builder),
+    getSubCategory: getSubCategory(builder),
     getCategoryThumbnail: getCategoryThumbnail(builder),
     getCategories: getCategories(builder),
+    getCategoryCount: getCategoryCount(builder),
+    getSubCategoryCount: getSubCategoryCount(builder),
 
     getCourses: getCourses(builder),
     getCoursesCount: getCoursesCount(builder),
@@ -66,8 +78,11 @@ export const adminApi = createApi({
     createCategory: createCategory(builder),
     updateCategory: updateCategory(builder),
     deleteCategory: deleteCategory(builder),
+    deleteBulkCategory: deleteBulkCategory(builder),
     createSubCategory: createSubCategory(builder),
+    updateSubCategory: updateSubCategory(builder),
     deleteSubCategory: deleteSubCategory(builder),
+    deleteBulkSubCategory: deleteBulkSubCategory(builder),
     insertCategoryThumbnail: insertCategoryThumbnail(builder),
   }),
 });
@@ -83,9 +98,12 @@ export const {
   useGetTestQuery,
   useGetCategoryQuery,
   useGetSubCategoriesQuery,
+  useGetSubCategoryQuery,
   useGetCategoryThumbnailQuery,
   useGetCategoriesQuery,
   useGetInstructorsQuery,
+  useGetCategoryCountQuery,
+  useGetSubCategoryCountQuery,
 
   // mutattion
   useCourseActionMutation,
@@ -101,7 +119,10 @@ export const {
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
+  useDeleteBulkCategoryMutation,
   useCreateSubCategoryMutation,
+  useUpdateSubCategoryMutation,
   useDeleteSubCategoryMutation,
+  useDeleteBulkSubCategoryMutation,
   useInsertCategoryThumbnailMutation,
 } = adminApi;

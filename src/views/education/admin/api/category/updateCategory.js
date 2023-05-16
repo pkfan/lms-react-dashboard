@@ -2,10 +2,10 @@ import createResponseErrors from '@/helpers/createResponseErrors';
 
 export default function updateCategory(builder) {
   const updateCategoryQuery = builder.mutation({
-    query: ({ id, name, description }) => ({
-      url: `/admin/course/category/update/${id}`,
+    query: (data) => ({
+      url: `/admin/category/update`,
       method: 'POST',
-      data: { name, description },
+      data,
     }),
     transformResponse: (response) => {
       console.log('updateCategoryQuery response', response);

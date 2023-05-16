@@ -4,7 +4,7 @@ import config from '@/config';
 export function NotFoundImage({ message, titleOrder = 4, ...others }) {
   return (
     <Stack align="center" justify="center">
-      <Image src={`${config.domainUrl}/storage/images/error/not-found.png`} {...others} />
+      <Image src={`${config.domainUrl}/storage/images/default/error/not-found.png`} {...others} />
       <Title order={titleOrder}>{message}</Title>
     </Stack>
   );

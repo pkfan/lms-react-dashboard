@@ -5,12 +5,11 @@ import { Link, useParams } from 'react-router-dom';
 import { Button, TabStatusIcons, PageTitle } from '@/components';
 import { useGetCategoryQuery } from '@/views/education/admin/api';
 import { showNotification } from '@mantine/notifications';
-import { Category, SubCategory, Thumbnail } from '@/views/education/admin/components';
+import { Category, Thumbnail } from '@/views/education/admin/components';
 import { IconX, SiAddthis } from '@/components/icons';
 
 export function UpdateCategory() {
   const [categoryData, setCategoryData] = useState(null);
-  const [hasSubCategory, setHasSubCategory] = useState(false);
   const [hasThumbnail, setHasThumbnail] = useState(false);
   const categoryId = useParams().id;
   console.log('useParams().id', categoryId);
@@ -48,13 +47,13 @@ export function UpdateCategory() {
     <Stack sx={{ width: '100%' }}>
       {/* <MainLoadingOverlay visibleOvarlay={visibleOvarlay} /> */}
 
-      <PageTitle title="Add New Category">
+      <PageTitle title="Update Category">
         <Group>
           {categoryData && (
             <Button
               compact
               component={Link}
-              to="/dashboard/admin/category/create"
+              to="/dashboard/admin/categories/create"
               leftIcon={<SiAddthis size={16} />}
             >
               Add New
@@ -104,22 +103,12 @@ export function UpdateCategory() {
           <Tabs.Tab
             disabled={!categoryData}
             sx={{ fontSize: '16px' }}
-            value="sub_category"
-            icon={
-              hasSubCategory ? <TabStatusIcons status="check" /> : <TabStatusIcons status="cross" />
-            }
-          >
-            Sub Category
-          </Tabs.Tab>
-          <Tabs.Tab
-            disabled={!categoryData}
-            sx={{ fontSize: '16px' }}
-            value="thumnail"
+            value="thumbnail"
             icon={
               hasThumbnail ? <TabStatusIcons status="check" /> : <TabStatusIcons status="cross" />
             }
           >
-            thumnail
+            Thumbnail
           </Tabs.Tab>
         </Tabs.List>
 
@@ -139,19 +128,9 @@ export function UpdateCategory() {
             />
           )}
         </Tabs.Panel>
-        <Tabs.Panel value="sub_category" pl="xs">
-          {categoryData && (
-            <SubCategory categoryData={categoryData} setHasSubCategory={setHasSubCategory} />
-          )}
-        </Tabs.Panel>
-        <Tabs.Panel value="thumnail" pl="xs">
-          {categoryData && (
-            <Thumbnail
-              image_id={categoryData.image_id}
-              category_id={categoryData.id}
-              setHasThumbnail={setHasThumbnail}
-            />
-          )}
+
+        <Tabs.Panel value="thumbnail" pl="xs">
+          {categoryData && <Thumbnail category={categoryData} setHasThumbnail={setHasThumbnail} />}
         </Tabs.Panel>
       </Tabs>
     </Stack>

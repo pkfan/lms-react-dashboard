@@ -466,13 +466,18 @@ export function AdminCourseList() {
       name: 'Thumbnail',
       selector: (row) => (
         <Image
-          src={row.thumbnail ? getImageUrl(row.thumbnail) : getDimensionImageUrl('640X360')}
-          width={150}
-          py={8}
+          src={
+            row.thumbnail
+              ? getImageUrl(row.thumbnail)
+              : getDimensionImageUrl({ dimension: '640X360' })
+          }
+          width="100%"
+          p={8}
+          radius="md"
         />
       ),
-      maxWidth: '165px',
-      minWidth: '165px',
+      maxWidth: '180px',
+      minWidth: '180px',
     },
     {
       name: 'Title',

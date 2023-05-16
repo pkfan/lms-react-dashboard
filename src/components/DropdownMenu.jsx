@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { Menu, Avatar, Text } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getImageUrl } from '@/helpers';
-import { useLogoutMutation } from '@/views/auth/api';
+import { getImageUrl, getDefaultAvatarUrl } from '@/helpers';
+import { useLogoutMutation, useGetUserAvatarQuery } from '@/views/auth/api';
+
 import { useNavigate } from 'react-router-dom';
 
 import { setIsPasswordConfirm as setIsPasswordConfirmAction } from '@/views/auth/slice/authSlice';
@@ -37,15 +38,18 @@ export function DropdownMenu() {
   const [avatarSrc, setAvatarSrc] = useState('');
 
   const authUser = useSelector((state) => state.authSlice.auth.user);
+  const { isSuccess: isUserAvatarSuccess, data: userAvatarData } = useGetUserAvatarQuery();
 
   const [logout, { isSuccess: isLogoutSuccess, isError: isLogoutError }] = useLogoutMutation();
 
   useEffect(() => {
-    if (authUser?.avatar) {
-      const url = getImageUrl(authUser?.avatar);
+    if (isUserAvatarSuccess && userAvatarData) {
+      const url = getImageUrl(userAvatarData);
       setAvatarSrc(url);
+    } else {
+      setAvatarSrc(getDefaultAvatarUrl());
     }
-  }, [authUser]);
+  }, [isUserAvatarSuccess, userAvatarData]);
 
   const navigate = useNavigate();
   useEffect(() => {

@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 import { IconChevronRight } from '@tabler/icons';
 import { useGetAuthUserQuery } from '@/views/auth/api';
 import { useGetUserAvatarQuery } from '@/views/auth/api';
-import createImageUrl from '@/helpers/createImageUrl';
 
 import { useSelector } from 'react-redux';
-import { getImageUrl } from '@/helpers/getImageUrl';
+import { getImageUrl, getDefaultAvatarUrl } from '@/helpers';
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -37,11 +36,15 @@ export function SideBarFooter({ lmsRole }) {
   const authUser = useSelector((state) => state.authSlice.auth.user);
 
   useEffect(() => {
-    if (authUser?.avatar) {
-      const url = getImageUrl(authUser?.avatar);
+    if (isUserAvatarSuccess && userAvatarData) {
+      const url = getImageUrl(userAvatarData);
       setAvatarSrc(url);
+    } else {
+      setAvatarSrc(getDefaultAvatarUrl());
     }
-  }, [authUser]);
+  }, [isUserAvatarSuccess, userAvatarData]);
+
+  console.log('authUser : ========', authUser);
 
   return (
     <>

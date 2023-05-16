@@ -2,18 +2,14 @@ import createResponseErrors from '@/helpers/createResponseErrors';
 
 export default function getSubCategories(builder) {
   const getSubCategoriesQuery = builder.query({
-    query: ({ categoryId }) => {
-      if (!categoryId) {
-        throw new Error('skip request on null. [pkfan error]');
-      }
-
+    query: ({ url }) => {
       return {
-        url: `/admin/course/subcategories/${categoryId}`,
+        url,
         method: 'GET',
       };
     },
     transformResponse: (response) => {
-      return response.data;
+      return response;
     },
     transformErrorResponse: (response) => {
       return createResponseErrors(response);

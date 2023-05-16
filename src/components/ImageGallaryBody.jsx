@@ -35,6 +35,7 @@ export function ImageGallaryBody({
   onError,
   imageUploadRelativeUrl = '/body-image',
   enableExternalLink = false,
+  imageExtensions = IMAGE_EXTENSIONS,
 }) {
   const elementRef = useRef();
   const [activePage, setPage] = useState(1);
@@ -44,7 +45,9 @@ export function ImageGallaryBody({
     isError: isGetImagesError,
     data: imagesData,
     refetch: imagesRefetch,
-  } = useGetImagesQuery(activePage);
+  } = useGetImagesQuery({
+    url: `/images?paginate=true&rowsPerPage=5&filter[authInstructorImages]=true&page=${activePage}`,
+  });
 
   useEffect(() => {
     const divElement = elementRef.current;
@@ -55,7 +58,8 @@ export function ImageGallaryBody({
       url: config.baseUrl + imageUploadRelativeUrl,
       maxFiles: 1,
       maxFileSize: config.imageUploadSize,
-      fileExtenstions: IMAGE_EXTENSIONS,
+      // fileExtenstions: IMAGE_EXTENSIONS,
+      fileExtenstions: imageExtensions,
       onSuccess,
       onError,
       onAdded,

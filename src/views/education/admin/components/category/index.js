@@ -1,7 +1,4 @@
-import { CategoryCard } from './CategoryCard';
-import { CategoryCardAction } from './CategoryCardAction';
-import { CategoryList } from './CategoryList';
+import { SubCategory } from './SubCategory';
 
-export { CategoryCard, CategoryCardAction, CategoryList };
-
-export { Category, SubCategory, Thumbnail } from './category-steps';
+export { SubCategory };
+export { Category, Thumbnail } from './category-steps';

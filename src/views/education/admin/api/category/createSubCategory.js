@@ -3,7 +3,7 @@ import createResponseErrors from '@/helpers/createResponseErrors';
 export default function createSubCategory(builder) {
   const createSubCategoryQuery = builder.mutation({
     query: (data) => ({
-      url: `/admin/course/subcategory/create`,
+      url: `/admin/subcategory/create`,
       method: 'POST',
       data,
     }),

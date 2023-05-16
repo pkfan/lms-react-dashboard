@@ -15,7 +15,7 @@ export function CategoryCard({ category, getCategoriesRefetch }) {
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(false);
   const imageSrc = category.image
     ? getImageUrl(category.image)
-    : `${config.domainUrl}/storage/images/400X400.png`;
+    : `${config.domainUrl}/storage/images/default/400X400.png`;
 
   const [
     deleteCategory,

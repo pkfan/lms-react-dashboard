@@ -5,7 +5,7 @@ const config = {
   // baseUrl: 'http://localhost:8000/api',
   domainUrl,
   baseUrl: `${domainUrl}/api`,
-
+  frontEndUrl: window.location.origin,
   imageUploadSize: '10-MB',
 };
 

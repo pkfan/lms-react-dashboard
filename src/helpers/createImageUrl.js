@@ -1,7 +1,7 @@
 import config from '@/config';
 
-export function createImageUrl({ directory, imageName, imageExtension = 'webp' }) {
-  const url = `${config.domainUrl}/${directory}/${imageName}.${imageExtension}`;
+export function createImageUrl(image) {
+  const url = `${config.domainUrl}/${image.url}`;
   return url;
 }
 

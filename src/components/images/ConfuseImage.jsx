@@ -4,7 +4,7 @@ import config from '@/config';
 export function ConfuseImage({ message, titleOrder = 4, ...others }) {
   return (
     <Stack align="center" justify="center">
-      <Image src={`${config.domainUrl}/storage/images/error/confuse.png`} {...others} />
+      <Image src={`${config.domainUrl}/storage/images/default/error/confuse.png`} {...others} />
       <Title order={titleOrder}>{message}</Title>
     </Stack>
   );

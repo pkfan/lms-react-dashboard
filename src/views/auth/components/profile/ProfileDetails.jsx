@@ -113,11 +113,7 @@ export function ProfileDetails() {
   useEffect(() => {
     if (isUserAvatarSuccess && userAvatarData) {
       console.log('userAvatarData : ', userAvatarData);
-      const url = createImageUrl({
-        directory: userAvatarData.directory,
-        imageName: userAvatarData.file_name,
-        imageExtension: userAvatarData.extension,
-      });
+      const url = createImageUrl(userAvatarData);
 
       setAvatarSrc(url);
     }

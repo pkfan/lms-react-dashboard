@@ -83,7 +83,7 @@ export function Category() {
           <Button
             compact
             component={Link}
-            to="/dashboard/admin/category/create"
+            to="/dashboard/admin/categories/create"
             leftIcon={<SiAddthis size={16} />}
           >
             Add New

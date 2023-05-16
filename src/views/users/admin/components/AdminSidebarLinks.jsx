@@ -100,12 +100,44 @@ export function AdminSidebarLinks({ setSidebarOpened }) {
             Intructors
           </Text>
         </SideBarLink>
-        <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/admin/category">
-          <BiCategory size={20} style={{ opicity: 0.6 }} />
-          <Text fw={500} fz={16}>
-            Category
-          </Text>
-        </SideBarLink>
+        <Accordion.Item value="category">
+          <Accordion.Control icon={<BiCategory size={20} style={{ opicity: 0.6 }} />}>
+            <Text fw={500} fz={16}>
+              Category
+            </Text>
+          </Accordion.Control>
+          <Accordion.Panel>
+            <SubSideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/admin/categories">
+              <Text fw={500} fz={14}>
+                Category List
+              </Text>
+            </SubSideBarLink>
+            <SubSideBarLink
+              setSidebarOpened={setSidebarOpened}
+              href="/dashboard/admin/categories/create"
+            >
+              <Text fw={500} fz={14}>
+                Create Category
+              </Text>
+            </SubSideBarLink>
+            <SubSideBarLink
+              setSidebarOpened={setSidebarOpened}
+              href="/dashboard/admin/subcategories"
+            >
+              <Text fw={500} fz={14}>
+                SubCategory List
+              </Text>
+            </SubSideBarLink>
+            <SubSideBarLink
+              setSidebarOpened={setSidebarOpened}
+              href="/dashboard/admin/subcategories/create"
+            >
+              <Text fw={500} fz={14}>
+                Create SubCategory
+              </Text>
+            </SubSideBarLink>
+          </Accordion.Panel>
+        </Accordion.Item>
 
         <SideBarLink setSidebarOpened={setSidebarOpened} href="/dashboard/admin/payment">
           <MdPayment size={20} />

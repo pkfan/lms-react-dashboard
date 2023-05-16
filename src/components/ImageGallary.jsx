@@ -1,28 +1,41 @@
 import { useState, useEffect } from 'react';
 import { Modal } from '@mantine/core';
-import ImageGallaryBody from './ImageGallaryBody';
 import {
   showLoadingNotification,
   updateLoadingNotificationError,
   updateLoadingNotificationSuccess,
 } from '@/helpers/notification';
-import createImageUrl from '@/helpers/createImageUrl';
+import { IMAGE_EXTENSIONS } from '@/constants/imageExtensions';
+import { createImageUrl, imageUploadOnPaste } from '@/helpers';
+import ImageGallaryBody from './ImageGallaryBody';
 
 export function ImageGallary({
   openGallary,
   setOpenGallary,
   setImageDeta,
   imageUploadRelativeUrl,
+  forTextEditor = false,
+  enableExternalLink = false,
 }) {
   const [pictureAdded, setPictureAdded] = useState({ file: null });
   const [pictureSuccess, setPictureSuccess] = useState({ response: null });
   const [pictureError, setPictureError] = useState({ response: null });
 
-  const setImageDetail = (imageUrl) => {
-    console.log(imageUrl);
-    setImageDeta(imageUrl);
+  const setImageDetail = (image) => {
+    console.log(image);
+    setImageDeta(image);
     setOpenGallary(false);
   };
+
+  useEffect(() => {
+    if (forTextEditor) {
+      imageUploadOnPaste({
+        onAdded: setPictureAdded,
+        onSuccess: setPictureSuccess,
+        onError: setPictureError,
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (pictureAdded.file && !(pictureSuccess.response || pictureError.response)) {
@@ -32,15 +45,11 @@ export function ImageGallary({
         title: 'Uploading Image...',
         message: 'Uloading image to server and then will add.',
       });
-    } else if (pictureSuccess.response) {
-      const image = pictureSuccess.response;
-      const { directory, file_name, extension } = image;
+    } else if (pictureSuccess.response?.data) {
+      const image = pictureSuccess.response?.data;
+      // const { directory, file_name, extension } = image;
 
-      const imageUrl = createImageUrl({
-        directory,
-        imageName: file_name,
-        imageExtension: extension,
-      });
+      const imageUrl = createImageUrl(image);
       console.log('createImageUrl error trace :', imageUrl);
 
       setImageDetail({ imageUrl, imageId: image.id });
@@ -80,6 +89,8 @@ export function ImageGallary({
             onSuccess={setPictureSuccess}
             onError={setPictureError}
             imageUploadRelativeUrl={imageUploadRelativeUrl}
+            enableExternalLink={enableExternalLink}
+            imageExtensions={IMAGE_EXTENSIONS}
           />
         </Modal>
       )}

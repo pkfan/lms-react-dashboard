@@ -1,14 +1,14 @@
 import createResponseErrors from '@/helpers/createResponseErrors';
 
-export default function getCategory(builder) {
-  const getCategoryQuery = builder.query({
-    query: (categoryId) => {
-      if (!categoryId) {
+export default function getSubCategory(builder) {
+  const getSubCategoryQuery = builder.query({
+    query: (subCategoryId) => {
+      if (!subCategoryId) {
         throw new Error('skip request on null. [pkfan error]');
       }
 
       return {
-        url: `/admin/category/${categoryId}`,
+        url: `/admin/subcategory/${subCategoryId}`,
         method: 'GET',
       };
     },
@@ -21,5 +21,5 @@ export default function getCategory(builder) {
     providesTags: ['Category'],
   });
 
-  return getCategoryQuery;
+  return getSubCategoryQuery;
 }

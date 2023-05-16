@@ -17,7 +17,7 @@ import config from '@/config';
 import { useGetCategoryThumbnailQuery, useInsertCategoryThumbnailMutation } from '../../../api';
 import { IconX } from '@/components/icons';
 
-export function Thumbnail({ image_id = 0, category_id = 0, setHasThumbnail }) {
+export function Thumbnail({ category, setHasThumbnail }) {
   const [openThumbnailGallary, setOpenThumbnailGallary] = useState(false);
   const [thumbnailData, setThumbnailData] = useState({ imageId: null, imageUrl: null });
 
@@ -26,7 +26,7 @@ export function Thumbnail({ image_id = 0, category_id = 0, setHasThumbnail }) {
     isFetching: isGetThumbnailFetching,
     isError: isGetThumbnailError,
     data: getThumbnailData,
-  } = useGetCategoryThumbnailQuery(image_id);
+  } = useGetCategoryThumbnailQuery(category.image_id);
 
   const [
     insertThumbnail,
@@ -48,7 +48,7 @@ export function Thumbnail({ image_id = 0, category_id = 0, setHasThumbnail }) {
       setHasThumbnail(true);
     }
     if (isGetThumbnailError) {
-      setThumbnailData({ imageUrl: `${config.domainUrl}/storage/images/400X400.png` });
+      setThumbnailData({ imageUrl: `${config.domainUrl}/storage/images/default/400X400.png` });
     }
   }, [isGetThumbnailSuccess, isGetThumbnailError]);
 
@@ -60,12 +60,13 @@ export function Thumbnail({ image_id = 0, category_id = 0, setHasThumbnail }) {
 
   const insertThumbnailDetail = (imageDetail) => {
     console.log('image detail : ', imageDetail);
-    insertThumbnail({ image_id: imageDetail.imageId, category_id });
+    insertThumbnail({ image_id: imageDetail.imageId, category_id: category.id });
     setThumbnailData(imageDetail);
   };
 
   return (
     <Paper p="md" withBorder sx={{ borderLeftWidth: 0, borderRadius: 0 }}>
+      <Text>Category: {category.name}</Text>
       <Stack
         spacing="lg"
         py={16}
@@ -87,7 +88,7 @@ export function Thumbnail({ image_id = 0, category_id = 0, setHasThumbnail }) {
           }}
           onClick={() => setOpenThumbnailGallary(true)}
         >
-          {/* <Image src={`${config.domainUrl}/storage/images/640X360.png`} alt="640X360 thumbnail" /> */}
+          {/* <Image src={`${config.domainUrl}/storage/images/default/640X360.png`} alt="640X360 thumbnail" /> */}
           <Image
             sx={(theme) => ({ border: `1px solid ${theme.colors.lmsLayout[3]}` })}
             src={thumbnailData.imageUrl}
@@ -115,7 +116,7 @@ export function Thumbnail({ image_id = 0, category_id = 0, setHasThumbnail }) {
           openGallary={openThumbnailGallary}
           setOpenGallary={setOpenThumbnailGallary}
           setImageDeta={insertThumbnailDetail}
-          imageUploadRelativeUrl="/admin/course/category/thumbnail/upload"
+          imageUploadRelativeUrl="/admin/category/thumbnail/upload"
         />
       </Stack>
     </Paper>

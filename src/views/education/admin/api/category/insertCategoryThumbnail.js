@@ -2,10 +2,10 @@ import createResponseErrors from '@/helpers/createResponseErrors';
 
 export default function insertCategoryThumbnail(builder) {
   const insertCategoryThumbnailQuery = builder.mutation({
-    query: ({ category_id, image_id }) => ({
-      url: `/admin/course/category/thumbnail/update`,
+    query: (data) => ({
+      url: `/admin/category/thumbnail/update`,
       method: 'POST',
-      data: { category_id, image_id },
+      data,
     }),
     transformResponse: (response) => {
       console.log('insertCategoryThumbnailQuery response', response);

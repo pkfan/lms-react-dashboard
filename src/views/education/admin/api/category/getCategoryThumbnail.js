@@ -8,7 +8,7 @@ export default function getCategoryThumbnail(builder) {
       }
 
       return {
-        url: `/admin/course/category/thumbnail/${image_id}`,
+        url: `/admin/category/thumbnail/${image_id}`,
         method: 'GET',
       };
     },

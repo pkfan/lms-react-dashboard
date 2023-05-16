@@ -10,6 +10,9 @@ import calculateCourseDiscount from './course/calculateCourseDiscount';
 import liveStatusAndColor from './course/liveStatusAndColor';
 import statusAndColor from './course/statusAndColor';
 import { getDimensionImageUrl } from './image/getDimensionImageUrl';
+import getDefaultAvatarUrl from './image/getDefaultAvatarUrl';
+import redirectTo from './redirectTo';
+import imageUploadOnPaste from './imageUploadOnPaste';
 
 export {
   createImageUrl,
@@ -24,4 +27,7 @@ export {
   liveStatusAndColor,
   statusAndColor,
   getDimensionImageUrl,
+  getDefaultAvatarUrl,
+  redirectTo,
+  imageUploadOnPaste,
 };

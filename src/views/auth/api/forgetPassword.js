@@ -13,7 +13,7 @@ export default function forgetPassword(builder) {
     transformErrorResponse: (response) => {
       return createResponseErrors(response);
     },
-    invalidatesTags: ['Auth'],
+    // invalidatesTags: ['Auth'],
   });
 
   return forgetPasswordQuery;

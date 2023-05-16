@@ -141,7 +141,7 @@ export function ThumbnailAndCover({ course, refetchSteps }) {
           }}
           onClick={() => setOpenThumbnailGallary(true)}
         >
-          {/* <Image src={`${config.domainUrl}/storage/images/640X360.png`} alt="640X360 thumbnail" /> */}
+          {/* <Image src={`${config.domainUrl}/storage/images/default/640X360.png`} alt="640X360 thumbnail" /> */}
           <Image
             sx={(theme) => ({ border: `1px solid ${theme.colors.lmsLayout[3]}` })}
             src={thumbnailData.imageUrl || getDimensionImageUrl({ dimension: '640X360' })}
@@ -184,7 +184,7 @@ export function ThumbnailAndCover({ course, refetchSteps }) {
           }}
           onClick={() => setOpenCoverGallary(true)}
         >
-          {/* <Image src={`${config.domainUrl}/storage/images/1340X400.png`} alt="1340X400 thumbnail" /> */}
+          {/* <Image src={`${config.domainUrl}/storage/images/default/1340X400.png`} alt="1340X400 thumbnail" /> */}
           <Image
             sx={(theme) => ({ border: `1px solid ${theme.colors.lmsLayout[3]}` })}
             src={coverData.imageUrl || getDimensionImageUrl({ dimension: '1340X400' })}

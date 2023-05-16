@@ -116,7 +116,7 @@ export function Category({ categoryData, setCategoryData, enabled = false }) {
     if (!categoryData) {
       createCategory(values);
     } else {
-      updateCategory({ ...values, id: categoryData.id });
+      updateCategory({ ...values, category_id: categoryData.id });
     }
   };
 
@@ -162,7 +162,7 @@ export function Category({ categoryData, setCategoryData, enabled = false }) {
               loading={isCreateCategoryLoading || isUpdateCategoryLoading}
               leftIcon={<MdLibraryAdd size={16} />}
             >
-              add
+              {!categoryData ? 'Create' : 'Update'}
             </Button>
           </Flex>
         </Stack>

@@ -16,7 +16,7 @@ export default function successfullyVerifiedEmail(builder) {
     transformErrorResponse: (response) => {
       return createResponseErrors(response);
     },
-    invalidatesTags: ['Auth'],
+    // invalidatesTags: ['Auth'],
   });
 
   return successfullyVerifiedEmailQuery;

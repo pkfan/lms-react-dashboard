@@ -33,11 +33,14 @@ import {
 
 // admin pages
 import {
-  Category,
   CreateCategory,
   UpdateCategory,
+  CreateSubCategory,
+  UpdateSubCategory,
   AdminCourseList,
   AdminTrashCourseList,
+  AdminCategoryList,
+  AdminSubCategoryList,
 } from '@/views/education/admin/pages';
 
 import Course from '@/views/pages/Course';
@@ -107,10 +110,15 @@ export function ReactRouter() {
 
           <Route path="instructor" element={<Instructor />} />
           <Route path="student" element={<Student />} />
-          <Route path="category">
-            <Route index element={<Category />} />
+          <Route path="categories">
+            <Route index element={<AdminCategoryList />} />
             <Route path="create" element={<CreateCategory />} />
-            <Route path=":id/update" element={<UpdateCategory />} />
+            <Route path=":id/edit" element={<UpdateCategory />} />
+          </Route>
+          <Route path="subcategories">
+            <Route index element={<AdminSubCategoryList />} />
+            <Route path="create" element={<CreateSubCategory />} />
+            <Route path=":id/edit" element={<UpdateSubCategory />} />
           </Route>
         </Route>
       </Routes>

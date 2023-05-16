@@ -1,4 +1,11 @@
 import axios from 'axios';
+import {
+  // ReasonPhrases,
+  StatusCodes,
+  // getReasonPhrase,
+  // getStatusCode,
+} from 'http-status-codes';
+import { redirectTo } from '@/helpers';
 // import set_csrf_token_in_cookie from './set_csrf_token_in_cookie';
 
 // async function loginTest() {
@@ -40,6 +47,13 @@ const axiosBaseQuery =
       return { data: result.data };
     } catch (axiosError) {
       let err = axiosError;
+
+      console.log('axios err ========== : ', err);
+
+      if (err.response?.status == StatusCodes.UNAUTHORIZED) {
+        redirectTo('/lms/login');
+      }
+
       return {
         error: {
           status: err.response?.status,

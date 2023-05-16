@@ -1,23 +1,23 @@
 import createResponseErrors from '@/helpers/createResponseErrors';
 
-export default function deleteCategory(builder) {
-  const deleteCategoryQuery = builder.mutation({
+export default function deleteBulkSubCategory(builder) {
+  const deleteBulkSubCategoryQuery = builder.mutation({
     query: (data) => ({
-      url: `/admin/category/delete`,
+      url: `/admin/subcategories/bulk/delete`,
       method: 'POST',
       data,
     }),
     transformResponse: (response) => {
-      console.log('deleteCategoryQuery response', response);
+      console.log('deleteBulkSubCategoryQuery response', response);
       return response.data;
     },
     transformErrorResponse: (response) => {
-      console.log('deleteCategoryQuery errors response', response);
+      console.log('deleteBulkSubCategoryQuery errors response', response);
 
       return createResponseErrors(response);
     },
     invalidatesTags: ['Category'],
   });
 
-  return deleteCategoryQuery;
+  return deleteBulkSubCategoryQuery;
 }

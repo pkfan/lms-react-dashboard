@@ -2,10 +2,10 @@ import createResponseErrors from '@/helpers/createResponseErrors';
 
 export default function deleteSubCategory(builder) {
   const deleteSubCategoryQuery = builder.mutation({
-    query: ({ subCategoryId }) => ({
-      url: `/admin/course/subcategory/delete/${subCategoryId}`,
+    query: (data) => ({
+      url: `/admin/subcategory/delete`,
       method: 'POST',
-      data: {},
+      data,
     }),
     transformResponse: (response) => {
       console.log('deleteSubCategoryQuery response', response);
